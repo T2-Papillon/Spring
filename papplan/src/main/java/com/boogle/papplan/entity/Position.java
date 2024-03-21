@@ -5,16 +5,14 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public enum ProjectPriority {
+public enum Position {
 
-    LV0("긴급"),
-    LV1("높음"),
-    LV2("보통"),
-    LV3("낮음");
+    TEAM_LEADER("팀장"),
+    EMPLOYEE("사원");
 
     private final String value;
 
-    ProjectPriority(String value) {
+    Position(String value) {
         this.value = value;
     }
 
