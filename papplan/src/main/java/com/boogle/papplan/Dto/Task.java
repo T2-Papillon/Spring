@@ -17,7 +17,7 @@ public class Task {
     // 외래키
     @ManyToOne
     @JoinColumn(name="proj_no", nullable = false)
-    private Project project; // 프로젝트번호
+    private Project project; // 프로젝트번호 - 오류(추후연결예정)
 
     @Column(name = "task_title", length=50, nullable = false)
     private String taskTitle; // 업무명
