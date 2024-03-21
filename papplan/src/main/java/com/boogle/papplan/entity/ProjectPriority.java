@@ -1,5 +1,10 @@
 package com.boogle.papplan.entity;
 
+import jakarta.persistence.Entity;
+import lombok.Getter;
+
+@Entity
+@Getter
 public enum ProjectPriority {
 
     TODO("긴급"),

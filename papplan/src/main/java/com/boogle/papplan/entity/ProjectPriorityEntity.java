@@ -1,10 +1,10 @@
 package com.boogle.papplan.entity;
 
-import jakarta.persistence.Entity;
-import lombok.Getter;
+import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
-@Getter
 public class ProjectPriorityEntity {
 
     @Id
