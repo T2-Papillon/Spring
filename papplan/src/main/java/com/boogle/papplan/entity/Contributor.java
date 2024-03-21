@@ -9,10 +9,10 @@ public class Contributor {
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "proj_no")
-    private Project project;
+    private Project project; // 프로젝트번호
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "eno")
-    private Employees employees;
+    private Employees employees; // 사번
 
 }

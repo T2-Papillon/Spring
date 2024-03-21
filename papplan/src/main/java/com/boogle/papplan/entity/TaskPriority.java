@@ -1,4 +1,4 @@
-package com.boogle.papplan.Dto;
+package com.boogle.papplan.entity;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;
