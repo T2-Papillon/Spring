@@ -9,7 +9,8 @@ public enum TaskStatus {
     TODO("진행예정"),
     DOING("진행중"),
     DONE("완료"),
-    hold("보류");
+    HOLD("보류"),
+    TEST("테스트");
 
     private final String value;
 
