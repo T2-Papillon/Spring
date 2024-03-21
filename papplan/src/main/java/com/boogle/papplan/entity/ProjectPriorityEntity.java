@@ -1,15 +1,14 @@
 package com.boogle.papplan.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Entity;
+import lombok.Getter;
 
-@Data
 @Entity
+@Getter
 public class ProjectPriorityEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "projp_no", length = 20)
+    @Column(name = "projp_no")
     private String projpNo;
 
     @Column(name = "projp_name")

@@ -6,7 +6,6 @@ import lombok.Getter;
 @Entity
 @Getter
 public enum ProjectStatus {
-
     TODO("진행예정"),
     GOING("진행중"),
     DONE("완료"),
@@ -17,5 +16,4 @@ public enum ProjectStatus {
     ProjectStatus(String value) {
         this.value = value;
     }
-
 }

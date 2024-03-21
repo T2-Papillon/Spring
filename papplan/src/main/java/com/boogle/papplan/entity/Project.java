@@ -8,7 +8,6 @@ import java.util.Date;
 @Data
 @Entity
 public class Project {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "proj_no")
@@ -48,5 +47,4 @@ public class Project {
     @OneToOne
     @JoinColumn(nullable = false, name = "projs_no")
     private Project projsNo;
-
 }

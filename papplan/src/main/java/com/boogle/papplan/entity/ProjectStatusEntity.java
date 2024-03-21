@@ -8,8 +8,7 @@ import lombok.Data;
 public class ProjectStatusEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "projs_no", length = 20)
+    @Column(name = "projs_no")
     private String projsNo;
 
     @Column(name = "projs_name")

@@ -25,5 +25,4 @@ public class Employees {
 
     @Column(length = 20, nullable = false, name = "position_no")
     private String positionNo;
-
 }
