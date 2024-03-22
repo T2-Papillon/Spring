@@ -42,11 +42,9 @@ public class Project {
 
     @OneToOne
     @JoinColumn(nullable = false, name = "projp_no")
-    @Enumerated(EnumType.STRING) // Enum을 문자열로 저장
-    private ProjectPriority projectPriority; // 프로젝트 우선순위번호
+    private ProjectPriorityEntity projectPriority; // 프로젝트 우선순위번호
 
     @OneToOne
     @JoinColumn(nullable = false, name = "projs_no")
-    @Enumerated(EnumType.STRING) // Enum을 문자열로 저장
-    private ProjectStatus projectStatus; // 프로젝트 상태번호
+    private ProjectStatusEntity projectStatus; // 프로젝트 상태번호
 }

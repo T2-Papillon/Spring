@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Spring.iml" filepath="$PROJECT_DIR$/.idea/Spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/papplan/paplan.iml" filepath="$PROJECT_DIR$/papplan/paplan.iml" />
     </modules>
   </component>
 </project>

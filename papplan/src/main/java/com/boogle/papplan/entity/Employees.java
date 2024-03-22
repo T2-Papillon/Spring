@@ -23,11 +23,9 @@ public class Employees {
 
     @OneToOne
     @JoinColumn(nullable = false, name = "dept_no")
-    @Enumerated(EnumType.STRING) // Enum을 문자열로 저장
     private Department department; // 부서번호
 
     @OneToOne
-    @JoinColumn(nullable = false, name = "position_no")
-    @Enumerated(EnumType.STRING) // Enum을 문자열로 저장
-    private Position position; // 직책번호
+    @JoinColumn(nullable = false, name = "position_id")
+    private Position position; // 직책코드
 }

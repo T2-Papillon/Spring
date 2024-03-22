@@ -1,29 +1,18 @@
 package com.boogle.papplan.entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
-@Entity
+@Entity(name = "Department")
 @Getter
-public enum Department {
+public class Department {
 
-    PL("기획팀"),
-    DS("디자인팀"),
-    DEV1("개발1팀"),
-    DEV2("개발2팀"),
-    MKT1("마케팅1팀"),
-    MKT2("마케팅2팀"),
-    HR("인사팀"),
-    FIN("재무팀"),
-    SLS("영업팀"),
-    CS("CS팀"),
-    OS("해외영업팀"),
-    SYS("시스템개발팀");
+    @Id
+    @Column(length = 20, name = "dept_no", nullable = false)
+    private String dept_no;
 
-    private final String value;
-
-    Department(String value) {
-        this.value = value;
-    }
+    @Column(length = 20, nullable = false)
+    private String dept_name;
 
 }
