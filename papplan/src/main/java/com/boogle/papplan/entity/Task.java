@@ -50,13 +50,13 @@ public class Task {
     private String taskDesc; // 설명
 
     // 외래키
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "tasks_no", nullable = false)
-    private TaskStatusEntity taskStatus; // 업무상태번호
+    private TaskStatus taskStatus; // 업무상태번호
 
     // 외래키
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "taskp_no", nullable = false)
-    private TaskPriorityEntity taskPriority; // 업무우선순위번호
+    private TaskPriority taskPriority; // 업무우선순위번호
 
 }

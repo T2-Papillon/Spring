@@ -1,0 +1,29 @@
+spring:
+  sql:
+    init:
+      platform: mariadb
+      encoding: UTF-8
+      mode: always
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3307/papplan
+    # url: jdbc:mariadb://54.150.211.146:3306/papplan
+    username: root
+    # password: root
+    password: maria
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: false
+    show-sql: true
+
+# Hibernate SQL ?? ?? ??
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+
+devtools:
+  liverload:
+    enable: true
