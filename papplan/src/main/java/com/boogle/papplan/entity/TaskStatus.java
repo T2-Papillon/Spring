@@ -3,9 +3,9 @@ package com.boogle.papplan.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-@Entity(name = "TaskStatus")
+@Entity
 @Getter
-public class TaskStatusEntity {
+public class TaskStatus {
 
     @Id
     @Column(length = 20, name = "task_status_id", nullable = false)

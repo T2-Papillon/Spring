@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Entity(name = "ProjectPriority")
 @Getter
-public class ProjectPriorityEntity {
+public class ProjectPriority {
 
     @Id
     @Column(length = 20, name = "project_priority_id", nullable = false)

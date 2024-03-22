@@ -13,8 +13,8 @@ public class Project {
     @Column(name = "proj_no")
     private Integer projNo; // 프로젝트 번호
 
-    @Column(length = 50, nullable = false, name = "proj_name")
-    private String projName; // 프로젝트명
+    @Column(length = 50, nullable = false, name = "proj_title")
+    private String projTitle; // 프로젝트명
 
     @Column(length = 50, nullable = false, name = "proj_pm")
     private String projPm; // PM
@@ -40,11 +40,11 @@ public class Project {
     @Column(length = 300, nullable = false, name = "proj_desc")
     private String projDesc; // 프로젝트 설명
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(nullable = false, name = "projp_no")
-    private ProjectPriorityEntity projectPriority; // 프로젝트 우선순위번호
+    private ProjectPriority projectPriority; // 프로젝트 우선순위번호
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(nullable = false, name = "projs_no")
-    private ProjectStatusEntity projectStatus; // 프로젝트 상태번호
+    private ProjectStatus projectStatus; // 프로젝트 상태번호
 }

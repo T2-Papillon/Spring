@@ -1,0 +1,14 @@
+# local, dev, prd
+# java -jar papplan-0.0.1-SNAPSHOT.jar --spring.profiles.active=prd
+
+# 기본값은 local 프로필으로 설정
+spring:
+  profiles:
+    default: local
+  application:
+    name: papplan
+---
+spring:
+  config:
+    activate:
+      on-profile: local, dev, prd
