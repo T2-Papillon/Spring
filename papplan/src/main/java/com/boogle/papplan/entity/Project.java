@@ -19,9 +19,6 @@ public class Project {
     @Column(length = 50, nullable = false, name = "proj_pm")
     private String projPm; // PM
 
-    @Column(length = 20, nullable = false, name = "proj_mem")
-    private String projMem; // 프로젝트 참여자
-
     @Temporal(TemporalType.DATE)
     @Column(nullable = false, name = "proj_start_date")
     private Date projStartDate; // 프로젝트 시작일
