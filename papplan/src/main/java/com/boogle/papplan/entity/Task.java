@@ -52,13 +52,11 @@ public class Task {
     // 외래키
     @OneToOne
     @JoinColumn(name = "tasks_no", nullable = false)
-    @Enumerated(EnumType.STRING) // Enum을 문자열로 저장
-    private TaskStatus taskStatus; // 업무상태번호
+    private TaskStatusEntity taskStatus; // 업무상태번호
 
     // 외래키
     @OneToOne
     @JoinColumn(name = "taskp_no", nullable = false)
-    @Enumerated(EnumType.STRING) // Enum을 문자열로 저장
-    private TaskPriority taskPriority; // 업무우선순위번호
+    private TaskPriorityEntity taskPriority; // 업무우선순위번호
 
 }

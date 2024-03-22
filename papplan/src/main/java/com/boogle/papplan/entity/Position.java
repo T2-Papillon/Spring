@@ -1,11 +1,22 @@
 package com.boogle.papplan.entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 
-@Entity
+@Entity(name = "JobTitle")
 @Getter
-public enum Position {
+public class Position {
+
+    @Id
+    @Column(length = 20, name = "position_id", nullable = false)
+    private String position_id;
+
+    @Column(length = 20, nullable = false)
+    private String position_name;
+}
+
+/*
+enum Position {
 
     TEAM_LEADER("팀장"),
     STAFF("사원");
@@ -16,4 +27,4 @@ public enum Position {
         this.value = value;
     }
 
-}
+}*/
