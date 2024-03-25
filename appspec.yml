@@ -1,12 +1,12 @@
 version: 0.0
 os: linux
 files:
-  - source: /
+  - source: /papplan
     destination: /home/ubuntu/app/papplan
     overwrite: yes
 
 permissions:
-  - object: /
+  - object: /papplan
     pattern: "**"
     owner: ubuntu
     group: ubuntu
