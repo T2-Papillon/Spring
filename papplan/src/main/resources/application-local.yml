@@ -6,7 +6,7 @@ spring:
       mode: always
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3307/papplan
+    url: jdbc:mariadb://localhost:3306/papplan
     # url: jdbc:mariadb://54.150.211.146:3306/papplan
     username: root
     # password: root
