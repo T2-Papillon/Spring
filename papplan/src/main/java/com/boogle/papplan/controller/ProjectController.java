@@ -28,15 +28,13 @@ public class ProjectController {
 
     @GetMapping("/contributor/{id}")
     public ResponseEntity<List<Project>> getProjectsByContributor(@PathVariable Long id) {
-        List<Project> projects = projectService.getProjectsByContributor(id);
+        List<Project> projects = projectService.findProjectsByContributorId(id);
         return ResponseEntity.ok().body(projects);
     }
 
     @GetMapping("/status/{status}")
-    public ResponseEntity<List<Project>> getProjectsByStatus(@PathVariable String status) {
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setProjectStatusId(status);
-        List<Project> projects = projectService.getProjectsByStatus(projectStatus);
+    public ResponseEntity<List<Project>> getProjectsByStatus(@PathVariable("status") String status) {
+        List<Project> projects = projectService.getProjectsByStatus(status);
         return ResponseEntity.ok().body(projects);
     }
 
