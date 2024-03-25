@@ -3,7 +3,7 @@
 cd /home/ubuntu/app/papplan
 
 # Maven 프로젝트에서 사용할 겨우
-mvn package
+./mvnw clean package
 
 # ./gradlew bootJar
 
