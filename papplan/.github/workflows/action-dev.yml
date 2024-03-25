@@ -3,7 +3,7 @@ name: Deploy2aws 🚀
 on:
   push:
     branches:
-      - dev
+      - AWSDeploy_v0.1.2/choi
   pull_request:
     types:
       - closed
