@@ -46,18 +46,22 @@ public class ProjectController {
         return ResponseEntity.ok().body(searchResults);
     }
 
-    // 프로젝트 상세정보 조회
+
+    //글 상세페이지
     @GetMapping("/project/{projNo}")
-    public ResponseEntity<Project> showProjectDetail(@PathVariable("projNo") Integer projNo) {
+    public String showProjectDetail(@PathVariable("projNo") Integer projNo, Model model) {
         // 프로젝트 번호(projNo)에 해당하는 프로젝트 정보 조회
-        Project project = projectService.getProjectByProjNo(projNo);
+        Project project = projectService.getProjectById(projNo);
 
         if (project == null) {
-            // 프로젝트가 존재하지 않을 경우 404 Not Found 응답 반환
-            return ResponseEntity.notFound().build();
+            // 프로젝트가 존재하지 않을 경우 에러 페이지로 이동하거나 적절한 처리를 수행합니다.
+            return "error"; // 에러 페이지 경로로 수정해주세요.
         }
 
-        // 프로젝트 정보를 JSON 형식으로 반환
-        return ResponseEntity.ok().body(project);
+        // 조회한 프로젝트 정보를 모델에 추가하여 뷰로 전달
+        model.addAttribute("project", project);
+
+        // 상세 페이지 뷰로 이동
+        return "projectDetail"; // 상세 페이지 뷰 경로로 수정해주세요.
     }
 }
