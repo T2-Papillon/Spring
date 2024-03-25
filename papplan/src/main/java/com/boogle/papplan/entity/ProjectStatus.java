@@ -1,18 +1,20 @@
 package com.boogle.papplan.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity(name = "ProjectStatus")
-@Getter
+@Data
 public class ProjectStatus {
 
     @Id
     @Column(length = 20, name = "project_status_id", nullable = false)
-    private String project_status_id;
+    private String projectStatusId;
 
     @Column(length = 20, name = "project_status_name", nullable = false)
-    private String project_status_name;
+    private String projectStatusName;
 }
 
 /*
