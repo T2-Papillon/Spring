@@ -16,7 +16,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     // 특정 상태의 프로젝트를 조회하는 메서드
     List<Project> findByProjectStatus(ProjectStatus projectStatus);
 
-    // 프로젝트명 또는 PM/참여자 이름으로 프로젝트 검색
+    // 프로젝트명 또는 PM 또는 참여자 이름으로 프로젝트 검색
     List<Project> findByProjTitleAndProjPm(String projTitle, String projPm);
 
     // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
