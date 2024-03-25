@@ -18,4 +18,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
     // 프로젝트명 또는 PM/참여자 이름으로 프로젝트 검색
     List<Project> findByProjects(String projTitle, String projPm, String id);
+
+    // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
+    Project findByProjNo(Integer projNo);
 }

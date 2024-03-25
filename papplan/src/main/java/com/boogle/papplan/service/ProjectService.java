@@ -19,8 +19,10 @@ public class ProjectService {
     private final ContributorRepository contributorRepository; //참여자
 
     @Autowired
-    public ProjectService(ProjectRepository projectRepository, ContributorRepository contributorRepository) {
+    public ProjectService(ProjectRepository projectRepository, ContributorRepository contributorRepository, ProjectRepository projectRepository1, ContributorRepository contributorRepository1) {
 
+        this.projectRepository = projectRepository1;
+        this.contributorRepository = contributorRepository1;
     }
 
     // PM으로 참여한 프로젝트를 가져오는 메서드
@@ -46,6 +48,8 @@ public class ProjectService {
         return projectRepository.findByProjects(keyword, keyword, keyword);
     }
 
-    public Project getProjectById(Integer projNo) {
+    // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
+    public Project getProjectByProjNo(Integer projNo) {
+        return projectRepository.findByProjNo(projNo);
     }
 }
