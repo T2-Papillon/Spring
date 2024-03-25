@@ -45,7 +45,7 @@ public class ProjectService {
 
     // 프로젝트명 또는 PM/참여자 이름으로 프로젝트 검색
     public List<Project> searchProjects(String keyword) {
-        return projectRepository.findByProjects(keyword, keyword, keyword);
+        return projectRepository.findByProjTitleAndProjPm(keyword, keyword);
     }
 
     // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
