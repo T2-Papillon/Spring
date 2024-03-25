@@ -15,5 +15,5 @@ services:
   rest:
     build: .
     ports:
-      - 7777:8080
+      - 7778:8080
     platform: linux/amd64
