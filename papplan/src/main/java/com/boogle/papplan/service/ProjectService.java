@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +20,10 @@ public class ProjectService {
     private final ContributorRepository contributorRepository; //참여자
 
     @Autowired
-    public ProjectService(ProjectRepository projectRepository, ContributorRepository contributorRepository, ProjectRepository projectRepository1, ContributorRepository contributorRepository1) {
+    public ProjectService(ProjectRepository projectRepository, ContributorRepository contributorRepository) {
 
-        this.projectRepository = projectRepository1;
-        this.contributorRepository = contributorRepository1;
+        this.projectRepository = projectRepository;
+        this.contributorRepository = contributorRepository;
     }
 
     // PM으로 참여한 프로젝트를 가져오는 메서드
@@ -31,7 +32,7 @@ public class ProjectService {
     }
 
     // 특정 사용자로 참여한 프로젝트를 가져오는 메서드
-    public List<Project> getProjectsByContributor(Long id) {
+    public List<Project> findProjectsByContributorId(Long id) {
         Optional<Contributor> contributorOptional = contributorRepository.findById(id);
         List<Project> projects = new ArrayList<>();
         contributorOptional.ifPresent(contributor -> projects.add(contributor.getProject()));
@@ -39,13 +40,22 @@ public class ProjectService {
     }
 
     // 특정 상태의 프로젝트 목록을 가져오는 메서드
-    public List<Project> getProjectsByStatus(ProjectStatus projectStatus) {
-        return projectRepository.findByProjectStatus(projectStatus);
+    public List<Project> getProjectsByStatus(String status) {
+        // status를 이용하여 적절한 ProjectStatus 객체를 생성하거나 가져와야 함
+        ProjectStatus projectStatus = new ProjectStatus();
+        projectStatus.setProjectStatusId(status);
+        return projectRepository.findByProjectStatus_ProjectStatusId(projectStatus.getProjectStatusId());
     }
 
-    // 프로젝트명 또는 PM/참여자 이름으로 프로젝트 검색
+
+    // 프로젝트명 또는 PM으로 프로젝트 검색
     public List<Project> searchProjects(String keyword) {
         return projectRepository.findByProjTitleAndProjPm(keyword, keyword);
+    }
+
+    // 이름으로 참여한 프로젝트를 가져오는 메서드
+    public List<Project> findProjectsByContributorName(String name) {
+        return contributorRepository.findProjectsByContributorName(name);
     }
 
     // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
