@@ -4,7 +4,7 @@ import com.boogle.papplan.entity.Contributor;
 import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.entity.ProjectStatus;
 import com.boogle.papplan.repository.ContributorRepository;
-import com.boogle.papplan.repository.ProjectListRepository;
+import com.boogle.papplan.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,20 +13,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProjectListService {
+public class ProjectService {
 
-    private final ProjectListRepository projectListRepository;
-    private final ContributorRepository contributorRepository;
+    private final ProjectRepository projectRepository;
+    private final ContributorRepository contributorRepository; //참여자
 
     @Autowired
-    public ProjectListService(ProjectListRepository projectListRepository, ContributorRepository contributorRepository) {
-        this.projectListRepository = projectListRepository;
-        this.contributorRepository = contributorRepository;
+    public ProjectService(ProjectRepository projectRepository, ContributorRepository contributorRepository, ProjectRepository projectRepository1, ContributorRepository contributorRepository1) {
+
+        this.projectRepository = projectRepository1;
+        this.contributorRepository = contributorRepository1;
     }
 
     // PM으로 참여한 프로젝트를 가져오는 메서드
     public List<Project> getProjectsByPM(String projPm) {
-        return projectListRepository.findByProjPm(projPm);
+        return projectRepository.findByProjPm(projPm);
     }
 
     // 특정 사용자로 참여한 프로젝트를 가져오는 메서드
@@ -39,12 +40,16 @@ public class ProjectListService {
 
     // 특정 상태의 프로젝트 목록을 가져오는 메서드
     public List<Project> getProjectsByStatus(ProjectStatus projectStatus) {
-        return projectListRepository.findByProjectStatus(projectStatus);
+        return projectRepository.findByProjectStatus(projectStatus);
     }
 
     // 프로젝트명 또는 PM/참여자 이름으로 프로젝트 검색
     public List<Project> searchProjects(String keyword) {
-        return projectListRepository.findByProjects(keyword, keyword, keyword);
+        return projectRepository.findByProjects(keyword, keyword, keyword);
     }
 
+    // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
+    public Project getProjectByProjNo(Integer projNo) {
+        return projectRepository.findByProjNo(projNo);
+    }
 }

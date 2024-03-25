@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 @Repository
-public interface ProjectListRepository extends JpaRepository<Project, Integer> {
+public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
     // PM으로 참여한 프로젝트를 조회하는 메서드
     List<Project> findByProjPm(String projPm);
@@ -18,4 +18,7 @@ public interface ProjectListRepository extends JpaRepository<Project, Integer> {
 
     // 프로젝트명 또는 PM/참여자 이름으로 프로젝트 검색
     List<Project> findByProjects(String projTitle, String projPm, String id);
+
+    // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
+    Project findByProjNo(Integer projNo);
 }
