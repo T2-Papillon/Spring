@@ -10,7 +10,6 @@ permissions:
     pattern: "**"
     owner: ubuntu
     group: ubuntu
-    mode: 744
 
 hooks:
   AfterInstall:
