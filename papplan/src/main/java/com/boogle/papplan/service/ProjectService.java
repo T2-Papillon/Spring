@@ -5,6 +5,7 @@ import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.entity.ProjectStatus;
 import com.boogle.papplan.repository.ContributorRepository;
 import com.boogle.papplan.repository.ProjectRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
