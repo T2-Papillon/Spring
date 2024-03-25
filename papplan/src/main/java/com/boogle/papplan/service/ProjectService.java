@@ -43,7 +43,7 @@ public class ProjectService {
         return projectRepository.findByProjectStatus(projectStatus);
     }
 
-    // 프로젝트명 또는 PM 또는 참여자 이름으로 프로젝트 검색
+    // 프로젝트명 또는 PM으로 프로젝트 검색
     public List<Project> searchProjects(String keyword) {
         return projectRepository.findByProjTitleAndProjPm(keyword, keyword);
     }
