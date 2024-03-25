@@ -1,0 +1,21 @@
+package com.boogle.papplan.repository;
+
+import com.boogle.papplan.entity.Project;
+import com.boogle.papplan.entity.ProjectStatus;
+import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+@Repository
+public interface ProjectListRepository extends JpaRepository<Project, Integer> {
+
+    // PM으로 참여한 프로젝트를 조회하는 메서드
+    List<Project> findByProjPm(String projPm);
+
+    // 특정 상태의 프로젝트를 조회하는 메서드
+    List<Project> findByProjectStatus(ProjectStatus projectStatus);
+
+    // 프로젝트명 또는 PM/참여자 이름으로 프로젝트 검색
+    List<Project> findByProjects(String projTitle, String projPm, String id);
+}
