@@ -7,6 +7,7 @@ import com.boogle.papplan.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,8 +18,14 @@ public class TaskService {
 
 
     // 특정 프로젝트에 속한 모든 Task를 조회하는 메서드
-    public List<Task> getTasksByProject(Project project) {
-        return taskRepository.findAllByProject(project);
+    public List<Task> getTasksByProjectId(Integer projectId) {
+        // 프로젝트 ID로 Project 엔티티 조회
+        Project project = projectRepository.findById(projectId).orElse(null);
+        if (project != null) {
+            return taskRepository.findAllByProject(project);
+        } else {
+            return new ArrayList<>(); // 프로젝트가 없다면 빈 리스트 반환
+        }
     }
 
     // 새로운 Task를 생성하는 메서드
