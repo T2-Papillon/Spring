@@ -14,10 +14,10 @@ permissions:
 
 hooks:
   AfterInstall:
-    - location: stop.sh
+    - location: papplan/stop.sh
       timeout: 60
       runas: ubuntu
   ApplicationStart:
-    - location: start.sh
+    - location: papplan/start.sh
       timeout: 60
       runas: ubuntu
