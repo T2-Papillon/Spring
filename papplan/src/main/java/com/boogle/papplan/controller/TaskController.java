@@ -43,7 +43,7 @@ public class TaskController {
     }
 
     // Task 수정
-    @PutMapping("/{taskId}")
+    @PostMapping("/{taskId}")
     public ResponseEntity<Task> updateTask(@PathVariable Integer taskId, @RequestBody Task task) {
         Task updatedTask = taskService.updateTask(task);
         if (updatedTask != null) {

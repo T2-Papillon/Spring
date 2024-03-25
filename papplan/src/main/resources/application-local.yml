@@ -17,6 +17,7 @@ spring:
     generate-ddl: false
     show-sql: true
 
+
 # Hibernate SQL ?? ?? ??
 logging:
   level:
