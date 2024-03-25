@@ -20,7 +20,7 @@ public class TaskController {
         // 프로젝트 ID를 사용하여 Task 조회 로직 구현 필요
         // 예시에서는 단순히 Service의 메서드를 호출하는 것으로 표현
         // 실제로는 projectId를 이용하여 Project 객체를 조회한 후 해당 객체를 사용하여 Task 조회
-        List<Task> tasks = taskService.getTasksByProjectId(projectId); // 이 메서드는 TaskService에 추가 구현이 필요합니다.
+        List<Task> tasks = taskService.getTasksByProjectId(projectId);
         return ResponseEntity.ok(tasks);
     }
 
