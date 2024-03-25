@@ -38,12 +38,12 @@ public class ProjectController {
         return ResponseEntity.ok().body(projects);
     }
 
+    // 프로젝트 검색
     @GetMapping("/search")
-    public ResponseEntity<List<Project>> searchProjects(@RequestParam("keyword") String keyword) {
-        List<Project> searchResults = projectService.searchProjects(keyword);
-        return ResponseEntity.ok().body(searchResults);
+    public ResponseEntity<List<Project>> searchProjects(@RequestParam String searchTerm) {
+        List<Project> projects = projectService.searchProjects(searchTerm);
+        return ResponseEntity.ok(projects);
     }
-
 
     // 프로젝트 상세정보 조회
     @GetMapping("/{projNo}")

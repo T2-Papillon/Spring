@@ -22,12 +22,12 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     // 프로젝트 상태로 프로젝트를 조회하는 메서드
     List<Project> findByProjectStatus_ProjectStatusId(String projectStatusId);
 
-    // 프로젝트명 또는 PM으로 프로젝트 검색
-    List<Project> findByProjTitleAndProjPm(String projTitle, String projPm);
-
-    // 이름으로 참여한 프로젝트를 조회하는 메서드
-    @Query("SELECT c.project FROM Contributor c WHERE c.employees.name = :name")
-    List<Project> findProjectsByContributorName(@Param("name") String name);
+    // 프로젝트명 또는 PM 또는 참여자로 프로젝트 검색
+    @Query("SELECT p FROM Project p WHERE " +
+            "LOWER(p.projTitle) LIKE LOWER(:searchTerm) OR " +
+            "LOWER(p.projPm) LIKE LOWER(:searchTerm) OR " +
+            "p.id IN (SELECT c.project.id FROM Contributor c WHERE LOWER(c.employees.name) LIKE LOWER(:searchTerm))")
+    List<Project> findByTitleOrPmOrContributor(String searchTerm);
 
     // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
     Project findByProjNo(Integer projNo);
