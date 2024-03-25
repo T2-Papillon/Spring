@@ -19,10 +19,10 @@ public class ProjectService {
     private final ContributorRepository contributorRepository; //참여자
 
     @Autowired
-    public ProjectService(ProjectRepository projectRepository, ContributorRepository contributorRepository, ProjectRepository projectRepository1, ContributorRepository contributorRepository1) {
+    public ProjectService(ProjectRepository projectRepository, ContributorRepository contributorRepository) {
 
-        this.projectRepository = projectRepository1;
-        this.contributorRepository = contributorRepository1;
+        this.projectRepository = projectRepository;
+        this.contributorRepository = contributorRepository;
     }
 
     // PM으로 참여한 프로젝트를 가져오는 메서드
