@@ -38,6 +38,7 @@ public class ProjectController {
         return ResponseEntity.ok().body(projects);
     }
 
+    // 검색 api 수정
     @GetMapping("/search")
     public ResponseEntity<List<Project>> searchProjects(@RequestParam("keyword") String keyword) {
         List<Project> searchResults = projectService.searchProjects(keyword);
