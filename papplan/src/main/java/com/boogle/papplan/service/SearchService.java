@@ -24,4 +24,9 @@ public class SearchService {
             return searchRepository.findByProjectStatus_ProjectStatusId(projectStatusId);
         }
     }
+
+    // 프로젝트명 또는 PM 또는 참여자로 프로젝트 검색
+    public List<Project> searchProjects(String searchTerm) {
+        return searchRepository.findByTitleOrPmOrContributor(searchTerm);
+    }
 }
