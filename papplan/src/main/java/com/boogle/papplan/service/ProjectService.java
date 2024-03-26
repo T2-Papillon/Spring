@@ -52,8 +52,13 @@ public class ProjectService {
         return projectRepository.findByTitleOrPmOrContributor(searchTerm);
     }
 
-    // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
+    // 프로젝트 번호로 프로젝트 상세정보 조회
     public Project getProjectByProjNo(Integer projNo) {
-        return projectRepository.findByProjNo(projNo);
+        return projectRepository.findById(projNo).orElse(null);
+    }
+
+    // 모든 프로젝트 목록 조회
+    public List<Project> getAllProjects() {
+        return projectRepository.findAll();
     }
 }

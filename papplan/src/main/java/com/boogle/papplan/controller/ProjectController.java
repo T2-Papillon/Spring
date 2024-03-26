@@ -58,4 +58,11 @@ public class ProjectController {
         // 프로젝트 정보를 JSON 형식으로 반환
         return ResponseEntity.ok().body(project);
     }
+
+    // 모든 프로젝트 목록 조회
+    @GetMapping
+    public ResponseEntity<List<Project>> getAllProjects() {
+        List<Project> projects = projectService.getAllProjects();
+        return ResponseEntity.ok(projects);
+    }
 }
