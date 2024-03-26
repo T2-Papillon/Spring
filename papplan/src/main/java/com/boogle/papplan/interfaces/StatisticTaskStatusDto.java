@@ -1,4 +1,4 @@
-package com.boogle.papplan.dto;
+package com.boogle.papplan.interfaces;
 
 import lombok.Data;
 
