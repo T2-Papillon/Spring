@@ -12,10 +12,10 @@ public class Employees {
     @Column(name = "eno")
     private Integer eno; // 사번
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = false, unique = true)
     private String email; // 이메일
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 65, nullable = false)
     private String password; // 비밀번호
 
     @Column(length = 20, nullable = false)

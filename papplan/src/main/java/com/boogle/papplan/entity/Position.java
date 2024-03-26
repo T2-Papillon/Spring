@@ -1,10 +1,14 @@
 package com.boogle.papplan.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(name = "JobTitle")
-@Getter
+@Data
 public class Position {
 
     @Id
@@ -13,6 +17,9 @@ public class Position {
 
     @Column(length = 20, nullable = false)
     private String position_name;
+
+    @OneToMany(mappedBy = "position", cascade = CascadeType.REMOVE)
+    private List<Employees> employees = new ArrayList<>();
 }
 
 /*

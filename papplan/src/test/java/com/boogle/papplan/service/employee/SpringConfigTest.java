@@ -1,4 +1,4 @@
-package com.boogle.papplan.service.login;
+package com.boogle.papplan.service.employee;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class LoginServiceImplTest {
+class SpringConfigTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
