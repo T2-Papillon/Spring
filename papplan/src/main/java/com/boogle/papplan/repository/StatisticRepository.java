@@ -1,6 +1,7 @@
 package com.boogle.papplan.repository;
 
 import com.boogle.papplan.dto.StatisticProjectDto;
+import com.boogle.papplan.dto.StatisticTaskStatusDto;
 import com.boogle.papplan.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +13,7 @@ import java.util.List;
 @Repository
 public interface StatisticRepository extends JpaRepository<Project, Integer> {
 
-    // [통계분석] 특정 프로젝트의 프로젝트 제목, 기간(시작일과 종료일),
+    // [프로젝트] 특정 프로젝트의 프로젝트 제목, 기간(시작일과 종료일),
     // 참여자, 진행률, 작성일을 조회하는 메서드
     // GROUP_CONCAT은 JPQL에서는 지원되지 않아서, native query를 명시적으로 사용해야 한다
     // 그리고 조회결과가 해당 project전체필드가 아니므로, DTO를 생성해야 한다.
@@ -31,4 +32,12 @@ public interface StatisticRepository extends JpaRepository<Project, Integer> {
             "GROUP BY p.proj_no", nativeQuery = true)
     StatisticProjectDto findProjectDetailsByProjNo(Integer projNo);
 
+    // [프로젝트] 특정 프로젝트의 업무들에 대해 각 진행 상태별로 업무가 몇 개씩 있는지 조회
+    @Query(value = "SELECT " +
+            "new StatisticTaskStatusDto(ts.taskStatusName, COUNT(t.taskNo)) " +
+            "FROM Task t " +
+            "JOIN t.taskStatus ts " +
+            "WHERE t.projNo = :projNo " +
+            "GROUP BY ts.taskStatusName", nativeQuery = true)
+    List<StatisticTaskStatusDto> findTaskCountByStatus(Integer projNo);
 }
