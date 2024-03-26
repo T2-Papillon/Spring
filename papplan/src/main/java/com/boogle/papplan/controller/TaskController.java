@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/task")
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskService taskService;
@@ -43,7 +43,7 @@ public class TaskController {
     }
 
     // Task 수정
-    @PutMapping("/{taskId}")
+    @PostMapping("/{taskId}")
     public ResponseEntity<Task> updateTask(@PathVariable Integer taskId, @RequestBody Task task) {
         Task updatedTask = taskService.updateTask(task);
         if (updatedTask != null) {
