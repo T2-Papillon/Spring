@@ -8,8 +8,6 @@ import lombok.ToString;
 import java.time.LocalDate;
 
 @Data
-@Getter @Setter
-@ToString
 public class StatisticProjectDto {
     private Integer projNo;
     private String title;

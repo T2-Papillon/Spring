@@ -18,12 +18,12 @@ public interface StatisticRepository extends JpaRepository<Project, Integer> {
     // Criteria API를 사용하는 복잡한 쿼리는 주로 서비스 클래스 내에서 처리
 
 
-    // [프로젝트] 특정 프로젝트의 업무들에 대해 각 진행 상태별로 업무가 몇 개씩 있는지 조회
-//    @Query("SELECT " +
-//            "ts.task_status_name taskStatusName, COUNT(t.task_no) taskNo " +
-//            "FROM task t " +
-//            "JOIN task_status ts ON t.tasks_no = ts.task_status_id " +
-//            "WHERE t.proj_no = :projNo " +
-//            "GROUP BY ts.task_status_name")
-//    List<StatisticTaskStatusDto> findTaskCountByStatus(@Param("projNo") Integer projNo);
+//     [프로젝트] 특정 프로젝트의 업무들에 대해 각 진행 상태별로 업무가 몇 개씩 있는지 조회
+    @Query("SELECT " +
+            "ts.task_status_name taskStatusName, COUNT(t.task_no) taskNo " +
+            "FROM task t " +
+            "JOIN task_status ts ON t.tasks_no = ts.task_status_id " +
+            "WHERE t.proj_no = :projNo " +
+            "GROUP BY ts.task_status_name")
+    List<StatisticTaskStatusDto> findTaskCountByStatus(@Param("projNo") Integer projNo);
 }

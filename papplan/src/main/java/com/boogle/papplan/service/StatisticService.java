@@ -1,18 +1,20 @@
 package com.boogle.papplan.service;
 
 import com.boogle.papplan.entity.Project;
+import com.boogle.papplan.entity.Task;
+import com.boogle.papplan.entity.TaskStatus;
 import com.boogle.papplan.interfaces.StatisticProjectDto;
 import com.boogle.papplan.interfaces.StatisticTaskStatusDto;
 import com.boogle.papplan.repository.StatisticRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.Tuple;
+import jakarta.persistence.criteria.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StatisticService {
@@ -51,7 +53,23 @@ public class StatisticService {
     }
 
     // [프로젝트] 특정 프로젝트의 업무들에 대해 각 진행 상태별로 업무가 몇 개씩 있는지 조회
-//    public List<StatisticTaskStatusDto> getTaskCountByStatus(Integer projNo) {
-//        return statisticRepository.findTaskCountByStatus(projNo);
-//    }
+    public List<StatisticTaskStatusDto> getTaskCountByStatus(Integer projNo) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> cq = cb.createTupleQuery();
+        Root<Project> project = cq.from(Project.class);
+        Join<Project, Task> tasks = project.join("tasks", JoinType.INNER); // 'tasks'는 Project 엔터티에 정의된 Task 엔터티와의 관계를 나타냅니다.
+        Join<Task, TaskStatus> taskStatus = tasks.join("taskStatus", JoinType.INNER); // 'taskStatus'는 Task 엔터티 내에 정의된 TaskStatus 엔터티와의 관계를 나타냅니다.
+
+        cq.multiselect(taskStatus.get("name").alias("taskStatusName"),
+                        cb.count(tasks).alias("taskCount"))
+                .where(cb.equal(project.get("projNo"), projNo))
+                .groupBy(taskStatus.get("name"));
+
+        List<Tuple> results = entityManager.createQuery(cq).getResultList();
+
+        return results.stream().map(t -> new StatisticTaskStatusDto(
+                t.get("taskStatusName", String.class),
+                t.get("taskCount", Long.class)
+        )).collect(Collectors.toList());
+    }
 }
