@@ -19,9 +19,6 @@ out/
 ### VS Code ###
 .vscode/
 
-# Maven Wrapper
-mvnw
-mvnw.cmd
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,intellij,maven
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,intellij,maven
@@ -84,10 +81,6 @@ local.properties
 .scala_dependencies
 .worksheet
 
-# Uncomment this line if you wish to ignore the project description file.
-# Typically, this file would be tracked if it contains build/dependency configurations:
-#.project
-
 ### Eclipse Patch ###
 # Spring Boot Tooling
 .sts4-cache/
@@ -121,19 +114,6 @@ local.properties
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
-
-# Gradle and Maven with auto-import
-# When using Gradle or Maven with auto-import, you should exclude module files,
-# since they will be recreated, and may cause churn.  Uncomment if using
-# auto-import.
-# .idea/artifacts
-# .idea/compiler.xml
-# .idea/jarRepositories.xml
-# .idea/modules.xml
-# .idea/*.iml
-# .idea/modules
-# *.iml
-# *.ipr
 
 # CMake
 cmake-build-*/
@@ -170,14 +150,6 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
-
-### Intellij Patch ###
-# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
-
-# *.iml
-# modules.xml
-# .idea/misc.xml
-# *.ipr
 
 # Sonarlint plugin
 # https://plugins.jetbrains.com/plugin/7973-sonarlint
