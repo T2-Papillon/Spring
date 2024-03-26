@@ -27,7 +27,7 @@ public class StatisticController {
         StatisticProjectDto statisticProjectDto = statisticService.getProjectDetails(projNo);
         return ResponseEntity.ok().body(statisticProjectDto);
     }
-
+// commit
 //    @GetMapping("/{projNo}/tasks/status")
 //    public ResponseEntity<List<StatisticTaskStatusDto>> getTaskCountByStatus(@PathVariable("projNo") Integer projNo) {
 //        List<StatisticTaskStatusDto> statisticTaskStatusDtos = statisticService.getTaskCountByStatus(projNo);
