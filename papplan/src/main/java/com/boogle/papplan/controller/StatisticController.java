@@ -1,10 +1,10 @@
 package com.boogle.papplan.controller;
 
-import com.boogle.papplan.dto.StatisticProjectDto;
-import com.boogle.papplan.dto.StatisticTaskStatusDto;
-import com.boogle.papplan.service.ProjectService;
+import com.boogle.papplan.interfaces.StatisticProjectDto;
+import com.boogle.papplan.interfaces.StatisticTaskStatusDto;
 import com.boogle.papplan.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +23,14 @@ public class StatisticController {
     }
 
     @GetMapping("/{projNo}/details")
-    public StatisticProjectDto getProjectDetails(@PathVariable Integer projNo) {
-        return statisticService.getProjectDetails(projNo);
+    public ResponseEntity<StatisticProjectDto> getProjectDetails(@PathVariable("projNo") Integer projNo) {
+        StatisticProjectDto statisticProjectDto = statisticService.getProjectDetails(projNo);
+        return ResponseEntity.ok().body(statisticProjectDto);
     }
 
-    @GetMapping("/{projNo}/tasks/status")
-    public List<StatisticTaskStatusDto> getTaskCountByStatus(@PathVariable Integer projNo) {
-        return statisticService.getTaskCountByStatus(projNo);
-    }
+//    @GetMapping("/{projNo}/tasks/status")
+//    public ResponseEntity<List<StatisticTaskStatusDto>> getTaskCountByStatus(@PathVariable("projNo") Integer projNo) {
+//        List<StatisticTaskStatusDto> statisticTaskStatusDtos = statisticService.getTaskCountByStatus(projNo);
+//        return ResponseEntity.ok().body(statisticTaskStatusDtos);
+//    }
 }
