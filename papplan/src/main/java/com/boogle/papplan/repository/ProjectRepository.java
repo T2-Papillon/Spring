@@ -1,7 +1,6 @@
 package com.boogle.papplan.repository;
 
 import com.boogle.papplan.entity.Project;
-import com.boogle.papplan.entity.ProjectStatus;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -31,4 +30,6 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
     // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
     Project findByProjNo(Integer projNo);
+
+
 }

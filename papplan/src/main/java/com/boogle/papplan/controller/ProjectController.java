@@ -1,7 +1,6 @@
 package com.boogle.papplan.controller;
 
 import com.boogle.papplan.entity.Project;
-import com.boogle.papplan.entity.ProjectStatus;
 import com.boogle.papplan.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
