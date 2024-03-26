@@ -3,6 +3,9 @@ package com.boogle.papplan.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(name = "ProjectPriority")
 @Getter
 public class ProjectPriority {
@@ -13,6 +16,9 @@ public class ProjectPriority {
 
     @Column(length = 20, name = "project_priority_name", nullable = false)
     private String project_priority_name;
+
+    @OneToMany(mappedBy = "projectPriority", cascade = CascadeType.REMOVE)
+    private List<Project> projects = new ArrayList<>();
 }
 
 

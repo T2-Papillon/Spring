@@ -34,7 +34,7 @@ public class ProjectService {
     public List<Project> findProjectsByContributorId(Long id) {
         Optional<Contributor> contributorOptional = contributorRepository.findById(id);
         List<Project> projects = new ArrayList<>();
-        contributorOptional.ifPresent(contributor -> projects.add(contributor.getProject()));
+        contributorOptional.ifPresent((contributor) -> projects.add(contributor.getProject()));
         return projects;
     }
 

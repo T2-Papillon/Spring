@@ -1,11 +1,15 @@
 package com.boogle.papplan.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(name = "Department")
-@Getter
+@Data
 public class Department {
 
     @Id
@@ -14,5 +18,8 @@ public class Department {
 
     @Column(length = 20, nullable = false)
     private String dept_name;
+
+    @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE)
+    private List<Employees> employees = new ArrayList<>();
 
 }

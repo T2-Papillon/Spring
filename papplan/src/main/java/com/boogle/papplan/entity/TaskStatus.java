@@ -3,6 +3,9 @@ package com.boogle.papplan.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 public class TaskStatus {
@@ -13,6 +16,9 @@ public class TaskStatus {
 
     @Column(length = 20, name = "task_status_name", nullable = false)
     private String task_status_name;
+
+    @OneToMany(mappedBy = "taskStatus", cascade = CascadeType.REMOVE)
+    private List<Task> tasks = new ArrayList<>();
 }
 
 /*

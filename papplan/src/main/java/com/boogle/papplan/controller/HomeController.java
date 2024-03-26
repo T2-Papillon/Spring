@@ -14,4 +14,9 @@ public class HomeController {
         return ResponseEntity.ok("OK");
     }
 
+    @GetMapping("test")
+    public ResponseEntity<String> getPage() {
+        return ResponseEntity.ok("TEST OK");
+    }
+
 }
