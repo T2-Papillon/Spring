@@ -1,11 +1,9 @@
-package com.boogle.papplan.interfaces;
+package com.boogle.papplan.dto;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDate;
 
 @Data
 @Getter @Setter
@@ -25,6 +23,6 @@ public class StatisticProjectDto {
         this.startDate = startDate;
         this.endDate = endDate;
         this.progress = progress;
-        this.createDate =createDate;
+        this.createDate = createDate;
     }
 }
