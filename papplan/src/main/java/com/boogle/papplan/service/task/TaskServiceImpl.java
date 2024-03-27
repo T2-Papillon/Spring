@@ -19,7 +19,7 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public TaskDto getTaskById(Integer taskNo) {
+    public TaskDto getTaskById(Integer taskNo, Integer no) {
         return null;
     }
 

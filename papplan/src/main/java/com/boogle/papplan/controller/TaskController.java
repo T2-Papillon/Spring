@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -21,7 +22,6 @@ public class TaskController {
         return ResponseEntity.ok(tasks);
     }
 
-
     // 프로젝트에 새로운 태스크를 추가
     @PostMapping("/project/{projNo}/task")
     public ResponseEntity<TaskDto> addTaskToProject(@PathVariable Integer projNo, @RequestBody TaskDto taskDto) {
@@ -32,12 +32,12 @@ public class TaskController {
     // 프로젝트와 태스크 ID에 해당하는 태스크를 가져오는
     @GetMapping("/project/{projNo}/task/{taskNo}")
     public ResponseEntity<TaskDto> getTaskById(@PathVariable Integer projNo, @PathVariable Integer taskNo) {
-        TaskDto task = taskService.getTaskById(taskNo);
+        TaskDto task = taskService.getTaskById(projNo, taskNo);
         return task != null ? ResponseEntity.ok(task) : ResponseEntity.notFound().build();
     }
 
     // 프로젝트와 태스크 ID에 해당하는 태스크를 업데이트
-    @PutMapping("/projects/{projNo}/task/{taskNo}")
+    @PutMapping("/project/{projNo}/task/{taskNo}")
     public ResponseEntity<TaskDto> updateTask(@PathVariable Integer projNo, @PathVariable Integer taskNo, @RequestBody TaskDto taskDto) {
         // 태스크를 업데이트하고 결과를 받아옴
         TaskDto updatedTask = taskService.updateTask(taskNo, taskDto);
@@ -52,7 +52,7 @@ public class TaskController {
     }
 
     // 프로젝트와 태스크 ID에 해당하는 태스크를 삭제
-    @DeleteMapping("/projects/{projNo}/task/{taskNo}")
+    @DeleteMapping("/project/{projNo}/task/{taskNo}")
     public ResponseEntity<Void> deleteTask(@PathVariable Integer projNo, @PathVariable Integer taskNo) {
         taskService.deleteTask(taskNo);
         return ResponseEntity.ok().build();
