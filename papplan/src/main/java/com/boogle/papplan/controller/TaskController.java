@@ -1,6 +1,6 @@
 package com.boogle.papplan.controller;
 
-import com.boogle.papplan.entity.Task;
+import com.boogle.papplan.dto.TaskDto;
 import com.boogle.papplan.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,43 +9,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/api/task") // 경로를 복수형으로 변경
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskService taskService;
 
-    // 특정 프로젝트에 속한 모든 Task 조회
-    @GetMapping("/project/{projectId}")
-    public ResponseEntity<List<Task>> getTasksByProjectId(@PathVariable Integer projectId) {
-        // 프로젝트 ID를 사용하여 Task 조회 로직 구현 필요
-        // 예시에서는 단순히 Service의 메서드를 호출하는 것으로 표현
-        // 실제로는 projectId를 이용하여 Project 객체를 조회한 후 해당 객체를 사용하여 Task 조회
-        List<Task> tasks = taskService.getTasksByProjectId(projectId);
-        return ResponseEntity.ok(tasks);
-    }
-
     // 새 Task 생성
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        Task createdTask = taskService.createTask(task);
+    public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto taskDto) {
+        TaskDto createdTask = taskService.createTask(taskDto);
         return ResponseEntity.ok(createdTask);
     }
 
     // 특정 Task 조회
-    @GetMapping("/{task_no}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Integer task_no) {
-        Task task = taskService.getTaskById(task_no);
-        if (task != null) {
-            return ResponseEntity.ok(task);
+    @GetMapping("/{taskNo}")
+    public ResponseEntity<TaskDto> getTaskById(@PathVariable Integer taskNo) {
+        TaskDto taskDto = taskService.getTaskById(taskNo);
+        if (taskDto != null) {
+            return ResponseEntity.ok(taskDto);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     // Task 수정
-    @PostMapping("/{task_no}")
-    public ResponseEntity<Task> updateTask(@PathVariable Integer task_no, @RequestBody Task task) {
-        Task updatedTask = taskService.updateTask(task);
+    @PutMapping("/{taskNo}")
+    public ResponseEntity<TaskDto> updateTask(@PathVariable Integer taskNo, @RequestBody TaskDto taskDto) {
+        taskDto.setTaskNo(taskNo); // URL에서 받은 taskNo를 DTO에 설정
+        TaskDto updatedTask = taskService.updateTask(taskDto);
         if (updatedTask != null) {
             return ResponseEntity.ok(updatedTask);
         } else {
@@ -54,10 +45,9 @@ public class TaskController {
     }
 
     // Task 삭제
-    @DeleteMapping("/{task_no}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Integer task_no) {
-        taskService.deleteTask(task_no);
+    @DeleteMapping("/{taskNo}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Integer taskNo) {
+        taskService.deleteTask(taskNo);
         return ResponseEntity.ok().build();
     }
 }
-
