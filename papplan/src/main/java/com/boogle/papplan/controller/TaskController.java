@@ -16,10 +16,31 @@ public class TaskController {
     private final TaskService taskService;
 
     // 프로젝트 ID에 해당하는 모든 태스크를 가져오기
+//    @GetMapping("/project/{projNo}/task")
+//    public ResponseEntity<List<TaskDto>> getAllTasksByProjectId(@PathVariable Integer projNo) {
+//        List<TaskDto> tasks = taskService.getTasksByProjectId(projNo);
+//        return ResponseEntity.ok().body(tasks);
+//    }
+
+    // 프로젝트 ID에 해당하는 모든 태스크를 가져오기
+//    @GetMapping("/project/{projNo}/task")
+//    public ResponseEntity<List<TaskDto>> getAllTasksByProjectId(@PathVariable Integer projNo) {
+//        // 임시 코드: 메서드 호출 시 전달된 프로젝트 ID 출력
+//        System.out.println("Project ID: " + projNo);
+//
+//        List<TaskDto> tasks = taskService.getTasksByProjectId(projNo);
+//
+//        // 임시 코드: 메서드가 반환한 태스크 목록 출력
+//        System.out.println("Tasks: " + tasks);
+//
+//        return ResponseEntity.ok().body(tasks);
+//    }
+
+    // 프로젝트 ID에 해당하는 모든 태스크를 가져오기
     @GetMapping("/project/{projNo}/task")
     public ResponseEntity<List<TaskDto>> getAllTasksByProjectId(@PathVariable Integer projNo) {
         List<TaskDto> tasks = taskService.getTasksByProjectId(projNo);
-        return ResponseEntity.ok(tasks);
+        return ResponseEntity.ok().body(tasks);
     }
 
     // 프로젝트에 새로운 태스크를 추가

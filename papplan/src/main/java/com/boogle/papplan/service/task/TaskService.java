@@ -8,6 +8,6 @@ public interface TaskService {
     List<TaskDto> getTasksByProjectId(Integer projNo);
     TaskDto addTaskToProject(Integer projNo, TaskDto taskDto);
     TaskDto getTaskById(Integer projNo, Integer taskNo);
-    TaskDto updateTask(Integer taskNo, TaskDto taskDto);
+    TaskDto updateTask(Integer projNo, TaskDto taskDto);
     void deleteTask(Integer taskNo);
 }
