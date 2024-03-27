@@ -32,9 +32,9 @@ public class TaskController {
     }
 
     // 특정 Task 조회
-    @GetMapping("/{taskId}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Integer taskId) {
-        Task task = taskService.getTaskById(taskId);
+    @GetMapping("/{task_no}")
+    public ResponseEntity<Task> getTaskById(@PathVariable Integer task_no) {
+        Task task = taskService.getTaskById(task_no);
         if (task != null) {
             return ResponseEntity.ok(task);
         } else {
@@ -43,8 +43,8 @@ public class TaskController {
     }
 
     // Task 수정
-    @PostMapping("/{taskId}")
-    public ResponseEntity<Task> updateTask(@PathVariable Integer taskId, @RequestBody Task task) {
+    @PostMapping("/{task_no}")
+    public ResponseEntity<Task> updateTask(@PathVariable Integer task_no, @RequestBody Task task) {
         Task updatedTask = taskService.updateTask(task);
         if (updatedTask != null) {
             return ResponseEntity.ok(updatedTask);
@@ -54,9 +54,9 @@ public class TaskController {
     }
 
     // Task 삭제
-    @DeleteMapping("/{taskId}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Integer taskId) {
-        taskService.deleteTask(taskId);
+    @DeleteMapping("/{task_no}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Integer task_no) {
+        taskService.deleteTask(task_no);
         return ResponseEntity.ok().build();
     }
 }
