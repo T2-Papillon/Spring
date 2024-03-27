@@ -36,7 +36,13 @@ public class TaskController {
     public ResponseEntity<TaskDto> getTaskById(@PathVariable Integer projNo, @PathVariable Integer taskNo) {
         // 프로젝트와 태스크 ID에 해당하는 태스크를 가져옴
         TaskDto task = taskService.getTaskById(projNo, taskNo);
-        return task != null ? ResponseEntity.ok(task) : ResponseEntity.notFound().build();
+        // 가져온 태스크가 null이 아닌 경우 - 태스크 반환
+        if (task != null) {
+            return ResponseEntity.ok(task);
+        } else {
+            // 가져온 태스크가 null인 경우 - 해당 태스크를 찾을 수 없음을 응답
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // 프로젝트와 태스크 ID에 해당하는 태스크를 업데이트하는 엔드포인트
@@ -53,6 +59,7 @@ public class TaskController {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     // 프로젝트와 태스크 ID에 해당하는 태스크를 삭제하는 엔드포인트
     @DeleteMapping("/project/{projNo}/task/{taskNo}")
