@@ -30,8 +30,8 @@ public class TaskController {
     }
 
     // 프로젝트와 태스크 ID에 해당하는 태스크를 가져오는
-    @GetMapping("/projects/{projNo}/task/{taskNo}")
-    public ResponseEntity<TaskDto> getTaskByIdentifier(@PathVariable Integer projNo, @PathVariable Integer taskNo) { // 수정된 부분
+    @GetMapping("/project/{projNo}/task/{taskNo}")
+    public ResponseEntity<TaskDto> getTaskById(@PathVariable Integer projNo, @PathVariable Integer taskNo) {
         TaskDto task = taskService.getTaskById(taskNo);
         return task != null ? ResponseEntity.ok(task) : ResponseEntity.notFound().build();
     }
@@ -39,8 +39,16 @@ public class TaskController {
     // 프로젝트와 태스크 ID에 해당하는 태스크를 업데이트
     @PutMapping("/projects/{projNo}/task/{taskNo}")
     public ResponseEntity<TaskDto> updateTask(@PathVariable Integer projNo, @PathVariable Integer taskNo, @RequestBody TaskDto taskDto) {
+        // 태스크를 업데이트하고 결과를 받아옴
         TaskDto updatedTask = taskService.updateTask(taskNo, taskDto);
-        return updatedTask != null ? ResponseEntity.ok(updatedTask) : ResponseEntity.notFound().build();
+
+        // 업데이트된 태스크가 null이 아닌 경우 - 업데이트 성공
+        if (updatedTask != null) {
+            return ResponseEntity.ok(updatedTask);
+        } else {
+            // 업데이트된 태스크가 null인 경우 - 해당 태스크를 찾을 수 없음
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // 프로젝트와 태스크 ID에 해당하는 태스크를 삭제
