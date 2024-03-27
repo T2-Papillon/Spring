@@ -3,6 +3,7 @@ package com.boogle.papplan.dto;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class ProjectDto {
@@ -17,5 +18,6 @@ public class ProjectDto {
     private String projDesc;
     private String projectPriority;
     private String projectStatus;
+    private List<Integer> employeeEnos; // 참여자의 사원 번호(eno) 리스트
 
 }
