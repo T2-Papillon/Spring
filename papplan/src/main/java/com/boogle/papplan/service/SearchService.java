@@ -3,6 +3,7 @@ package com.boogle.papplan.service;
 import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.repository.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -28,5 +29,9 @@ public class SearchService {
     // 프로젝트명 또는 PM 또는 참여자로 프로젝트 검색
     public List<Project> searchProjects(String searchTerm) {
         return searchRepository.findByTitleOrPmOrContributor(searchTerm);
+    }
+
+    public List<Project> searchProjectPages(String term, int page, int pageSize) {
+        return searchRepository.findByTermWithLimit(term, PageRequest.of(page,pageSize));
     }
 }

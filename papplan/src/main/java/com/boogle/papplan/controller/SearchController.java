@@ -30,4 +30,17 @@ public class SearchController {
         List<Project> projects = searchService.searchProjects(searchTerm);
         return ResponseEntity.ok(projects);
     }
+
+    @GetMapping("/project2")
+    public ResponseEntity<List> searchByPage(@RequestParam String term,
+                                             @RequestParam(defaultValue = "0") String page,
+                                             @RequestParam(defaultValue = "10") String pageSize) {
+
+        int pageInt = Integer.parseInt(page);
+        int pageSizeInt = Integer.parseInt(pageSize);
+
+        List<Project> projects = searchService.searchProjectPages(term, pageInt, pageSizeInt);
+
+        return ResponseEntity.ok(projects);
+    }
 }
