@@ -15,11 +15,12 @@ public class TaskController {
     private final TaskService taskService;
 
     // 프로젝트 ID에 해당하는 모든 태스크를 가져오기
-    @GetMapping("/project/{projNo}/tasks")
+    @GetMapping("/project/{projNo}/task")
     public ResponseEntity<List<TaskDto>> getAllTasksByProjectId(@PathVariable Integer projNo) {
         List<TaskDto> tasks = taskService.getTasksByProjectId(projNo);
         return ResponseEntity.ok(tasks);
     }
+
 
     // 프로젝트에 새로운 태스크를 추가
     @PostMapping("/project/{projNo}/task")

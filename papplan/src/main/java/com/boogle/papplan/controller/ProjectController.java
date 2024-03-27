@@ -72,10 +72,4 @@ public class ProjectController {
         return ResponseEntity.ok(projectDtos);
     }
 
-    // 특정 프로젝트에 속한 모든 Task 조회
-    @GetMapping("/{projNo}/task")
-    public ResponseEntity<List<TaskDto>> getTasksByProjectId(@PathVariable Integer projNo) {
-        List<TaskDto> tasks = taskService.getTasksByProjectId(projNo);
-        return ResponseEntity.ok(tasks);
-    }
 }
