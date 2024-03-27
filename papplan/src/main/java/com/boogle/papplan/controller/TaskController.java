@@ -9,17 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/task") // 경로를 복수형으로 변경
+@RequestMapping("/api/task") // 경로를 복수형으로 변경
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskService taskService;
-
-    // 모든 Task 조회
-    @GetMapping
-    public ResponseEntity<List<TaskDto>> getAllTasks() {
-        List<TaskDto> tasks = taskService.getAllTasks();
-        return ResponseEntity.ok(tasks);
-    }
 
     // 특정 프로젝트에 속한 모든 Task 조회
     @GetMapping("/project/{projectId}")

@@ -11,7 +11,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/api/search")
 public class SearchController {
 
     private final SearchService searchService;
@@ -27,7 +27,7 @@ public class SearchController {
         return ResponseEntity.ok(projectDtos);
     }
 
-    @GetMapping("/projectSearch")
+    @GetMapping("/project")
     public ResponseEntity<List<ProjectDto>> searchProjects(@RequestParam String searchTerm) {
         List<ProjectDto> projectDtos = searchService.searchProjectsDto(searchTerm);
         return ResponseEntity.ok(projectDtos);
