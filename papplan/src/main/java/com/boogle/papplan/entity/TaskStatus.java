@@ -12,10 +12,10 @@ public class TaskStatus {
 
     @Id
     @Column(length = 20, name = "task_status_id", nullable = false)
-    private String task_status_id;
+    private String taskStatusId;
 
     @Column(length = 20, name = "task_status_name", nullable = false)
-    private String task_status_name;
+    private String taskStatusName;
 
     @OneToMany(mappedBy = "taskStatus", cascade = CascadeType.REMOVE)
     private List<Task> tasks = new ArrayList<>();

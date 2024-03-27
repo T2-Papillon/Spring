@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Data
 @Entity
@@ -44,4 +46,13 @@ public class Project {
     @ManyToOne
     @JoinColumn(nullable = false, name = "projs_no")
     private ProjectStatus projectStatus; // 프로젝트 상태번호
+
+    // Task 엔터티와의 @OneToMany 관계 추가
+    @OneToMany(mappedBy = "project")
+    private List<Task> tasks;
+
+    // contributor 엔터티와의 @OneToMany 관계 추가
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    private List<Contributor> contributors;
+
 }

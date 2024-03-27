@@ -1,7 +1,7 @@
 package com.boogle.papplan.controller;
 
-import com.boogle.papplan.entity.Project;
-import com.boogle.papplan.service.SearchService;
+import com.boogle.papplan.dto.ProjectDto;
+import com.boogle.papplan.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/api/search")
 public class SearchController {
 
     private final SearchService searchService;
@@ -21,14 +21,15 @@ public class SearchController {
     }
 
     @GetMapping
-    public List<Project> findProjectsByStatusId(@RequestParam(required = false) String projectStatusId) {
-        return searchService.findProjectsByStatusId(projectStatusId);
+    public ResponseEntity<List<ProjectDto>> findProjectsByStatusId(@RequestParam(required = false) String projectStatusId) {
+        List<ProjectDto> projectDtos = searchService.findProjectsByStatusIdDto(projectStatusId);
+        return ResponseEntity.ok(projectDtos);
     }
 
-    @GetMapping("/projectSearch")
-    public ResponseEntity<List<Project>> searchProjects(@RequestParam String searchTerm) {
-        List<Project> projects = searchService.searchProjects(searchTerm);
-        return ResponseEntity.ok(projects);
+    @GetMapping("/project")
+    public ResponseEntity<List<ProjectDto>> searchProjects(@RequestParam String searchTerm) {
+        List<ProjectDto> projectDtos = searchService.searchProjectsDto(searchTerm);
+        return ResponseEntity.ok(projectDtos);
     }
 
     @GetMapping("/project2")
