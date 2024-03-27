@@ -1,8 +1,10 @@
 package com.boogle.papplan.controller;
 
 import com.boogle.papplan.dto.ProjectDto;
+import com.boogle.papplan.dto.TaskDto;
 import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.service.ProjectService;
+import com.boogle.papplan.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +16,12 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final TaskService taskService;
 
     @Autowired
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, TaskService taskService) {
         this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     // PM별 프로젝트 조회
@@ -67,5 +71,12 @@ public class ProjectController {
     public ResponseEntity<List<ProjectDto>> getAllProjects() {
         List<ProjectDto> projectDtos = projectService.getAllProjects();
         return ResponseEntity.ok(projectDtos);
+    }
+
+    // 특정 프로젝트에 속한 모든 Task 조회
+    @GetMapping("/{projectId}/task")
+    public ResponseEntity<List<TaskDto>> getTasksByProjectId(@PathVariable Integer projectId) {
+        List<TaskDto> tasks = taskService.getTasksByProjectId(projectId);
+        return ResponseEntity.ok(tasks);
     }
 }

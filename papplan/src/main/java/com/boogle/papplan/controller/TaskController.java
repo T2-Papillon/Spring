@@ -14,13 +14,6 @@ import java.util.List;
 public class TaskController {
     private final TaskService taskService;
 
-    // 특정 프로젝트에 속한 모든 Task 조회
-    @GetMapping("/project/{projectId}")
-    public ResponseEntity<List<TaskDto>> getTasksByProjectId(@PathVariable Integer projectId) {
-        List<TaskDto> tasks = taskService.getTasksByProjectId(projectId);
-        return ResponseEntity.ok(tasks);
-    }
-
     // 새 Task 생성
     @PostMapping
     public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto taskDto) {
