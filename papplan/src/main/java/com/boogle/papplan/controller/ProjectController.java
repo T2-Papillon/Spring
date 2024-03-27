@@ -26,21 +26,21 @@ public class ProjectController {
 
     // PM별 프로젝트 조회
     @GetMapping("/pm/{pm}")
-    public ResponseEntity<List<ProjectDto>> getProjectsByPM(@PathVariable String pm) {
+    public ResponseEntity<List<ProjectDto>> getProjectsByPM(@RequestParam String pm) {
         List<ProjectDto> projectDtos = projectService.getProjectsByPM(pm);
         return ResponseEntity.ok().body(projectDtos);
     }
 
     // 참여자별 프로젝트 조회
     @GetMapping("/contributor/{id}")
-    public ResponseEntity<List<ProjectDto>> getProjectsByContributor(@PathVariable Long id) {
+    public ResponseEntity<List<ProjectDto>> getProjectsByContributor(@RequestParam Long id) {
         List<ProjectDto> projectDtos = projectService.findProjectsByContributorId(id);
         return ResponseEntity.ok().body(projectDtos);
     }
 
     // 상태별 프로젝트 조회
     @GetMapping("/status/{status}")
-    public ResponseEntity<List<ProjectDto>> getProjectsByStatus(@PathVariable("status") String status) {
+    public ResponseEntity<List<ProjectDto>> getProjectsByStatus(@RequestParam("status") String status) {
         List<ProjectDto> projectDtos = projectService.getProjectsByStatus(status);
         return ResponseEntity.ok().body(projectDtos);
     }
@@ -54,7 +54,7 @@ public class ProjectController {
 
     // 프로젝트 상세정보 조회
     @GetMapping("/{projNo}")
-    public ResponseEntity<ProjectDto> showProjectDetail(@PathVariable("projNo") Integer projNo) {
+    public ResponseEntity<ProjectDto> showProjectDetail(@RequestParam("projNo") Integer projNo) {
         ProjectDto projectDto = projectService.getProjectByProjNo(projNo);
 
         if (projectDto == null) {
@@ -74,9 +74,9 @@ public class ProjectController {
     }
 
     // 특정 프로젝트에 속한 모든 Task 조회
-    @GetMapping("/{projectId}/task")
-    public ResponseEntity<List<TaskDto>> getTasksByProjectId(@PathVariable Integer projectId) {
-        List<TaskDto> tasks = taskService.getTasksByProjectId(projectId);
+    @GetMapping("/{projectNo}/task")
+    public ResponseEntity<List<TaskDto>> getTasksByProjectId(@RequestParam Integer projectNo) {
+        List<TaskDto> tasks = taskService.getTasksByProjectId(projectNo);
         return ResponseEntity.ok(tasks);
     }
 }
