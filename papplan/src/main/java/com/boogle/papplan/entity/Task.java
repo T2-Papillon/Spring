@@ -51,12 +51,12 @@ public class Task {
 
     // 외래키
     @ManyToOne
-    @JoinColumn(name = "tasks_no", nullable = false)
+    @JoinColumn(name = "task_status_id", nullable = false)
     private TaskStatus taskStatus; // 업무상태번호
 
     // 외래키
     @ManyToOne
-    @JoinColumn(name = "taskp_no", nullable = false)
+    @JoinColumn(name = "task_priority_id", nullable = false)
     private TaskPriority taskPriority; // 업무우선순위번호
 
 }

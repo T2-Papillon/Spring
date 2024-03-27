@@ -2,9 +2,8 @@ package com.boogle.papplan.controller;
 
 import com.boogle.papplan.dto.ProjectDto;
 import com.boogle.papplan.dto.TaskDto;
-import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.service.ProjectService;
-import com.boogle.papplan.service.TaskService;
+import com.boogle.papplan.service.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -74,9 +73,9 @@ public class ProjectController {
     }
 
     // 특정 프로젝트에 속한 모든 Task 조회
-    @GetMapping("/{projectId}/task")
-    public ResponseEntity<List<TaskDto>> getTasksByProjectId(@PathVariable Integer projectId) {
-        List<TaskDto> tasks = taskService.getTasksByProjectId(projectId);
+    @GetMapping("/{projNo}/task")
+    public ResponseEntity<List<TaskDto>> getTasksByProjectId(@PathVariable Integer projNo) {
+        List<TaskDto> tasks = taskService.getTasksByProjectId(projNo);
         return ResponseEntity.ok(tasks);
     }
 }
