@@ -1,8 +1,6 @@
 package com.boogle.papplan.dto;
 
 import lombok.Data;
-
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -12,6 +10,8 @@ public class TaskDto {
     private String taskTitle;
     private String taskDesc;
     private String taskStatus;
+    private String TaskPriority;
+    private Date taskStartDate;
     private Date taskEndDate;
 
 }

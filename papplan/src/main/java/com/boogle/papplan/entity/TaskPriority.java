@@ -21,17 +21,3 @@ public class TaskPriority {
     private List<Task> tasks = new ArrayList<>();
 }
 
-/*
-enum TaskPriority{
-    LV0("긴급"),
-    LV1("높음"),
-    LV2("보통"),
-    LV3("낮음");
-
-    private final String value;
-
-    TaskPriority(String value) {
-        this.value = value;
-    }
-
-}*/
