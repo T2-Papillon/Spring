@@ -3,10 +3,7 @@ package com.boogle.papplan.service.task;
 import com.boogle.papplan.dto.TaskDto;
 import com.boogle.papplan.entity.Task;
 import com.boogle.papplan.repository.ProjectRepository;
-import com.boogle.papplan.repository.TaskPriorityRepository;
 import com.boogle.papplan.repository.TaskRepository;
-import com.boogle.papplan.repository.TaskStatusRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
