@@ -2,8 +2,11 @@ package com.boogle.papplan.service.task;
 
 import com.boogle.papplan.dto.TaskDto;
 import com.boogle.papplan.entity.Task;
+import com.boogle.papplan.entity.TaskStatus;
 import com.boogle.papplan.repository.ProjectRepository;
+import com.boogle.papplan.repository.TaskPriorityRepository;
 import com.boogle.papplan.repository.TaskRepository;
+import com.boogle.papplan.repository.TaskStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +18,15 @@ public class TaskServiceImpl implements TaskService {
 
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
+    private  final TaskPriorityRepository taskPriorityRepository;
+    private final TaskStatusRepository taskStatusRepository;
 
     @Autowired
-    public TaskServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository) {
+    public TaskServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, TaskPriorityRepository taskPriorityRepository, TaskStatusRepository taskStatusRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
+        this.taskPriorityRepository = taskPriorityRepository;
+        this.taskStatusRepository = taskStatusRepository;
     }
 
     @Override
