@@ -1,8 +1,10 @@
 package com.boogle.papplan.service.project;
 
-import com.boogle.papplan.dto.ProjectDTO;
+import com.boogle.papplan.dto.EmployeeDTO;
+import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.repository.ContributorRepository;
+import com.boogle.papplan.repository.EmployeeRepository;
 import com.boogle.papplan.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -17,11 +19,15 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final ContributorRepository contributorRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public ProjectServiceImpl(ProjectRepository projectRepository, ContributorRepository contributorRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository,
+                              ContributorRepository contributorRepository,
+                              EmployeeRepository employeeRepository) {
         this.projectRepository = projectRepository;
         this.contributorRepository = contributorRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     // PM으로 참여한 프로젝트를 가져오는 메서드
@@ -91,10 +97,11 @@ public class ProjectServiceImpl implements ProjectService {
             dto.setProjectPriority(project.getProjectPriority().getProjectPriorityId()); // Or use getProjectPriorityName()
         }
         // 참여자 정보 설정
-        List<Integer> employeeEnos = project.getContributors().stream()
+        List<Integer> contributorEnos = project.getContributors().stream()
                 .map(contributor -> contributor.getEmployees().getEno())
                 .collect(Collectors.toList());
-        dto.setEmployeeEnos(employeeEnos);
+        Optional<List<EmployeeDTO>> contributors = employeeRepository.findAllByEnos(contributorEnos);
+        contributors.ifPresent(dto::setContributors);
         return dto;
     }
 }

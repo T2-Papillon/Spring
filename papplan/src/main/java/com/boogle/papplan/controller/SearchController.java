@@ -1,6 +1,6 @@
 package com.boogle.papplan.controller;
 
-import com.boogle.papplan.dto.ProjectDTO;
+import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/search")
 public class SearchController {
@@ -26,7 +26,7 @@ public class SearchController {
         return ResponseEntity.ok(projectDTOS);
     }
 
-    @GetMapping("/project2")
+    @GetMapping("/project")
     public ResponseEntity<List<ProjectDTO>> searchByPage(@RequestParam String term,
                                              @RequestParam(defaultValue = "0") String page,
                                              @RequestParam(defaultValue = "10") String pageSize) {
@@ -38,4 +38,5 @@ public class SearchController {
 
         return ResponseEntity.ok(projects);
     }
+
 }

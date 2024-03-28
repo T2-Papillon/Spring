@@ -1,6 +1,6 @@
 package com.boogle.papplan.controller;
 
-import com.boogle.papplan.dto.ProjectDTO;
+import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.service.project.ProjectService;
 import com.boogle.papplan.service.task.TaskService;
