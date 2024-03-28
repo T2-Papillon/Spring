@@ -34,28 +34,17 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto addTaskToProject(Integer projNo, TaskDto taskDto) {
         Task task = convertToEntity(taskDto);
         Project project = projectRepository.findByProjNo(projNo);
-
-        if (project == null) {
-            // 여기에 프로젝트가 없는 경우의 처리를 추가하세요.
-            return null;
-        }
-
-
-        // projNo에 해당하는 프로젝트에 태스크 추가하는 로직을 추가하세요.
+        if (project == null)  return null;
         return convertToDto(task);
     }
 
     @Override
     public TaskDto getTaskById(Integer projNo, Integer taskNo) {
-        // projNo와 taskNo에 해당하는 태스크를 찾습니다.
         Task task = taskRepository.findByProjectProjNoAndTaskNo(projNo, taskNo);
 
-        // 만약 해당 태스크가 존재하지 않으면 null을 반환합니다.
         if (task == null) {
             return null;
         }
-
-        // 태스크가 존재하는 경우 해당 태스크의 정보를 TaskDto로 변환하여 반환합니다.
         return convertToDto(task);
     }
 
