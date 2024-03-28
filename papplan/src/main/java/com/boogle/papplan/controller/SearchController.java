@@ -1,7 +1,8 @@
 package com.boogle.papplan.controller;
 
 import com.boogle.papplan.dto.ProjectDto;
-import com.boogle.papplan.service.search.SearchService;
+import com.boogle.papplan.entity.Project;
+import com.boogle.papplan.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
