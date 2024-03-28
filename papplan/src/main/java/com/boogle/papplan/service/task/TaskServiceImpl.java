@@ -2,7 +2,6 @@ package com.boogle.papplan.service.task;
 
 import com.boogle.papplan.dto.TaskDto;
 import com.boogle.papplan.entity.Task;
-import com.boogle.papplan.entity.TaskStatus;
 import com.boogle.papplan.repository.ProjectRepository;
 import com.boogle.papplan.repository.TaskPriorityRepository;
 import com.boogle.papplan.repository.TaskRepository;
@@ -18,15 +17,11 @@ public class TaskServiceImpl implements TaskService {
 
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
-    private  final TaskPriorityRepository taskPriorityRepository;
-    private final TaskStatusRepository taskStatusRepository;
 
     @Autowired
     public TaskServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, TaskPriorityRepository taskPriorityRepository, TaskStatusRepository taskStatusRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
-        this.taskPriorityRepository = taskPriorityRepository;
-        this.taskStatusRepository = taskStatusRepository;
     }
 
     @Override
@@ -67,7 +62,10 @@ public class TaskServiceImpl implements TaskService {
         taskDto.setTaskTitle(task.getTaskTitle());
         taskDto.setAssignee(task.getAssignee());
         taskDto.setTaskDesc(task.getTaskDesc());
-        // 나머지 필드도 엔티티에서 가져와서 설정하세요.
+        taskDto.setTaskPriority(task.getTaskPriority());
+        taskDto.setTaskStatus(task.getTaskStatus());
+        taskDto.setTaskStartDate(task.getTaskStartDate());
+        taskDto.setTaskEndDate(task.getTaskEndDate());
         return taskDto;
     }
 
@@ -77,7 +75,10 @@ public class TaskServiceImpl implements TaskService {
         task.setTaskTitle(taskDto.getTaskTitle());
         task.setAssignee(taskDto.getAssignee());
         task.setTaskDesc(taskDto.getTaskDesc());
-        // 나머지 필드도 DTO에서 가져와서 설정하세요.
+        task.setTaskPriority(taskDto.getTaskPriority());
+        task.setTaskStatus(taskDto.getTaskStatus());
+        task.setTaskStartDate(taskDto.getTaskStartDate());
+        task.setTaskEndDate(taskDto.getTaskEndDate());
         return task;
     }
 }

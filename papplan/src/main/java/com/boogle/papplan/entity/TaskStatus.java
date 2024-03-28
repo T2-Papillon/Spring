@@ -17,7 +17,5 @@ public class TaskStatus {
     @Column(length = 20, name = "task_status_name", nullable = false)
     private String taskStatusName;
 
-    @OneToMany(mappedBy = "taskStatus", cascade = CascadeType.REMOVE)
-    private List<Task> tasks = new ArrayList<>();
 }
 
