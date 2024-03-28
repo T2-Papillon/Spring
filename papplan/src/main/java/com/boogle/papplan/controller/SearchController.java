@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/search")
+@CrossOrigin("http://localhost:5173/")
 public class SearchController {
 
     private final SearchService searchService;
