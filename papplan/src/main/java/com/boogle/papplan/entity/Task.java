@@ -45,7 +45,7 @@ public class Task {
     private Date taskCreateDate; // 업무작성일
 
     @Column(name = "task_test", nullable = false)
-    private Boolean taskTest; // 테스트 진행여부
+    private Boolean taskTest = false ; // 테스트 진행여부
 
     @Temporal(TemporalType.DATE)
     @Column(name = "task_update_date", nullable = true)
@@ -64,19 +64,4 @@ public class Task {
     @JoinColumn(name = "task_priority_id", nullable = false) // 업무우선순위번호 외래키
     private TaskPriority taskPriority; // 업무우선순위번호
 
-    @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
-        Task task = (Task) o;
-        return getTaskNo() != null && Objects.equals(getTaskNo(), task.getTaskNo());
-    }
-
-    @Override
-    public final int hashCode() {
-        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
-    }
 }

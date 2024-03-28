@@ -2,17 +2,51 @@ package com.boogle.papplan.dto;
 
 import com.boogle.papplan.entity.TaskPriority;
 import com.boogle.papplan.entity.TaskStatus;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import java.util.Date;
 
 @Data
 public class TaskDTO {
+
+    @JsonProperty("task_no")
     private Integer taskNo;
+
+    @JsonProperty(value = "proj_no", required = true)
+    private Integer projNo;
+
+    @JsonProperty("task_title")
     private String taskTitle;
+
+    //@JsonProperty("proj_no")
     private String assignee;
-    private String taskDesc;
-    private TaskStatus taskStatus;
-    private TaskPriority taskPriority;
+
+    @JsonProperty("task_status")
+    private String taskStatus;
+
+    @JsonProperty("task_priority")
+    private String taskPriority;
+
+    @JsonProperty("start_date")
     private Date taskStartDate;
+
+    @JsonProperty("end_date")
     private Date taskEndDate;
+
+    @JsonProperty("task_percent")
+    private Integer taskPercent;
+
+    @JsonProperty("task_test")
+    private Boolean taskTest;
+
+    @JsonProperty("update_date")
+    private Date taskUpdateDate;
+
+    @JsonProperty("create_date")
+    private Date taskCreateDate;
+
+    @JsonProperty("task_desc")
+    private String taskDesc;
+
+
 }
