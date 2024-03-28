@@ -18,11 +18,11 @@ public class TaskServiceImpl implements TaskService {
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
 
-    @Autowired
-    public TaskServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, TaskPriorityRepository taskPriorityRepository, TaskStatusRepository taskStatusRepository) {
+    public TaskServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }
+
 
     @Override
     public List<TaskDto> getTasksByProjectId(Integer projNo) {

@@ -3,9 +3,6 @@ package com.boogle.papplan.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity(name = "TaskPriority")
 @Getter
 public class TaskPriority {
