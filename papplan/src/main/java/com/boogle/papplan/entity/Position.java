@@ -22,16 +22,3 @@ public class Position {
     private List<Employees> employees = new ArrayList<>();
 }
 
-/*
-enum Position {
-
-    TEAM_LEADER("팀장"),
-    STAFF("사원");
-
-    private final String value;
-
-    Position(String value) {
-        this.value = value;
-    }
-
-}*/

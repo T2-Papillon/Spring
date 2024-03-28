@@ -21,16 +21,3 @@ public class ProjectStatus {
     private List<Project> projects = new ArrayList<>();
 }
 
-/*
-enum ProjectStatus {
-    TODO("진행예정"),
-    GOING("진행중"),
-    DONE("완료"),
-    HOLD("보류");
-
-    private final String value;
-
-    ProjectStatus(String value) {
-        this.value = value;
-    }
-}*/

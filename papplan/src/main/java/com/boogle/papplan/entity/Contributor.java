@@ -7,14 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-/*// 별도의 복합 키 클래스 정의
-@NoArgsConstructor
-@Data
-@Embeddable
-class ContributorId implements Serializable {
-    private Integer proj_no;
-    private Integer eno;
-}*/
+
 
 @Data
 @Entity
