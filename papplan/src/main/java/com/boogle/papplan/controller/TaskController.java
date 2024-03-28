@@ -45,6 +45,7 @@ public class TaskController {
         }
     }
 
+
     // 프로젝트와 태스크 ID에 해당하는 태스크를 업데이트하는 엔드포인트
     @PutMapping("/project/{projNo}/task/{taskNo}")
     public ResponseEntity<TaskDto> updateTask(@PathVariable Integer projNo, @PathVariable Integer taskNo, @RequestBody TaskDto taskDto) {
@@ -65,7 +66,7 @@ public class TaskController {
     @DeleteMapping("/project/{projNo}/task/{taskNo}")
     public ResponseEntity<Void> deleteTask(@PathVariable Integer projNo, @PathVariable Integer taskNo) {
         // 프로젝트와 태스크 ID에 해당하는 태스크를 삭제
-        taskService.deleteTask(taskNo);
+        taskService.deleteTask(projNo, taskNo);
         return ResponseEntity.ok().build();
     }
 

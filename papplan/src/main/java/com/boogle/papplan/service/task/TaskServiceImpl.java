@@ -2,6 +2,7 @@ package com.boogle.papplan.service.task;
 
 import com.boogle.papplan.dto.TaskDto;
 import com.boogle.papplan.entity.Task;
+import com.boogle.papplan.repository.ProjectRepository;
 import com.boogle.papplan.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,12 @@ import java.util.stream.Collectors;
 @Service
 public class TaskServiceImpl implements TaskService {
 
+    private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
 
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository) {
+    public TaskServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository) {
+        this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }
 
@@ -47,8 +50,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(Integer taskNo) {
-        // taskNo에 해당하는 태스크를 삭제하는 로직을 추가하세요.
+    public void deleteTask(Integer projNo, Integer taskNo) {
+        taskRepository.deleteById(taskNo);
     }
 
     private TaskDto convertToDto(Task task) {

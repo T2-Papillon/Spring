@@ -9,5 +9,5 @@ public interface TaskService {
     TaskDto addTaskToProject(Integer projNo, TaskDto taskDto);
     TaskDto getTaskById(Integer projNo, Integer taskNo);
     TaskDto updateTask(Integer projNo, Integer taskNo, TaskDto taskDto);
-    void deleteTask(Integer taskNo);
+    void deleteTask(Integer projNo, Integer taskNo);
 }
