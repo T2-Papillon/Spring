@@ -8,6 +8,7 @@ import com.boogle.papplan.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,7 +22,7 @@ public class TaskServiceImpl implements TaskService {
         this.taskRepository = taskRepository;
     }
 
-
+    // 프로젝트 ID에 해당하는 모든 태스크를 가져오는 엔드포인트
     @Override
     public List<TaskDto> getTasksByProjectId(Integer projNo) {
         List<Task> tasks = taskRepository.findAllByProjectProjNo(projNo);
@@ -30,6 +31,7 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    // 프로젝트에 새로운 태스크를 추가하는 엔드포인트
     @Override
     public TaskDto addTaskToProject(Integer projNo, TaskDto taskDto) {
         Task task = convertToEntity(taskDto);
@@ -38,6 +40,7 @@ public class TaskServiceImpl implements TaskService {
         return convertToDto(task);
     }
 
+    // 프로젝트와 태스크 ID에 해당하는 태스크를 가져오는 엔드포인트
     @Override
     public TaskDto getTaskById(Integer projNo, Integer taskNo) {
         Task task = taskRepository.findByProjectProjNoAndTaskNo(projNo, taskNo);
@@ -48,12 +51,31 @@ public class TaskServiceImpl implements TaskService {
         return convertToDto(task);
     }
 
+    // 프로젝트와 태스크 ID에 해당하는 태스크를 업데이트하는 엔드포인트
     @Override
     public TaskDto updateTask(Integer projNo, Integer taskNo, TaskDto taskDto) {
-        // projNo와 taskNo에 해당하는 태스크를 업데이트하는 로직을 추가하세요.
-        return null;
+        Optional<Task> optionalTask = taskRepository.findByTaskNoAndProjectProjNo(taskNo, projNo);
+
+        if (optionalTask.isEmpty()) {
+            return null;
+        }
+
+        Task task = optionalTask.get();
+        task.setTaskTitle(taskDto.getTaskTitle());
+        task.setAssignee(taskDto.getAssignee());
+        task.setTaskDesc(taskDto.getTaskDesc());
+        task.setTaskPriority(taskDto.getTaskPriority());
+        task.setTaskStatus(taskDto.getTaskStatus());
+        task.setTaskStartDate(taskDto.getTaskStartDate());
+        task.setTaskEndDate(taskDto.getTaskEndDate());
+
+        task = taskRepository.save(task);
+
+        return convertToDto(task);
     }
 
+
+    // 프로젝트와 태스크 ID에 해당하는 태스크를 삭제하는 엔드포인트
     @Override
     public void deleteTask(Integer projNo, Integer taskNo) {
         taskRepository.deleteById(taskNo);
