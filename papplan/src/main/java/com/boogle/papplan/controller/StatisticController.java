@@ -1,7 +1,6 @@
 package com.boogle.papplan.controller;
 
-import com.boogle.papplan.dto.StatisticCombinedDto;
-import com.boogle.papplan.dto.StatisticProjectDto;
+import com.boogle.papplan.dto.StatisticCombinedDTO;
 import com.boogle.papplan.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +20,8 @@ public class StatisticController {
     }
 
     @GetMapping("/{projNo}/details")
-    public ResponseEntity<StatisticCombinedDto> getCombinedProjectInfo(@PathVariable("projNo") Integer projNo) {
-        StatisticCombinedDto combinedDto = statisticService.getCombinedProjectInfo(projNo);
+    public ResponseEntity<StatisticCombinedDTO> getCombinedProjectInfo(@PathVariable("projNo") Integer projNo) {
+        StatisticCombinedDTO combinedDto = statisticService.getCombinedProjectInfo(projNo);
         return ResponseEntity.ok(combinedDto);
     }
 

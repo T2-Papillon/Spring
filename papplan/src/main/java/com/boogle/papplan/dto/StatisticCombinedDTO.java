@@ -6,12 +6,12 @@ import java.util.List;
 
 // StatisticProjectDto와 StatisticTaskStatusDto를 하나로 합체!
 @Data
-public class StatisticCombinedDto {
-    private StatisticProjectDto projectDetails;
-    private List<StatisticTaskStatusDto> taskStatusCounts;
+public class StatisticCombinedDTO {
+    private StatisticProjectDTO projectDetails;
+    private List<StatisticTaskStatusDTO> taskStatusCounts;
 
     // 생성자
-    public StatisticCombinedDto(StatisticProjectDto projectDetails, List<StatisticTaskStatusDto> taskStatusCounts) {
+    public StatisticCombinedDTO(StatisticProjectDTO projectDetails, List<StatisticTaskStatusDTO> taskStatusCounts) {
         this.projectDetails = projectDetails;
         this.taskStatusCounts = taskStatusCounts;
     }

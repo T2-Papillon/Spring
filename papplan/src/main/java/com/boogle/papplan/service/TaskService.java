@@ -1,6 +1,6 @@
 package com.boogle.papplan.service;
 
-import com.boogle.papplan.dto.TaskDto;
+import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.entity.Task;
 import com.boogle.papplan.entity.TaskStatus;
@@ -22,8 +22,8 @@ public class TaskService {
     private final TaskStatusRepository taskStatusRepository;
 
     // Task 엔티티를 TaskDto로 변환
-    private TaskDto entityToDto(Task task) {
-        TaskDto dto = new TaskDto();
+    private TaskDTO entityToDto(Task task) {
+        TaskDTO dto = new TaskDTO();
         dto.setTaskNo(task.getTaskNo());
         dto.setTaskTitle(task.getTaskTitle());
         dto.setTaskDesc(task.getTaskDesc());
@@ -36,7 +36,7 @@ public class TaskService {
 
 
     // TaskDto를 Task 엔티티로 변환
-    private Task dtoToEntity(TaskDto dto) {
+    private Task dtoToEntity(TaskDTO dto) {
         Task task = new Task();
         task.setTaskNo(dto.getTaskNo());
         task.setTaskTitle(dto.getTaskTitle());
@@ -53,7 +53,7 @@ public class TaskService {
 
 
     // 특정 프로젝트에 속한 모든 Task를 조회하는 메서드
-    public List<TaskDto> getTasksByProjectId(Integer projectId) {
+    public List<TaskDTO> getTasksByProjectId(Integer projectId) {
         Project project = projectRepository.findById(projectId).orElse(null);
         if (project != null) {
             return taskRepository.findAllByProject(project).stream()
@@ -65,21 +65,21 @@ public class TaskService {
     }
 
     // 새로운 Task를 생성하는 메서드
-    public TaskDto createTask(TaskDto taskDto) {
+    public TaskDTO createTask(TaskDTO taskDto) {
         Task task = dtoToEntity(taskDto);
         Task savedTask = taskRepository.save(task);
         return entityToDto(savedTask);
     }
 
     // 특정 Task를 조회하는 메서드
-    public TaskDto getTaskById(Integer taskNo) {
+    public TaskDTO getTaskById(Integer taskNo) {
         return taskRepository.findById(taskNo)
                 .map(this::entityToDto)
                 .orElse(null);
     }
 
     // Task를 수정하는 메서드
-    public TaskDto updateTask(TaskDto taskDto) {
+    public TaskDTO updateTask(TaskDTO taskDto) {
         if (taskRepository.existsById(taskDto.getTaskNo())) {
             Task task = dtoToEntity(taskDto);
             Task updatedTask = taskRepository.save(task);
@@ -95,7 +95,7 @@ public class TaskService {
     }
 
     // 모든 Task 조회하는 메서드
-    public List<TaskDto> getAllTasks() {
+    public List<TaskDTO> getAllTasks() {
         return taskRepository.findAll().stream()
                 .map(this::entityToDto)
                 .collect(Collectors.toList());

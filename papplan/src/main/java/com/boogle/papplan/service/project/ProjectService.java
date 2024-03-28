@@ -1,15 +1,15 @@
 package com.boogle.papplan.service.project;
 
-import com.boogle.papplan.dto.ProjectDto;
+import com.boogle.papplan.dto.ProjectDTO;
 import java.util.List;
 
 public interface ProjectService {
 
-    List<ProjectDto> getProjectsByPM(String projPm);
-    List<ProjectDto> findProjectsByContributorId(Long id);
-    List<ProjectDto> getProjectsByStatus(String status);
-    List<ProjectDto> searchProjects(String searchTerm);
-    ProjectDto getProjectByProjNo(Integer projNo);
-    List<ProjectDto> getAllProjects();
+    List<ProjectDTO> getProjectsByPM(String projPm);
+    List<ProjectDTO> findProjectsByContributorId(Long id);
+    List<ProjectDTO> getProjectsByStatus(String status);
+    List<ProjectDTO> searchProjects(String term, int page, int pageSize);
+    ProjectDTO getProjectByProjNo(Integer projNo);
+    List<ProjectDTO> getAllProjects();
 
 }

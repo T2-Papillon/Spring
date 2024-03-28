@@ -1,6 +1,6 @@
 package com.boogle.papplan.controller;
 
-import com.boogle.papplan.dto.ProjectDto;
+import com.boogle.papplan.dto.ProjectDTO;
 import com.boogle.papplan.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,26 +21,20 @@ public class SearchController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProjectDto>> findProjectsByStatusId(@RequestParam(required = false) String projectStatusId) {
-        List<ProjectDto> projectDtos = searchService.findProjectsByStatusIdDto(projectStatusId);
-        return ResponseEntity.ok(projectDtos);
-    }
-
-    @GetMapping("/project")
-    public ResponseEntity<List<ProjectDto>> searchProjects(@RequestParam String searchTerm) {
-        List<ProjectDto> projectDtos = searchService.searchProjectsDto(searchTerm);
-        return ResponseEntity.ok(projectDtos);
+    public ResponseEntity<List<ProjectDTO>> findProjectsByStatusId(@RequestParam(required = false) String projectStatusId) {
+        List<ProjectDTO> projectDTOS = searchService.findProjectsByStatusIdDto(projectStatusId);
+        return ResponseEntity.ok(projectDTOS);
     }
 
     @GetMapping("/project2")
-    public ResponseEntity<List> searchByPage(@RequestParam String term,
+    public ResponseEntity<List<ProjectDTO>> searchByPage(@RequestParam String term,
                                              @RequestParam(defaultValue = "0") String page,
                                              @RequestParam(defaultValue = "10") String pageSize) {
 
         int pageInt = Integer.parseInt(page);
         int pageSizeInt = Integer.parseInt(pageSize);
 
-        List<Project> projects = searchService.searchProjectPages(term, pageInt, pageSizeInt);
+        List<ProjectDTO> projects = searchService.searchProjects(term, pageInt, pageSizeInt);
 
         return ResponseEntity.ok(projects);
     }

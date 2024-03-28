@@ -1,6 +1,7 @@
 package com.boogle.papplan.repository;
 
 import com.boogle.papplan.entity.Project;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -23,10 +24,10 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
     // 프로젝트명 또는 PM 또는 참여자로 프로젝트 검색
     @Query("SELECT p FROM Project p WHERE " +
-            "LOWER(p.projTitle) LIKE LOWER(:searchTerm) OR " +
-            "LOWER(p.projPm) LIKE LOWER(:searchTerm) OR " +
-            "p.id IN (SELECT c.project.id FROM Contributor c WHERE LOWER(c.employees.name) LIKE LOWER(:searchTerm))")
-    List<Project> findByTitleOrPmOrContributor(String searchTerm);
+            "LOWER(p.projTitle) LIKE LOWER(:term) OR " +
+            "LOWER(p.projPm) LIKE LOWER(:term) OR " +
+            "p.id IN (SELECT c.project.id FROM Contributor c WHERE LOWER(c.employees.name) LIKE LOWER(:term))")
+    List<Project> findByTermWithPage(String term, Pageable pageable);
 
     // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
     Project findByProjNo(Integer projNo);

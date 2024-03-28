@@ -1,7 +1,7 @@
 package com.boogle.papplan.controller;
 
-import com.boogle.papplan.dto.ProjectDto;
-import com.boogle.papplan.dto.TaskDto;
+import com.boogle.papplan.dto.ProjectDTO;
+import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.service.project.ProjectService;
 import com.boogle.papplan.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,36 +25,42 @@ public class ProjectController {
 
     // PM별 프로젝트 조회
     @GetMapping("/pm/{pm}")
-    public ResponseEntity<List<ProjectDto>> getProjectsByPM(@RequestParam String pm) {
-        List<ProjectDto> projectDtos = projectService.getProjectsByPM(pm);
-        return ResponseEntity.ok().body(projectDtos);
+    public ResponseEntity<List<ProjectDTO>> getProjectsByPM(@RequestParam String pm) {
+        List<ProjectDTO> projectDTOS = projectService.getProjectsByPM(pm);
+        return ResponseEntity.ok().body(projectDTOS);
     }
 
     // 참여자별 프로젝트 조회
     @GetMapping("/contributor/{id}")
-    public ResponseEntity<List<ProjectDto>> getProjectsByContributor(@RequestParam Long id) {
-        List<ProjectDto> projectDtos = projectService.findProjectsByContributorId(id);
-        return ResponseEntity.ok().body(projectDtos);
+    public ResponseEntity<List<ProjectDTO>> getProjectsByContributor(@RequestParam Long id) {
+        List<ProjectDTO> projectDTOS = projectService.findProjectsByContributorId(id);
+        return ResponseEntity.ok().body(projectDTOS);
     }
 
     // 상태별 프로젝트 조회
     @GetMapping("/status/{status}")
-    public ResponseEntity<List<ProjectDto>> getProjectsByStatus(@RequestParam("status") String status) {
-        List<ProjectDto> projectDtos = projectService.getProjectsByStatus(status);
-        return ResponseEntity.ok().body(projectDtos);
+    public ResponseEntity<List<ProjectDTO>> getProjectsByStatus(@RequestParam("status") String status) {
+        List<ProjectDTO> projectDTOS = projectService.getProjectsByStatus(status);
+        return ResponseEntity.ok().body(projectDTOS);
     }
 
     // 프로젝트 검색
     @GetMapping("/search")
-    public ResponseEntity<List<ProjectDto>> searchProjects(@RequestParam String searchTerm) {
-        List<ProjectDto> projectDtos = projectService.searchProjects(searchTerm);
-        return ResponseEntity.ok(projectDtos);
+    public ResponseEntity<List<ProjectDTO>> searchProjects(@RequestParam String term,
+                                                           @RequestParam(defaultValue = "0") String page,
+                                                           @RequestParam(defaultValue = "10") String pageSize) {
+
+        int pageInt = Integer.parseInt(page);
+        int pageSizeInt = Integer.parseInt(pageSize);
+
+        List<ProjectDTO> projectDTOS = projectService.searchProjects(term,pageInt,pageSizeInt);
+        return ResponseEntity.ok(projectDTOS);
     }
 
     // 프로젝트 상세정보 조회
     @GetMapping("/{projNo}")
-    public ResponseEntity<ProjectDto> showProjectDetail(@RequestParam("projNo") Integer projNo) {
-        ProjectDto projectDto = projectService.getProjectByProjNo(projNo);
+    public ResponseEntity<ProjectDTO> showProjectDetail(@RequestParam("projNo") Integer projNo) {
+        ProjectDTO projectDto = projectService.getProjectByProjNo(projNo);
 
         if (projectDto == null) {
             // 프로젝트가 존재하지 않을 경우 404 Not Found 응답 반환
@@ -67,15 +73,15 @@ public class ProjectController {
 
     // 모든 프로젝트 목록 조회
     @GetMapping
-    public ResponseEntity<List<ProjectDto>> getAllProjects() {
-        List<ProjectDto> projectDtos = projectService.getAllProjects();
-        return ResponseEntity.ok(projectDtos);
+    public ResponseEntity<List<ProjectDTO>> getAllProjects() {
+        List<ProjectDTO> projectDTOS = projectService.getAllProjects();
+        return ResponseEntity.ok(projectDTOS);
     }
 
     // 특정 프로젝트에 속한 모든 Task 조회
     @GetMapping("/{projectNo}/task")
-    public ResponseEntity<List<TaskDto>> getTasksByProjectId(@RequestParam Integer projectNo) {
-        List<TaskDto> tasks = taskService.getTasksByProjectId(projectNo);
+    public ResponseEntity<List<TaskDTO>> getTasksByProjectId(@RequestParam Integer projectNo) {
+        List<TaskDTO> tasks = taskService.getTasksByProjectId(projectNo);
         return ResponseEntity.ok(tasks);
     }
 }

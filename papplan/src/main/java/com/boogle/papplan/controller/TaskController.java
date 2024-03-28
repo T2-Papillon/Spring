@@ -1,12 +1,10 @@
 package com.boogle.papplan.controller;
 
-import com.boogle.papplan.dto.TaskDto;
+import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/task") // 경로를 복수형으로 변경
@@ -16,15 +14,15 @@ public class TaskController {
 
     // 새 Task 생성
     @PostMapping
-    public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto taskDto) {
-        TaskDto createdTask = taskService.createTask(taskDto);
+    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDto) {
+        TaskDTO createdTask = taskService.createTask(taskDto);
         return ResponseEntity.ok(createdTask);
     }
 
     // 특정 Task 조회
     @GetMapping("/{taskNo}")
-    public ResponseEntity<TaskDto> getTaskById(@PathVariable Integer taskNo) {
-        TaskDto taskDto = taskService.getTaskById(taskNo);
+    public ResponseEntity<TaskDTO> getTaskById(@PathVariable Integer taskNo) {
+        TaskDTO taskDto = taskService.getTaskById(taskNo);
         if (taskDto != null) {
             return ResponseEntity.ok(taskDto);
         } else {
@@ -34,9 +32,9 @@ public class TaskController {
 
     // Task 수정
     @PutMapping("/{taskNo}")
-    public ResponseEntity<TaskDto> updateTask(@PathVariable Integer taskNo, @RequestBody TaskDto taskDto) {
+    public ResponseEntity<TaskDTO> updateTask(@PathVariable Integer taskNo, @RequestBody TaskDTO taskDto) {
         taskDto.setTaskNo(taskNo); // URL에서 받은 taskNo를 DTO에 설정
-        TaskDto updatedTask = taskService.updateTask(taskDto);
+        TaskDTO updatedTask = taskService.updateTask(taskDto);
         if (updatedTask != null) {
             return ResponseEntity.ok(updatedTask);
         } else {
