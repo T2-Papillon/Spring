@@ -1,9 +1,10 @@
 package com.boogle.papplan.service.task;
 
-import com.boogle.papplan.dto.TaskDto;
+import com.boogle.papplan.dto.TaskDTO;
+import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.entity.Task;
+import com.boogle.papplan.repository.ProjectRepository;
 import com.boogle.papplan.repository.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,15 +13,17 @@ import java.util.stream.Collectors;
 @Service
 public class TaskServiceImpl implements TaskService {
 
+    private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
 
-    @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository) {
+    public TaskServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository) {
+        this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }
 
+
     @Override
-    public List<TaskDto> getTasksByProjectId(Integer projNo) {
+    public List<TaskDTO> getTasksByProjectId(Integer projNo) {
         List<Task> tasks = taskRepository.findAllByProjectProjNo(projNo);
         return tasks.stream()
                 .map(this::convertToDto)
@@ -28,46 +31,57 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto addTaskToProject(Integer projNo, TaskDto taskDto) {
+    public TaskDTO addTaskToProject(Integer projNo, TaskDTO taskDto) {
         Task task = convertToEntity(taskDto);
-        // projNo에 해당하는 프로젝트에 태스크 추가하는 로직을 추가하세요.
+        Project project = projectRepository.findByProjNo(projNo);
+        if (project == null)  return null;
         return convertToDto(task);
     }
 
     @Override
-    public TaskDto getTaskById(Integer projNo, Integer taskNo) {
-        // projNo와 taskNo에 해당하는 태스크를 가져오는 로직을 추가하세요.
-        return null;
+    public TaskDTO getTaskById(Integer projNo, Integer taskNo) {
+        Task task = taskRepository.findByProjectProjNoAndTaskNo(projNo, taskNo);
+
+        if (task == null) {
+            return null;
+        }
+        return convertToDto(task);
     }
 
     @Override
-    public TaskDto updateTask(Integer projNo, Integer taskNo, TaskDto taskDto) {
+    public TaskDTO updateTask(Integer projNo, Integer taskNo, TaskDTO taskDto) {
         // projNo와 taskNo에 해당하는 태스크를 업데이트하는 로직을 추가하세요.
         return null;
     }
 
     @Override
-    public void deleteTask(Integer taskNo) {
-        // taskNo에 해당하는 태스크를 삭제하는 로직을 추가하세요.
+    public void deleteTask(Integer projNo, Integer taskNo) {
+        taskRepository.deleteById(taskNo);
     }
 
-    private TaskDto convertToDto(Task task) {
-        TaskDto taskDto = new TaskDto();
+    private TaskDTO convertToDto(Task task) {
+        TaskDTO taskDto = new TaskDTO();
         taskDto.setTaskNo(task.getTaskNo());
         taskDto.setTaskTitle(task.getTaskTitle());
         taskDto.setAssignee(task.getAssignee());
         taskDto.setTaskDesc(task.getTaskDesc());
-        // 나머지 필드도 엔티티에서 가져와서 설정하세요.
+        taskDto.setTaskPriority(task.getTaskPriority());
+        taskDto.setTaskStatus(task.getTaskStatus());
+        taskDto.setTaskStartDate(task.getTaskStartDate());
+        taskDto.setTaskEndDate(task.getTaskEndDate());
         return taskDto;
     }
 
-    private Task convertToEntity(TaskDto taskDto) {
+    private Task convertToEntity(TaskDTO taskDto) {
         Task task = new Task();
         task.setTaskNo(taskDto.getTaskNo());
         task.setTaskTitle(taskDto.getTaskTitle());
         task.setAssignee(taskDto.getAssignee());
         task.setTaskDesc(taskDto.getTaskDesc());
-        // 나머지 필드도 DTO에서 가져와서 설정하세요.
+        task.setTaskPriority(taskDto.getTaskPriority());
+        task.setTaskStatus(taskDto.getTaskStatus());
+        task.setTaskStartDate(taskDto.getTaskStartDate());
+        task.setTaskEndDate(taskDto.getTaskEndDate());
         return task;
     }
 }

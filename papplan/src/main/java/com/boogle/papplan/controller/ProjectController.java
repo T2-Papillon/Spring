@@ -3,7 +3,7 @@ package com.boogle.papplan.controller;
 import com.boogle.papplan.dto.ProjectDTO;
 import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.service.project.ProjectService;
-import com.boogle.papplan.service.TaskService;
+import com.boogle.papplan.service.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

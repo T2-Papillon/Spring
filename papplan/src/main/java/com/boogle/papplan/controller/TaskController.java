@@ -25,7 +25,7 @@ public class TaskController {
 
     // 프로젝트에 새로운 태스크를 추가하는 엔드포인트
     @PostMapping("/project/{projNo}/task")
-    public ResponseEntity<TaskDTO> addTaskToProject(@PathVariable Integer projNo, @RequestBody TaskDto taskDto) {
+    public ResponseEntity<TaskDTO> addTaskToProject(@PathVariable Integer projNo, @RequestBody TaskDTO taskDto) {
         // 프로젝트에 새로운 태스크를 추가하고 결과를 반환
         TaskDTO createdTask = taskService.addTaskToProject(projNo, taskDto);
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
@@ -65,7 +65,7 @@ public class TaskController {
     @DeleteMapping("/project/{projNo}/task/{taskNo}")
     public ResponseEntity<Void> deleteTask(@PathVariable Integer projNo, @PathVariable Integer taskNo) {
         // 프로젝트와 태스크 ID에 해당하는 태스크를 삭제
-        taskService.deleteTask(taskNo);
+        taskService.deleteTask(projNo, taskNo);
         return ResponseEntity.ok().build();
     }
 
