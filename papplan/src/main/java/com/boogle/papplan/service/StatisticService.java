@@ -1,11 +1,11 @@
 package com.boogle.papplan.service;
 
-import com.boogle.papplan.dto.StatisticCombinedDto;
+import com.boogle.papplan.dto.StatisticCombinedDTO;
 import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.entity.Task;
 import com.boogle.papplan.entity.TaskStatus;
-import com.boogle.papplan.dto.StatisticProjectDto;
-import com.boogle.papplan.dto.StatisticTaskStatusDto;
+import com.boogle.papplan.dto.StatisticProjectDTO;
+import com.boogle.papplan.dto.StatisticTaskStatusDTO;
 import com.boogle.papplan.repository.StatisticRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -32,7 +32,7 @@ public class StatisticService {
     // [통계분석] 특정 프로젝트의 프로젝트 제목, 기간(시작일과 종료일),
     // 참여자, 진행률, 작성일을 조회하는 메서드
     // 복잡한 쿼리문은 criteria api 사용
-    public StatisticProjectDto getProjectDetails(Integer projNo) {
+    public StatisticProjectDTO getProjectDetails(Integer projNo) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Project> cq = cb.createQuery(Project.class);
         Root<Project> project = cq.from(Project.class);
@@ -42,7 +42,7 @@ public class StatisticService {
         Project result = entityManager.createQuery(cq).getSingleResult();
 
         // 참여자 정보 처리는 생략됨. 필요한 경우 별도 로직 추가
-        return new StatisticProjectDto(
+        return new StatisticProjectDTO(
                 result.getProjNo(),
                 result.getProjTitle(),
                 result.getProjStartDate().toString(),
@@ -54,7 +54,7 @@ public class StatisticService {
     }
 
     // [프로젝트] 특정 프로젝트의 업무들에 대해 각 진행 상태별로 업무가 몇 개씩 있는지 조회
-    public List<StatisticTaskStatusDto> getTaskCountByStatus(Integer projNo) {
+    public List<StatisticTaskStatusDTO> getTaskCountByStatus(Integer projNo) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Tuple> cq = cb.createTupleQuery();
         Root<Project> project = cq.from(Project.class);
@@ -68,15 +68,15 @@ public class StatisticService {
 
         List<Tuple> results = entityManager.createQuery(cq).getResultList();
 
-        return results.stream().map(t -> new StatisticTaskStatusDto(
+        return results.stream().map(t -> new StatisticTaskStatusDTO(
                 t.get("taskStatusName", String.class),
                 t.get("taskCount", Long.class)
         )).collect(Collectors.toList());
     }
 
-    public StatisticCombinedDto getCombinedProjectInfo(Integer projNo) {
-        StatisticProjectDto projectDetails = getProjectDetails(projNo); // 기존 메서드 사용
-        List<StatisticTaskStatusDto> taskStatusCounts = getTaskCountByStatus(projNo); // 기존 메서드 사용
-        return new StatisticCombinedDto(projectDetails, taskStatusCounts);
+    public StatisticCombinedDTO getCombinedProjectInfo(Integer projNo) {
+        StatisticProjectDTO projectDetails = getProjectDetails(projNo); // 기존 메서드 사용
+        List<StatisticTaskStatusDTO> taskStatusCounts = getTaskCountByStatus(projNo); // 기존 메서드 사용
+        return new StatisticCombinedDTO(projectDetails, taskStatusCounts);
     }
 }

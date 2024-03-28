@@ -1,54 +1,49 @@
 package com.boogle.papplan.service.search;
 
-import com.boogle.papplan.dto.ProjectDto;
+import com.boogle.papplan.dto.ProjectDTO;
 import com.boogle.papplan.entity.Project;
-import com.boogle.papplan.repository.SearchRepository;
+import com.boogle.papplan.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class SearchServiceImpl implements SearchService {
 
-    private final SearchRepository searchRepository;
+    private final ProjectRepository projectRepository;
 
     @Autowired
-    public SearchServiceImpl(SearchRepository searchRepository) {
-        this.searchRepository = searchRepository;
+    public SearchServiceImpl(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
     }
 
     @Override
     public List<Project> findProjectsByStatusId(String projectStatusId) {
         if (projectStatusId == null || projectStatusId.isEmpty() || projectStatusId.equals("전체")) {
-            return searchRepository.findAll();
+            return projectRepository.findAll();
         } else {
-            return searchRepository.findByProjectStatus_ProjectStatusId(projectStatusId);
+            return projectRepository.findByProjectStatus_ProjectStatusId(projectStatusId);
         }
     }
 
     // 프로젝트명 또는 PM 또는 참여자로 프로젝트 검색
     @Override
-    public List<Project> searchProjects(String searchTerm) {
-        return searchRepository.findByTitleOrPmOrContributor(searchTerm);
-    }
-
-    @Override
-    public List<ProjectDto> searchProjectsDto(String searchTerm) {
-        List<Project> projects = searchProjects(searchTerm); // Reuse the searchProjects method
+    public List<ProjectDTO> searchProjects(String term, int page, int pageSize) {
+        List<Project> projects = projectRepository.findByTermWithPage(term, PageRequest.of(page,pageSize));
         return projects.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<ProjectDto> findProjectsByStatusIdDto(String projectStatusId) {
+    public List<ProjectDTO> findProjectsByStatusIdDto(String projectStatusId) {
         List<Project> projects = findProjectsByStatusId(projectStatusId);
         return projects.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    private ProjectDto convertToDto(Project project) {
-        ProjectDto dto = new ProjectDto();
+    private ProjectDTO convertToDto(Project project) {
+        ProjectDTO dto = new ProjectDTO();
         dto.setProjNo(project.getProjNo());
         dto.setProjTitle(project.getProjTitle());
         dto.setProjPm(project.getProjPm());

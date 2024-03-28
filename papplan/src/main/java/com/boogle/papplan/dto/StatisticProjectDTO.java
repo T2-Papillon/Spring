@@ -8,7 +8,7 @@ import lombok.ToString;
 @Data
 @Getter @Setter
 @ToString
-public class StatisticProjectDto {
+public class StatisticProjectDTO {
     private Integer projNo;
     private String title;
     private String startDate;
@@ -17,7 +17,7 @@ public class StatisticProjectDto {
     private Integer progress;
     private String createDate;
 
-    public StatisticProjectDto(Integer projNo, String title, String startDate, String endDate, Integer progress, String createDate) {
+    public StatisticProjectDTO(Integer projNo, String title, String startDate, String endDate, Integer progress, String createDate) {
         this.projNo = projNo;
         this.title = title;
         this.startDate = startDate;

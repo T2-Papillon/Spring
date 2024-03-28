@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface EmployeeService {
 
-    public boolean signInLogin(HashMap<String,String> userInfo);
+    public Optional<Employees> signInLogin(HashMap<String,String> userInfo);
 
     public void signUp(Employees employees);
 }

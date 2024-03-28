@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class ProjectDto {
+public class ProjectDTO {
 
     private Integer projNo;
     private String projTitle;

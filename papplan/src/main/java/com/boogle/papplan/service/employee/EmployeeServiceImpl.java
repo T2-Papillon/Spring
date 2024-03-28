@@ -22,17 +22,17 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public boolean signInLogin(HashMap<String,String> userInfo) {
+    public Optional<Employees> signInLogin(HashMap<String,String> userInfo) {
 
         Optional<Employees> emp = employeeRepository.findByEmail(userInfo.get("email"));
         if(emp.isPresent()) {
             if(passwordEncoder.matches(userInfo.get("password"), emp.get().getPassword())){
-                return true;
+                return emp;
             }
-            return false;
+            return Optional.empty();
         }
         else{
-            return false;
+            return emp;
         }
     }
 

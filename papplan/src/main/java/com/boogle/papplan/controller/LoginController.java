@@ -4,6 +4,7 @@ import com.boogle.papplan.entity.Department;
 import com.boogle.papplan.entity.Employees;
 import com.boogle.papplan.entity.Position;
 import com.boogle.papplan.service.employee.EmployeeService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -12,28 +13,47 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class LoginController {
 
     private final EmployeeService employeeService;
+    private final ObjectMapper objectMapper;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public LoginController(EmployeeService employeeService){
-
+    public LoginController(EmployeeService employeeService,
+                           ObjectMapper objectMapper
+    )
+    {
         this.employeeService = employeeService;
+        this.objectMapper = objectMapper;
     }
 
     @ResponseBody
     @PostMapping("/signin")
-    public ResponseEntity<String> signIn(@RequestBody HashMap<String,String> userInfo) {
-        boolean isSignIn = employeeService.signInLogin(userInfo);
-        if(isSignIn)
-            return ResponseEntity.ok("Login successful");
+    public ResponseEntity<String> signIn(@RequestBody HashMap<String,String> loginInfo) {
+        System.out.println(loginInfo);
+        Optional<Employees> isSignIn = employeeService.signInLogin(loginInfo);
+        if(isSignIn.isPresent()) {
+            HashMap<String, String> userInfo = new HashMap<String, String>();
+            String userInfoJson;
+            userInfo.put("name", isSignIn.get().getName());
+            userInfo.put("email", isSignIn.get().getEmail());
+            //userInfo.put("dept", isSignIn.get().getName());
+            //userInfo.put("position", isSignIn.get().getName());
+            try{
+                userInfoJson = objectMapper.writeValueAsString(userInfo);
+                return ResponseEntity.ok(userInfoJson);
+            }
+            catch(Exception e){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Login failed - invalid User Info");
+            }
+        }
         else
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Login failed");
     }
@@ -41,7 +61,6 @@ public class LoginController {
     @ResponseBody
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody HashMap<String,String> emp) {
-        System.out.println("signup");
 
         Employees employees = new Employees();
         employees.setName(emp.get("name"));
