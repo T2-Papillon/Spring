@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
     List<Task> findAllByProjectProjNo(Integer projNo);
+
+    Task findByProjectProjNoAndTaskNo(Integer projNo, Integer taskNo);
 }

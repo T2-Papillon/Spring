@@ -1,5 +1,7 @@
 package com.boogle.papplan.dto;
 
+import com.boogle.papplan.entity.TaskPriority;
+import com.boogle.papplan.entity.TaskStatus;
 import lombok.Data;
 import java.util.Date;
 
@@ -9,8 +11,8 @@ public class TaskDto {
     private String taskTitle;
     private String assignee;
     private String taskDesc;
-    private String taskStatus;
-    private String taskPriority; 
+    private TaskStatus taskStatus;
+    private TaskPriority taskPriority;
     private Date taskStartDate;
     private Date taskEndDate;
 }
