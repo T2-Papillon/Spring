@@ -1,6 +1,6 @@
 package com.boogle.papplan.service.project;
 
-import com.boogle.papplan.dto.ProjectDTO;
+import com.boogle.papplan.dto.project.ProjectDTO;
 import java.util.List;
 
 public interface ProjectService {

@@ -1,22 +1,29 @@
 package com.boogle.papplan.service.search;
 
-import com.boogle.papplan.dto.ProjectDTO;
+import com.boogle.papplan.dto.EmployeeDTO;
+import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.entity.Project;
+import com.boogle.papplan.repository.EmployeeRepository;
 import com.boogle.papplan.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class SearchServiceImpl implements SearchService {
 
     private final ProjectRepository projectRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public SearchServiceImpl(ProjectRepository projectRepository) {
+    public SearchServiceImpl(ProjectRepository projectRepository,
+                             EmployeeRepository employeeRepository)
+    {
+        this.employeeRepository = employeeRepository;
         this.projectRepository = projectRepository;
     }
 
@@ -42,8 +49,10 @@ public class SearchServiceImpl implements SearchService {
         return projects.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
+    // 프로젝트 정보 조회 + 참여중인 직원 정보 조회
     private ProjectDTO convertToDto(Project project) {
         ProjectDTO dto = new ProjectDTO();
+
         dto.setProjNo(project.getProjNo());
         dto.setProjTitle(project.getProjTitle());
         dto.setProjPm(project.getProjPm());
@@ -52,16 +61,19 @@ public class SearchServiceImpl implements SearchService {
         dto.setProjPercent(project.getProjPercent());
         dto.setProjCreateDate(project.getProjCreateDate());
         dto.setProjDesc(project.getProjDesc());
+
         if (project.getProjectStatus() != null) {
             dto.setProjectStatus(project.getProjectStatus().getProjectStatusId());
         }
         if (project.getProjectPriority() != null) {
             dto.setProjectPriority(project.getProjectPriority().getProjectPriorityId());
         }
-        List<Integer> employeeEnos = project.getContributors().stream()
+
+        List<Integer> contributorEnos = project.getContributors().stream()
                 .map(contributor -> contributor.getEmployees().getEno())
                 .collect(Collectors.toList());
-        dto.setEmployeeEnos(employeeEnos);
+        Optional<List<EmployeeDTO>> contributors = employeeRepository.findAllByEnos(contributorEnos);
+        contributors.ifPresent(dto::setContributors);
 
         return dto;
     }

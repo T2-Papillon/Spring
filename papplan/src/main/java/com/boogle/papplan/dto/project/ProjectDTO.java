@@ -1,5 +1,6 @@
-package com.boogle.papplan.dto;
+package com.boogle.papplan.dto.project;
 
+import com.boogle.papplan.dto.EmployeeDTO;
 import lombok.Data;
 
 import java.util.Date;
@@ -18,6 +19,6 @@ public class ProjectDTO {
     private String projDesc;
     private String projectPriority;
     private String projectStatus;
-    private List<Integer> employeeEnos; // 참여자의 사원 번호(eno) 리스트
+    private List<EmployeeDTO> contributors; // 참여자의 사원 번호(eno) 리스트
 
 }
