@@ -27,7 +27,6 @@ public class TaskServiceImpl implements TaskService {
         this.taskRepository = taskRepository;
     }
 
-
     @Override
     public List<TaskDTO> getTasksByProjectId(Integer projNo) {
         List<Task> tasks = taskRepository.findAllByProjectProjNo(projNo);
@@ -63,21 +62,65 @@ public class TaskServiceImpl implements TaskService {
         return convertToDto(task);
     }
 
+//    @Override
+//    public TaskDTO updateTask(Integer projNo, Integer taskNo, TaskDTO taskDto) {
+//        // 프로젝트 ID와 태스크 ID를 사용하여 해당하는 태스크를 조회합니다.
+//        Optional<Task> optionalTask = Optional.ofNullable(taskRepository.findByProjectProjNoAndTaskNo(projNo, taskNo));
+//
+//        if (optionalTask.isEmpty()) {
+//            return null;
+//        }
+//
+//        // 태스크가 존재한다면 DTO로부터 새로운 정보를 가져와서 업데이트합니다.
+//        Task task = optionalTask.get();
+//        task.setTaskTitle(taskDto.getTaskTitle()); // 업무 제목
+//        task.setTaskDesc(taskDto.getTaskDesc()); // 업무 설명
+//
+//        // 업무 우선순위
+//        TaskPriority taskPriority = new TaskPriority();
+//        taskPriority.setTaskPriorityId(taskDto.getTaskPriority());
+//        task.setTaskPriority(taskPriority);
+//
+//        // 업무 진행상태
+//        TaskStatus taskStatus = new TaskStatus();
+//        taskStatus.setTaskStatusId(taskDto.getTaskStatus());
+//        task.setTaskStatus(taskStatus);
+//
+//        task.setTaskStartDate(taskDto.getTaskStartDate());
+//        task.setTaskEndDate(taskDto.getTaskEndDate());
+//        task.setTaskPercent(taskDto.getTaskPercent());          // 업무 진행 정도(xx%)
+//        if(taskDto.getTaskTest() != null)
+//            task.setTaskTest(taskDto.getTaskTest());                // 업무 테스트 진행 여부
+//        task.setTaskUpdateDate((taskDto.getTaskUpdateDate()));  // 수정일
+//
+//        // 업데이트된 태스크를 저장합니다.
+//        task = taskRepository.save(task);
+//
+//        // 업데이트된 태스크를 DTO로 변환하여 반환합니다.
+//        return convertToDto(task);
+//    }
+
+
+
     @Override
     public TaskDTO updateTask(Integer projNo, Integer taskNo, TaskDTO taskDto) {
         // 프로젝트 ID와 태스크 ID를 사용하여 해당하는 태스크를 조회합니다.
         Optional<Task> optionalTask = Optional.ofNullable(taskRepository.findByProjectProjNoAndTaskNo(projNo, taskNo));
 
         if (optionalTask.isEmpty()) {
-            // 만약 해당하는 태스크가 없다면 null을 반환합니다.
             return null;
         }
 
-        // 태스크가 존재한다면 DTO로부터 새로운 정보를 가져와서 업데이트합니다.
-        Task task = optionalTask.get();
-        task.setTaskTitle(taskDto.getTaskTitle());
-        task.setAssignee(taskDto.getAssignee());
-        task.setTaskDesc(taskDto.getTaskDesc());
+        Task task = new Task();
+
+        // Project 번호
+        Project project = new Project();
+        project.setProjNo(taskDto.getProjNo());
+        task.setProject(project);
+
+        task.setTaskTitle(taskDto.getTaskTitle());  // 업무 제목
+        task.setAssignee(taskDto.getAssignee());    // 업무 담당자 이름
+        task.setTaskDesc(taskDto.getTaskDesc());    // 업무 설명
 
         // 업무 우선순위
         TaskPriority taskPriority = new TaskPriority();
@@ -89,8 +132,8 @@ public class TaskServiceImpl implements TaskService {
         taskStatus.setTaskStatusId(taskDto.getTaskStatus());
         task.setTaskStatus(taskStatus);
 
-        task.setTaskStartDate(taskDto.getTaskStartDate());
-        task.setTaskEndDate(taskDto.getTaskEndDate());
+        task.setTaskStartDate(taskDto.getTaskStartDate());      // 업무 시작일
+        task.setTaskEndDate(taskDto.getTaskEndDate());          // 업무 종료일
         task.setTaskPercent(taskDto.getTaskPercent());          // 업무 진행 정도(xx%)
         if(taskDto.getTaskTest() != null)
             task.setTaskTest(taskDto.getTaskTest());                // 업무 테스트 진행 여부
@@ -103,13 +146,6 @@ public class TaskServiceImpl implements TaskService {
         // 업데이트된 태스크를 DTO로 변환하여 반환합니다.
         return convertToDto(task);
     }
-
-//    @Override
-//    public TaskDTO updateTask(Integer projNo, Integer taskNo, TaskDTO taskDto) {
-//
-//
-//        return taskDto;
-//    }
 
 
 
