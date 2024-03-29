@@ -8,7 +8,6 @@ import com.boogle.papplan.entity.TaskStatus;
 import com.boogle.papplan.repository.ProjectRepository;
 import com.boogle.papplan.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -73,12 +72,11 @@ public class TaskServiceImpl implements TaskService {
             return null;
         }
 
-        Task task = new Task();
+        Task task = optionalTask.get();
 
         // Project 번호
-        Project project = new Project();
+        Project project = task.getProject();
         project.setProjNo(taskDto.getProjNo());
-        task.setProject(project);
 
         task.setTaskTitle(taskDto.getTaskTitle());  // 업무 제목
         task.setAssignee(taskDto.getAssignee());    // 업무 담당자 이름
