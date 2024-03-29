@@ -47,19 +47,19 @@ public class TaskController {
 
 
    // 프로젝트와 태스크 ID에 해당하는 태스크를 업데이트하는 엔드포인트
-//    @PutMapping("/project/{projNo}/task/{taskNo}")
-//    public ResponseEntity<TaskDTO> updateTask(@PathVariable Integer projNo, @PathVariable Integer taskNo, @RequestBody TaskDTO taskDto) {
-//        // 프로젝트와 태스크 ID에 해당하는 태스크를 업데이트하고 결과를 반환
-//        TaskDTO updatedTask = taskService.updateTask(projNo, taskNo, taskDto);
-//
-//        // 업데이트된 태스크가 null이 아닌 경우 - 업데이트 성공
-//        if (updatedTask != null) {
-//            return ResponseEntity.ok(updatedTask);
-//        } else {
-//            // 업데이트된 태스크가 null인 경우 - 해당 태스크를 찾을 수 없음
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @PutMapping("/project/{projNo}/task/{taskNo}")
+    public ResponseEntity<TaskDTO> updateTask(@PathVariable Integer projNo, @PathVariable Integer taskNo, @RequestBody TaskDTO taskDto) {
+        // 프로젝트와 태스크 ID에 해당하는 태스크를 업데이트하고 결과를 반환
+        TaskDTO updatedTask = taskService.updateTask(projNo, taskNo, taskDto);
+
+        // 업데이트된 태스크가 null이 아닌 경우 - 업데이트 성공
+        if (updatedTask != null) {
+            return ResponseEntity.ok(updatedTask);
+        } else {
+            // 업데이트된 태스크가 null인 경우 - 해당 태스크를 찾을 수 없음
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 
