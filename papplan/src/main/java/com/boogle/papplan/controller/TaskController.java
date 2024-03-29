@@ -2,9 +2,7 @@ package com.boogle.papplan.controller;
 
 import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.service.task.TaskService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
