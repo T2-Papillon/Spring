@@ -17,7 +17,7 @@ public class TaskController {
     private final TaskService taskService;
 
     // 프로젝트 ID에 해당하는 모든 태스크를 가져오는 엔드포인트
-    @GetMapping("/project/{projNo}/tasks")
+    @GetMapping("/project/{projNo}/task")
     public ResponseEntity<List<TaskDTO>> getAllTasksByProjectId(@PathVariable Integer projNo) {
         // 프로젝트 ID를 기반으로 해당 프로젝트의 모든 태스크를 가져옴
         List<TaskDTO> tasks = taskService.getTasksByProjectId(projNo);
