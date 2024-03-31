@@ -20,11 +20,11 @@ public class Contributor{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proj_no", referencedColumnName = "proj_no", nullable = false)
     private Project project; // 프로젝트번호
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "eno", referencedColumnName = "eno", nullable = false)
     private Employees employees; // 사번
 

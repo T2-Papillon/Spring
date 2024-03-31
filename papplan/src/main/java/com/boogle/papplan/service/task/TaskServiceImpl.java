@@ -73,6 +73,15 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.deleteById(taskNo);
     }
 
+    // 사원 번호로 사원이 담당하고 있는 업무 리턴
+    @Override
+    public List<TaskDTO> getTasksByEmpNo(Integer empNo) {
+        List<Task> tasks = taskRepository.findAllByEmpNo(empNo);
+        return tasks.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     private TaskDTO convertToDto(Task task) {
         TaskDTO taskDto = new TaskDTO();
 

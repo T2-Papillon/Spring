@@ -40,13 +40,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     // 특정 사용자로 참여한 프로젝트를 가져오는 메서드
     @Override
-    public List<ProjectDTO> findProjectsByContributorId(Long id) {
-        return projectRepository.findAll().stream()
-                .filter(project -> project.getContributors().stream()
-                        .anyMatch(contributor -> contributor.getId().equals(id)))
+    public List<ProjectDTO> findProjectsByEmpNo(Integer empNo) {
+        return projectRepository.findAllByEmpno(empNo).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+
 
     // 특정 상태의 프로젝트 목록을 가져오는 메서드
     @Override

@@ -39,11 +39,11 @@ public class Project {
     @Column(length = 300, nullable = false, name = "proj_desc")
     private String projDesc; // 프로젝트 설명
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "projp_no")
     private ProjectPriority projectPriority; // 프로젝트 우선순위번호
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "projs_no")
     private ProjectStatus projectStatus; // 프로젝트 상태번호
 
