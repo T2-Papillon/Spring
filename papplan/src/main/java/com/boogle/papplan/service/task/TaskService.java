@@ -16,6 +16,6 @@ public interface TaskService {
     void deleteTask(Integer projNo, Integer taskNo);
 
     // 사원이 담당하고 있는 모든 업무 조회
-    List<TaskDTO> getTasksByEmpNo(Integer empNo);
+    List<TaskDTO> getTasksByEmpNoInProgress(Integer empNo);
 
 }

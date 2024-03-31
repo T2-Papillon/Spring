@@ -8,7 +8,6 @@ import com.boogle.papplan.entity.TaskStatus;
 import com.boogle.papplan.repository.ProjectRepository;
 import com.boogle.papplan.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -73,10 +72,10 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.deleteById(taskNo);
     }
 
-    // 사원 번호로 사원이 담당하고 있는 업무 리턴
+    // 사원 번호로 사원이 담당하고 있는 진행중인 업무 리턴
     @Override
-    public List<TaskDTO> getTasksByEmpNo(Integer empNo) {
-        List<Task> tasks = taskRepository.findAllByEmpNo(empNo);
+    public List<TaskDTO> getTasksByEmpNoInProgress(Integer empNo) {
+        List<Task> tasks = taskRepository.findAllByEmpNoInProgress(empNo);
         return tasks.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
