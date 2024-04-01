@@ -15,7 +15,7 @@ public interface EmployeeRepository extends JpaRepository<Employees, Integer> {
     Optional<Employees> findByEmail(String email);
 
     // eno 리스트에 해당하는 직원 정보 조회
-    @Query(" SELECT new com.boogle.papplan.dto.EmployeeDTO(e.eno, e.name, e.email, e.department.dept_no, e.position.position_id) " +
+    @Query(" SELECT new com.boogle.papplan.dto.EmployeeDTO(e.eno, e.email, e.name, e.department.dept_no, e.position.position_id) " +
             " FROM Employees e WHERE " +
             " e.eno IN (:enos)")
     Optional<List<EmployeeDTO>> findAllByEnos(List<Integer> enos);

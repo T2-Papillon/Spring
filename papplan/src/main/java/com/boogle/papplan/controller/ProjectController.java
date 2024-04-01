@@ -33,8 +33,8 @@ public class ProjectController {
 
     // 참여자별 프로젝트 조회
     @GetMapping("/contributor/{id}")
-    public ResponseEntity<List<ProjectDTO>> getProjectsByContributor(@RequestParam Long id) {
-        List<ProjectDTO> projectDTOS = projectService.findProjectsByContributorId(id);
+    public ResponseEntity<List<ProjectDTO>> getProjectsByContributor(@RequestParam Integer empNo) {
+        List<ProjectDTO> projectDTOS = projectService.findProjectsByEmpNo(empNo);
         return ResponseEntity.ok().body(projectDTOS);
     }
 
