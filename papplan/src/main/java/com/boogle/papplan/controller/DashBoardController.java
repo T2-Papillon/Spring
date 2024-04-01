@@ -16,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/dashboard")
+@CrossOrigin("http://localhost:5173/")
 public class DashBoardController {
 
     private final ProjectService projectService;
