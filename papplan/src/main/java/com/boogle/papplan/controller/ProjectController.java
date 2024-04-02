@@ -59,7 +59,7 @@ public class ProjectController {
     }
 
     // 프로젝트 상세정보 조회
-    @GetMapping("/{projNo}")
+    @GetMapping("/detail")
     public ResponseEntity<ProjectDTO> showProjectDetail(@RequestParam("projNo") Integer projNo) {
         ProjectDTO projectDto = projectService.getProjectByProjNo(projNo);
 
