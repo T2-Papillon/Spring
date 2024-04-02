@@ -18,4 +18,6 @@ public interface TaskService {
     // 사원이 담당하고 있는 모든 업무 조회
     List<TaskDTO> getTasksByEmpNoInProgress(Integer empNo);
 
+    // 모든 프로젝트의 전체 업무를 조회
+    List<TaskDTO> getAllTasks();
 }
