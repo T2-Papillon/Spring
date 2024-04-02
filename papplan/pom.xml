@@ -79,13 +79,6 @@
         			</executions>
 				<configuration>
 					<mainClass>com.boogle.papplan.PapplanApplication</mainClass>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-							<scope>provided</scope>
-						</exclude>
-					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
