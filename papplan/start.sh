@@ -7,4 +7,4 @@ cd /home/ubuntu/app/papplan
 
 # ./gradlew bootJar
 
-sudo docker compose -f docker-compose.yml up -d
+sudo docker compose -f docker-compose.yml up -d --build --force-recreate
