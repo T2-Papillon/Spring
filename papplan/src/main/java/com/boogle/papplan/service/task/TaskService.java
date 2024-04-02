@@ -20,4 +20,5 @@ public interface TaskService {
 
     // 모든 프로젝트의 전체 업무를 조회
     List<TaskDTO> getAllTasks();
+
 }
