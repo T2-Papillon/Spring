@@ -11,8 +11,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/task")
-@RequiredArgsConstructor
 @CrossOrigin("http://localhost:5173/")
+@RequiredArgsConstructor
 public class TaskController {
 
     private final TaskService taskService;
@@ -66,6 +66,13 @@ public class TaskController {
         // 프로젝트와 태스크 ID에 해당하는 태스크를 삭제
         taskService.deleteTask(projNo, taskNo);
         return ResponseEntity.ok().build();
+    }
+
+    // 모든 프로젝트의 전체 업무를 가져오는 엔드포인트
+    @GetMapping("/taskAll")
+    public ResponseEntity<List<TaskDTO>> getAllTasks() {
+        List<TaskDTO> tasks = taskService.getAllTasks();
+        return ResponseEntity.ok().body(tasks);
     }
 
 }
