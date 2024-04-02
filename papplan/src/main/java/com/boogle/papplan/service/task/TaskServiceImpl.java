@@ -172,12 +172,4 @@ public class TaskServiceImpl implements TaskService {
 
         return task;
     }
-
-    @Override
-    public List<TaskDTO> getAllTasks() {
-        List<Task> tasks = taskRepository.findAll(); // 모든 업무 조회
-        return tasks.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
-    }
 }

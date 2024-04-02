@@ -38,19 +38,12 @@ public class LoginController {
 
     @ResponseBody
     @PostMapping("/signin")
-    public ResponseEntity<String> signIn(@RequestBody HashMap<String,String> loginInfo) {
+    public ResponseEntity<Object> signIn(@RequestBody HashMap<String,String> loginInfo) {
         System.out.println(loginInfo);
         Optional<EmployeeDTO> isSignIn = employeeService.signInLogin(loginInfo);
         if(isSignIn.isPresent()) {
-            HashMap<String, String> userInfo = new HashMap<String, String>();
-            String userInfoJson;
-            userInfo.put("name", isSignIn.get().getName());
-            userInfo.put("email", isSignIn.get().getEmail());
-            //userInfo.put("dept", isSignIn.get().getName());
-            //userInfo.put("position", isSignIn.get().getName());
             try{
-                userInfoJson = objectMapper.writeValueAsString(userInfo);
-                return ResponseEntity.ok(userInfoJson);
+                return ResponseEntity.ok(isSignIn.get());
             }
             catch(Exception e){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Login failed - invalid User Info");
