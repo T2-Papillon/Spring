@@ -68,4 +68,11 @@ public class TaskController {
         return ResponseEntity.ok().build();
     }
 
+    // 모든 프로젝트의 전체 업무를 가져오는 엔드포인트
+    @GetMapping("/taskAll")
+    public ResponseEntity<List<TaskDTO>> getAllTasks() {
+        List<TaskDTO> tasks = taskService.getAllTasks();
+        return ResponseEntity.ok().body(tasks);
+    }
+
 }

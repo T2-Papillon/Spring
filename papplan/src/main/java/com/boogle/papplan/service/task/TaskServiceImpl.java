@@ -121,6 +121,14 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<TaskDTO> getAllTasks() {
+        List<Task> tasks = taskRepository.findAll(); // 모든 업무 조회
+        return tasks.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     private TaskDTO convertToDto(Task task) {
         TaskDTO taskDto = new TaskDTO();
 
