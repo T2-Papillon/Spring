@@ -1,3 +1,4 @@
+/*
 package com.boogle.papplan.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +13,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://127.0.0.1:5173");
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .maxAge(3000);
     }
 
     @Bean
@@ -20,3 +23,4 @@ public class WebConfig implements WebMvcConfigurer {
         return new ObjectMapper();
     }
 }
+*/
