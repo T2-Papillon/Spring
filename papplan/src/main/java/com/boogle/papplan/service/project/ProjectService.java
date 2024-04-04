@@ -11,5 +11,6 @@ public interface ProjectService {
     List<ProjectDTO> searchProjects(String term, int page, int pageSize);
     ProjectDTO getProjectByProjNo(Integer projNo);
     List<ProjectDTO> getAllProjects();
+    void updateProjectProgress(Integer projNo); // 프로젝트 진행율 업데이트 메서드 추가
 
 }

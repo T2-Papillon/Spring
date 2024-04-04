@@ -78,6 +78,11 @@ public class ProjectServiceImpl implements ProjectService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void updateProjectProgress(Integer projNo) {
+
+    }
+
     // 프로젝트 엔티티를 ProjectDto로 변환하는 유틸리티 메소드
     private ProjectDTO convertToDto(Project project) {
         ProjectDTO dto = new ProjectDTO();

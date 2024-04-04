@@ -21,6 +21,8 @@ public class TaskPriority {
     @OneToMany(mappedBy = "taskPriority", cascade = CascadeType.REMOVE)
     private List<Task> tasks = new ArrayList<>();
 
-
+    // 가중치 필드 추가
+    @Column(name = "weight")
+    private Double weight;
 }
 
