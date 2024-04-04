@@ -20,10 +20,10 @@ public class SpringConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.
-                csrf().disable().cors().disable().
+                csrf().disable().
                 authorizeHttpRequests(request -> request
-                        //.anyRequest().authenticated()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/**").permitAll()
+                        .anyRequest().authenticated()
                 );
 
         return http.build();
@@ -34,8 +34,8 @@ public class SpringConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:5173"); // 클라이언트 도메인을 지정하세요.
+        //config.setAllowCredentials(true);
+        config.addAllowedOrigin("*"); // 클라이언트 도메인을 지정하세요.
         config.addAllowedHeader("*");
         config.addAllowedMethod(HttpMethod.GET);
         config.addAllowedMethod(HttpMethod.POST);
