@@ -8,6 +8,7 @@ import com.boogle.papplan.entity.TaskStatus;
 import com.boogle.papplan.repository.ProjectRepository;
 import com.boogle.papplan.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -125,6 +126,13 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDTO> getAllTasks() {
         List<Task> tasks = taskRepository.findAll(); // 모든 업무 조회
         return tasks.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDTO> searchTasks(Integer projNo, String term, int page, int pageSize) {
+        return taskRepository.findByProjectIdAndTaskTitleOrAssignee(projNo, term, PageRequest.of(page, pageSize)).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
