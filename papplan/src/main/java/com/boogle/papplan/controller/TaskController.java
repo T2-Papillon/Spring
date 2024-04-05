@@ -91,4 +91,13 @@ public class TaskController {
         return ResponseEntity.ok(taskDTOS);
     }
 
+    // 특정 프로젝트 안의 특정 진행 상태에 해당하는 업무를 가져오는 엔드포인트
+    @GetMapping("project/{projNo}/status")
+    public ResponseEntity<List<TaskDTO>> findTasksByStatusId(
+            @PathVariable Integer projNo,
+            @RequestParam(required = false) String taskStatusId) {
+        List<TaskDTO> taskDTOS = taskService.findTasksByStatusIdDto(projNo, taskStatusId);
+        return ResponseEntity.ok(taskDTOS);
+    }
+
 }

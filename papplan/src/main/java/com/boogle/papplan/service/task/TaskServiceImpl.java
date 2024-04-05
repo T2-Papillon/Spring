@@ -32,6 +32,21 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> findTasksByStatusId(Integer projNo, String taskStatusId) {
+        if (taskStatusId == null || taskStatusId.isEmpty() || taskStatusId.equals("전체")) {
+            return taskRepository.findAll();
+        } else {
+            return taskRepository.findByProjectProjNoAndTaskStatusTaskStatusId(projNo, taskStatusId);
+        }
+    }
+
+    @Override
+    public List<TaskDTO> findTasksByStatusIdDto(Integer projNo, String taskStatusId) {
+        List<Task> tasks = taskRepository.findByProjectProjNoAndTaskStatusTaskStatusId(projNo, taskStatusId);
+        return tasks.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
     public List<TaskDTO> getTasksByProjectId(Integer projNo) {
         List<Task> tasks = taskRepository.findAllByProjectProjNo(projNo);
         return tasks.stream()
