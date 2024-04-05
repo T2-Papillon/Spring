@@ -149,7 +149,9 @@ public class TaskServiceImpl implements TaskService {
         taskDto.setTaskStatus(task.getTaskStatus().getTaskStatusId());          // 업무 진행 상태
         taskDto.setTaskStartDate(task.getTaskStartDate());                      // 업무 시작일
         taskDto.setTaskEndDate(task.getTaskEndDate());                          // 업무 종료일
+        taskDto.setTaskFinishDate(task.getTaskFinishDate());                    // 실제 업무 종료일
         taskDto.setTaskTest(task.getTaskTest());                // 업무 테스트 여부
+        taskDto.setTaskTestUrl(task.getTaskTestUrl());          // 테스트 요청 URL
         taskDto.setTaskPercent(task.getTaskPercent());          // 업무 진행도
         taskDto.setTaskCreateDate(task.getTaskCreateDate());    // 업무 생성일
         taskDto.setTaskUpdateDate(task.getTaskUpdateDate());    // 업무 수정일
@@ -179,10 +181,12 @@ public class TaskServiceImpl implements TaskService {
         task.setTaskStatus(taskStatus);
 
         task.setTaskStartDate(taskDto.getTaskStartDate());      // 업무 시작일
-        task.setTaskEndDate(taskDto.getTaskEndDate());          // 업무 종료일
+        task.setTaskEndDate(taskDto.getTaskEndDate());          // 업무 종료 예정일
+        task.setTaskFinishDate(taskDto.getTaskFinishDate());    // 실제 업무 종료일
         task.setTaskPercent(taskDto.getTaskPercent());          // 업무 진행 정도(xx%)
         if(taskDto.getTaskTest() != null)
-            task.setTaskTest(taskDto.getTaskTest());                // 업무 테스트 진행 여부
+            task.setTaskTest(taskDto.getTaskTest());            // 업무 테스트 진행 여부
+        task.setTaskTestUrl(taskDto.getTaskTestUrl());          // 테스트 요청 URL
         task.setTaskCreateDate(taskDto.getTaskCreateDate());    // 업무 생성일
         task.setTaskUpdateDate((taskDto.getTaskUpdateDate()));  // 수정일
 
