@@ -75,4 +75,18 @@ public class TaskController {
         return ResponseEntity.ok().body(tasks);
     }
 
+    // 프로젝트 ID를 경로에서 추출하여 특정 프로젝트 내에서 업무를 검색하는 엔드포인트
+    @GetMapping("/project/{projNo}/task/search")
+    public ResponseEntity<List<TaskDTO>> searchTasks(@PathVariable Integer projNo,
+                                                     @RequestParam String term,
+                                                     @RequestParam(defaultValue = "0") String page,
+                                                     @RequestParam(defaultValue = "10") String pageSize) {
+
+        int pageInt = Integer.parseInt(page);
+        int pageSizeInt = Integer.parseInt(pageSize);
+
+        List<TaskDTO> taskDTOS = taskService.searchTasks(projNo, term,pageInt,pageSizeInt);
+        return ResponseEntity.ok(taskDTOS);
+    }
+
 }
