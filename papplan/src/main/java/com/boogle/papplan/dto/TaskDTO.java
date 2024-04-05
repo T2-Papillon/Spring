@@ -33,11 +33,17 @@ public class TaskDTO {
     @JsonProperty("end_date")
     private Date taskEndDate;
 
+    @JsonProperty("finish_date")
+    private Date taskFinishDate;
+
     @JsonProperty("task_percent")
     private Integer taskPercent;
 
     @JsonProperty("task_test")
     private Boolean taskTest;
+
+    @JsonProperty("task_test_url")
+    private String taskTestUrl;
 
     @JsonProperty("update_date")
     private Date taskUpdateDate;

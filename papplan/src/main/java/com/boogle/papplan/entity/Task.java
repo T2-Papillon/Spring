@@ -35,7 +35,11 @@ public class Task {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "task_end_date", nullable = false)
-    private Date taskEndDate; // 업무종료일
+    private Date taskEndDate; // 업무종료 예정일
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "task_finish_date")
+    private Date taskFinishDate;    // 실제 업무 종료일
 
     @Column(name = "task_percent", nullable = false)
     private Integer taskPercent; // 업무진행율
@@ -44,11 +48,15 @@ public class Task {
     @Column(name = "task_create_date", nullable = false)
     private Date taskCreateDate; // 업무작성일
 
+
     @Column(name = "task_test", nullable = false)
     private Boolean taskTest = false ; // 테스트 진행여부
 
+    @Column(name = "task_test_url")
+    private String taskTestUrl;        // 테스트 요청 URL
+
     @Temporal(TemporalType.DATE)
-    @Column(name = "task_update_date", nullable = true)
+    @Column(name = "task_update_date")
     private Date taskUpdateDate; // 업무수정일
 
     @Column(name = "task_desc", length=300, nullable = false)

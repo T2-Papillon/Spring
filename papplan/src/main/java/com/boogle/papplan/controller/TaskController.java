@@ -50,7 +50,9 @@ public class TaskController {
    // 프로젝트와 태스크 ID에 해당하는 태스크를 업데이트하는 엔드포인트
     @PostMapping("/project/{projNo}/task/{taskNo}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable Integer projNo, @PathVariable Integer taskNo, @RequestBody TaskDTO taskDto) {
+        System.out.println(taskDto);
         TaskDTO updatedTask = taskService.updateTask(projNo, taskNo, taskDto);
+        System.out.println("check utc time : " + taskDto.getTaskStartDate() + " <><><> " + taskDto.getTaskFinishDate());
         if (updatedTask != null) {
             return ResponseEntity.ok(updatedTask);
         } else {
