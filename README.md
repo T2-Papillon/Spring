@@ -9,7 +9,7 @@ $ ./mvnw clean pacakge
 $ java -jar target/paplan-0.0.5-SNAPSHOT.jar
 ```
 
-## Proxy Build
+## Proxy Server Build
 ```sh
 $ cd papplan
 $ sudo docker compose -f docker-compose.yml up -d --build --force-recreate
