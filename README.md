@@ -2,6 +2,10 @@
 **효율적인 업무를 위한 일정 관리 시스템**
 - Backend URL : http://3.114.241.233/8888
 
+## Recommended IDE Setup
+
+- [IntelliJ](https://www.jetbrains.com/ko-kr/idea/) 
+
 ## Build
 ```sh
 $ cd papplan
