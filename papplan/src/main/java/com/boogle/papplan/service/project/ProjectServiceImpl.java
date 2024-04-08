@@ -89,6 +89,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void updateProjectProgress(Integer projNo) {
+        //하위업무 조회
         List<TaskDTO> tasks = taskService.getTasksByProjectId(projNo);
 
         if (!tasks.isEmpty()) {

@@ -92,5 +92,4 @@ public class ProjectController {
         projectService.updateProjectProgress(projNo);
         return ResponseEntity.ok("프로젝트 진행률이 업데이트되었습니다.");
     }
-
 }
