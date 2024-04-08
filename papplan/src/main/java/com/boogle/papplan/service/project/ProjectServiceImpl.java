@@ -1,11 +1,14 @@
 package com.boogle.papplan.service.project;
 
 import com.boogle.papplan.dto.EmployeeDTO;
+import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.repository.ContributorRepository;
 import com.boogle.papplan.repository.EmployeeRepository;
 import com.boogle.papplan.repository.ProjectRepository;
+import com.boogle.papplan.repository.TaskRepository;
+import com.boogle.papplan.service.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -20,14 +23,19 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final ContributorRepository contributorRepository;
     private final EmployeeRepository employeeRepository;
+    private final TaskService taskService;
+
+
 
     @Autowired
     public ProjectServiceImpl(ProjectRepository projectRepository,
                               ContributorRepository contributorRepository,
-                              EmployeeRepository employeeRepository) {
+                              EmployeeRepository employeeRepository,
+                              TaskService taskService) {
         this.projectRepository = projectRepository;
         this.contributorRepository = contributorRepository;
         this.employeeRepository = employeeRepository;
+        this.taskService = taskService;
     }
 
     // PM으로 참여한 프로젝트를 가져오는 메서드
@@ -77,6 +85,31 @@ public class ProjectServiceImpl implements ProjectService {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+
+
+    @Override
+    public void updateProjectProgress(Integer projNo) {
+        //하위업무 조회
+        List<TaskDTO> tasks = taskService.getTasksByProjectId(projNo);
+
+        if (!tasks.isEmpty()) {
+            // 가져온 작업들의 진행률을 평균냄
+            double averageProgress = tasks.stream()
+                    .mapToInt(TaskDTO::getTaskPercent)
+                    .average()
+                    .orElse(0.0); // 작업이 없으면 0 반환
+
+            // 프로젝트 엔티티를 찾아서 진행률을 업데이트
+            Optional<Project> projectOptional = projectRepository.findById(projNo);
+            if (projectOptional.isPresent()) {
+                Project project = projectOptional.get();
+                project.setProjPercent((int) Math.round(averageProgress));
+                projectRepository.save(project);
+            }
+        }
+    }
+
+
 
     // 프로젝트 엔티티를 ProjectDto로 변환하는 유틸리티 메소드
     private ProjectDTO convertToDto(Project project) {

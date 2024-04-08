@@ -12,4 +12,6 @@ public interface ProjectService {
     ProjectDTO getProjectByProjNo(Integer projNo);
     List<ProjectDTO> getAllProjects();
 
+    // 프로젝트 진행률 업데이트 메서드
+    void updateProjectProgress(Integer projNo);
 }
