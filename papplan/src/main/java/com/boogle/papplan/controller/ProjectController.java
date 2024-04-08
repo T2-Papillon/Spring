@@ -85,4 +85,12 @@ public class ProjectController {
         List<TaskDTO> tasks = taskService.getTasksByProjectId(projectNo);
         return ResponseEntity.ok(tasks);
     }
+
+    // 프로젝트 진행률 업데이트 요청 처리
+    @PostMapping("/{projNo}/updateProgress")
+    public ResponseEntity<String> updateProjectProgress(@PathVariable Integer projNo) {
+        projectService.updateProjectProgress(projNo);
+        return ResponseEntity.ok("프로젝트 진행률이 업데이트되었습니다.");
+    }
+
 }
