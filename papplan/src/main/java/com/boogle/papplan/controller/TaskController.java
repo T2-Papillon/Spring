@@ -50,7 +50,9 @@ public class TaskController {
    // 프로젝트와 태스크 ID에 해당하는 태스크를 업데이트하는 엔드포인트
     @PostMapping("/project/{projNo}/task/{taskNo}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable Integer projNo, @PathVariable Integer taskNo, @RequestBody TaskDTO taskDto) {
+        System.out.println(taskDto);
         TaskDTO updatedTask = taskService.updateTask(projNo, taskNo, taskDto);
+        System.out.println("check utc time : " + taskDto.getTaskStartDate() + " <><><> " + taskDto.getTaskFinishDate());
         if (updatedTask != null) {
             return ResponseEntity.ok(updatedTask);
         } else {
@@ -86,6 +88,15 @@ public class TaskController {
         int pageSizeInt = Integer.parseInt(pageSize);
 
         List<TaskDTO> taskDTOS = taskService.searchTasks(projNo, term,pageInt,pageSizeInt);
+        return ResponseEntity.ok(taskDTOS);
+    }
+
+    // 특정 프로젝트 안의 특정 진행 상태에 해당하는 업무를 가져오는 엔드포인트
+    @GetMapping("project/{projNo}/status")
+    public ResponseEntity<List<TaskDTO>> findTasksByStatusId(
+            @PathVariable Integer projNo,
+            @RequestParam(required = false) String taskStatusId) {
+        List<TaskDTO> taskDTOS = taskService.findTasksByStatusIdDto(projNo, taskStatusId);
         return ResponseEntity.ok(taskDTOS);
     }
 

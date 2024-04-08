@@ -11,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,6 +29,21 @@ public class TaskServiceImpl implements TaskService {
     public TaskServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
+    }
+
+    @Override
+    public List<Task> findTasksByStatusId(Integer projNo, String taskStatusId) {
+        if (taskStatusId == null || taskStatusId.isEmpty() || taskStatusId.equals("전체")) {
+            return taskRepository.findAll();
+        } else {
+            return taskRepository.findByProjectProjNoAndTaskStatusTaskStatusId(projNo, taskStatusId);
+        }
+    }
+
+    @Override
+    public List<TaskDTO> findTasksByStatusIdDto(Integer projNo, String taskStatusId) {
+        List<Task> tasks = taskRepository.findByProjectProjNoAndTaskStatusTaskStatusId(projNo, taskStatusId);
+        return tasks.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -69,17 +88,11 @@ public class TaskServiceImpl implements TaskService {
         // 프로젝트 ID와 태스크 ID를 사용하여 해당하는 태스크를 조회합니다.
         Optional<Task> optionalTask = Optional.ofNullable(taskRepository.findByProjectProjNoAndTaskNo(projNo, taskNo));
 
-        if (optionalTask.isEmpty()) {
-            return null;
-        }
-
-        Task task = optionalTask.get();
-
-        // Project 번호
+         /* // Project 번호
         Project project = task.getProject();
-        project.setProjNo(taskDto.getProjNo());
+        project.setProjNo(taskDto.getProjNo());*/
 
-        task.setTaskTitle(taskDto.getTaskTitle());  // 업무 제목
+        /*task.setTaskTitle(taskDto.getTaskTitle());  // 업무 제목
         task.setAssignee(taskDto.getAssignee());    // 업무 담당자 이름
         task.setTaskDesc(taskDto.getTaskDesc());    // 업무 설명
 
@@ -99,11 +112,40 @@ public class TaskServiceImpl implements TaskService {
         if(taskDto.getTaskTest() != null)
             task.setTaskTest(taskDto.getTaskTest());                // 업무 테스트 진행 여부
         task.setTaskCreateDate(taskDto.getTaskCreateDate());    // 업무 생성일
-        task.setTaskUpdateDate((taskDto.getTaskUpdateDate()));  // 수정일
+        task.setTaskUpdateDate((taskDto.getTaskUpdateDate()));  // 수정일*/
 
-        task = taskRepository.save(task);
+        if (optionalTask.isEmpty()) {
+            return null;
+        }
+        else{
+            Task task = optionalTask.get();
+            String originTaskStatus = task.getTaskStatus().getTaskStatusId();
+            Date originTaskFinishDate = task.getTaskFinishDate();
+            System.out.println("[Update Task LOG] " + task.getTaskNo() + " >> " + " +(( " + originTaskStatus + " )) >> TO BE (( " + taskDto.getTaskStatus() + " ))");
 
-        return convertToDto(task);
+            // 진행도가 100%가 되었거나 진행 상태가 완료로 바뀐 경우 -> 업무 종료 시간 저장
+            if(!originTaskStatus.equals("DONE") && (taskDto.getTaskStatus().equals("DONE") || taskDto.getTaskPercent() >= 100)){
+                taskDto.setTaskFinishDate(new Date());
+            }
+            // 어떤 이유에 진행도가 다시 100 미만이 되거나 완료 상태가 아니게 되었을 경우 -> 종료 시간 삭제
+            else if(originTaskStatus.equals("DONE") && (!taskDto.getTaskStatus().equals("DONE") || taskDto.getTaskPercent() < 100)){
+                taskDto.setTaskFinishDate(null);
+            }
+
+            try{
+                taskDto.setTaskNo(taskNo);
+                Task updateTask = convertToEntity(taskDto);
+                taskRepository.save(updateTask);
+
+                return convertToDto(task);
+            }
+            catch(Exception e){
+                return null;
+            }
+
+        }
+
+
     }
 
 
@@ -149,7 +191,9 @@ public class TaskServiceImpl implements TaskService {
         taskDto.setTaskStatus(task.getTaskStatus().getTaskStatusId());          // 업무 진행 상태
         taskDto.setTaskStartDate(task.getTaskStartDate());                      // 업무 시작일
         taskDto.setTaskEndDate(task.getTaskEndDate());                          // 업무 종료일
+        taskDto.setTaskFinishDate(task.getTaskFinishDate());                    // 실제 업무 종료일
         taskDto.setTaskTest(task.getTaskTest());                // 업무 테스트 여부
+        taskDto.setTaskTestUrl(task.getTaskTestUrl());          // 테스트 요청 URL
         taskDto.setTaskPercent(task.getTaskPercent());          // 업무 진행도
         taskDto.setTaskCreateDate(task.getTaskCreateDate());    // 업무 생성일
         taskDto.setTaskUpdateDate(task.getTaskUpdateDate());    // 업무 수정일
@@ -164,6 +208,7 @@ public class TaskServiceImpl implements TaskService {
         project.setProjNo(taskDto.getProjNo());
         task.setProject(project);
 
+        task.setTaskNo(taskDto.getTaskNo());
         task.setTaskTitle(taskDto.getTaskTitle());  // 업무 제목
         task.setAssignee(taskDto.getAssignee());    // 업무 담당자 이름
         task.setTaskDesc(taskDto.getTaskDesc());    // 업무 설명
@@ -179,10 +224,12 @@ public class TaskServiceImpl implements TaskService {
         task.setTaskStatus(taskStatus);
 
         task.setTaskStartDate(taskDto.getTaskStartDate());      // 업무 시작일
-        task.setTaskEndDate(taskDto.getTaskEndDate());          // 업무 종료일
+        task.setTaskEndDate(taskDto.getTaskEndDate());          // 업무 종료 예정일
+        task.setTaskFinishDate(taskDto.getTaskFinishDate());    // 실제 업무 종료일
         task.setTaskPercent(taskDto.getTaskPercent());          // 업무 진행 정도(xx%)
         if(taskDto.getTaskTest() != null)
-            task.setTaskTest(taskDto.getTaskTest());                // 업무 테스트 진행 여부
+            task.setTaskTest(taskDto.getTaskTest());            // 업무 테스트 진행 여부
+        task.setTaskTestUrl(taskDto.getTaskTestUrl());          // 테스트 요청 URL
         task.setTaskCreateDate(taskDto.getTaskCreateDate());    // 업무 생성일
         task.setTaskUpdateDate((taskDto.getTaskUpdateDate()));  // 수정일
 

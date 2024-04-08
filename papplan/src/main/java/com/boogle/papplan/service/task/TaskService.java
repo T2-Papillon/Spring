@@ -2,6 +2,8 @@
 package com.boogle.papplan.service.task;
 
 import com.boogle.papplan.dto.TaskDTO;
+import com.boogle.papplan.entity.Task;
+
 import java.util.List;
 
 public interface TaskService {
@@ -23,4 +25,8 @@ public interface TaskService {
 
     // 업무 검색
     List<TaskDTO> searchTasks(Integer projNo, String term, int page, int pageSize);
+
+    List<Task> findTasksByStatusId(Integer projNo, String taskStatusId);
+
+    List<TaskDTO> findTasksByStatusIdDto(Integer projNo, String taskStatusId);
 }
