@@ -157,8 +157,9 @@ public class TaskServiceImpl implements TaskService {
 
     // 사원 번호로 사원이 담당하고 있는 진행중인 업무 리턴
     @Override
-    public List<TaskDTO> getTasksByEmpNoInProgress(Integer empNo) {
-        List<Task> tasks = taskRepository.findAllByEmpNoInProgress(empNo);
+    public List<TaskDTO> getTasksByEmpNo(Integer empNo) {
+        //List<Task> tasks = taskRepository.findAllByEmpNoInProgress(empNo);
+        List<Task> tasks = taskRepository.findAllByEmpNo(empNo);
         return tasks.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());

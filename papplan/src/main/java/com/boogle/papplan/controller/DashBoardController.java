@@ -4,15 +4,16 @@ import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.service.project.ProjectService;
 import com.boogle.papplan.service.task.TaskService;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.boogle.papplan.util.DashBoardDataUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/dashboard")
@@ -37,14 +38,24 @@ public class DashBoardController {
     // 24.03.31 : 사용자가 참여중인 프로젝트, 진행중인 업무 조회
     // 통계 추가 예정
     @GetMapping("/emp/{empno}")
-    public ResponseEntity<HashMap<String,Object>> empProjectTaskAll(@PathVariable("empno") Integer empNo){
+    public ResponseEntity<Object> empProjectTaskAll(@PathVariable("empno") Integer empNo){
         HashMap<String, Object> empDashBoard = new HashMap<>();
-        List<ProjectDTO> projects = projectService.findProjectsByEmpNo(empNo);
-        List<TaskDTO> tasks = taskService.getTasksByEmpNoInProgress(empNo);
-        empDashBoard.put("projects", projects);
-        empDashBoard.put("tasks", tasks);
 
-        return ResponseEntity.ok(empDashBoard);
+        try{
+            List<ProjectDTO>    projects   = projectService.findProjectsByEmpNo(empNo);
+            List<TaskDTO>       tasks      = taskService.getTasksByEmpNo(empNo);
+
+            HashMap<String,Object> projectData  = DashBoardDataUtil.getDashBoardPrjData(projects);
+            HashMap<String,Object> taskData     = DashBoardDataUtil.getDashBoardTaskData(tasks);
+
+            empDashBoard.putAll(projectData);
+            empDashBoard.putAll(taskData);
+
+            return ResponseEntity.ok(empDashBoard);
+        }
+        catch(Exception e){
+            return new ResponseEntity<>("Data Not Found", HttpStatus.NOT_FOUND);
+        }
     }
 
     // 사용자 프로젝트 상세 조회
