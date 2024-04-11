@@ -13,13 +13,11 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 
     // 사원의 진행중인 업무 조회
     @Query("SELECT t FROM Task t WHERE " +
-            " t.assignee LIKE (SELECT e.name FROM Employees e WHERE e.eno = (:empNo)) " +
-            " AND t.taskStatus.taskStatusId = \"DOING\"")
+            " t.assignee.eno = :empNo AND t.taskStatus.taskStatusId = 'DOING'")
     List<Task> findAllByEmpNoInProgress(Integer empNo);
 
     // 사원에게 부여된 모든 업무 조회
-    @Query("SELECT t FROM Task t WHERE " +
-            " t.assignee LIKE (SELECT e.name FROM Employees e WHERE e.eno = (:empNo)) ")
+    @Query("SELECT t FROM Task t WHERE t.assignee.eno = :empNo")
     List<Task> findAllByEmpNo(Integer empNo);
 
     Task findByProjectProjNoAndTaskNo(Integer projNo, Integer taskNo);

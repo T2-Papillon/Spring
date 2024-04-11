@@ -1,8 +1,11 @@
 package com.boogle.papplan.dto;
 
+import com.boogle.papplan.entity.Employees;
 import com.boogle.papplan.entity.TaskPriority;
 import com.boogle.papplan.entity.TaskStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import java.util.Date;
 
@@ -18,8 +21,8 @@ public class TaskDTO {
     @JsonProperty("task_title")
     private String taskTitle;
 
-    //@JsonProperty("proj_no")
-    private String assignee;
+    @JsonProperty("assignee_eno")
+    private Integer assigneeEno; // 담당자의 사번
 
     @JsonProperty("task_status")
     private String taskStatus;

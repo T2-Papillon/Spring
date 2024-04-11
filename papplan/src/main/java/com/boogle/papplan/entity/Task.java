@@ -26,8 +26,10 @@ public class Task {
     @Column(name = "task_title", length=50, nullable = false)
     private String taskTitle; // 업무명
 
-    @Column(name = "assignee", length=20, nullable = false)
-    private String assignee; // 담당자
+    // 외래키
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assignee_eno", referencedColumnName = "eno", nullable = false)
+    private Employees assignee; // 담당자
 
     @Temporal(TemporalType.DATE)
     @Column(name = "task_start_date", nullable = false)
