@@ -201,7 +201,7 @@ public class TaskServiceImpl implements TaskService {
             taskDto.setAssigneeName(assignee.getName());
             // 부서 정보가 있는 경우, 부서명 설정
             if (assignee.getDepartment() != null) {
-                taskDto.setAssigneeDept(assignee.getDepartment().getDept_name());  // 부서명 설정
+                taskDto.setAssigneeDept(assignee.getDepartment().getDept_no());
             }
         }
         return taskDto;
