@@ -10,10 +10,13 @@ import com.boogle.papplan.repository.EmployeeRepository;
 import com.boogle.papplan.repository.ProjectRepository;
 import com.boogle.papplan.repository.TaskRepository;
 import com.boogle.papplan.service.task.TaskService;
+import com.boogle.papplan.util.DashBoardDataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,6 +55,28 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.findAllByEmpno(empNo).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<HashMap<String,Object>> findProjectsByEmpNoDashBoard(Integer empNo) {
+        HashMap<String, Object> projectData;
+        List<Project> doingProjects;
+        List<ProjectDTO> doingProjectDTOs = new ArrayList<>();
+        try {
+            projectData = DashBoardDataUtil.getDashBoardPrjData(projectRepository.findAllByEmpno(empNo));
+            doingProjects = (List<Project>) projectData.get("projects");
+            for(Project project : doingProjects) {
+                doingProjectDTOs.add(convertToDto(project));
+            }
+            projectData.put("projects", doingProjectDTOs);
+        }
+        catch(Exception e) {
+            return Optional.empty();
+        }
+
+        return Optional.of(projectData);
+
+
     }
 
 
@@ -129,6 +154,7 @@ public class ProjectServiceImpl implements ProjectService {
         dto.setProjTitle(project.getProjTitle());
         if(project.getProjPm() != null) {
             dto.setProjPm(project.getProjPm().getName());
+            dto.setProjPmDept(project.getProjPm().getDepartment().getDept_name());
         }
         dto.setProjStartDate(project.getProjStartDate());
         dto.setProjEndDate(project.getProjEndDate());

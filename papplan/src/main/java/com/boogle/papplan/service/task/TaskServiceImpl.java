@@ -1,18 +1,17 @@
 package com.boogle.papplan.service.task;
 
 import com.boogle.papplan.dto.TaskDTO;
+import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.entity.*;
 import com.boogle.papplan.repository.*;
+import com.boogle.papplan.util.DashBoardDataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -154,11 +153,32 @@ public class TaskServiceImpl implements TaskService {
     // 사원 번호로 사원이 담당하고 있는 진행중인 업무 리턴
     @Override
     public List<TaskDTO> getTasksByEmpNo(Integer empNo) {
-        //List<Task> tasks = taskRepository.findAllByEmpNoInProgress(empNo);
         List<Task> tasks = taskRepository.findAllByEmpNo(empNo);
         return tasks.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<HashMap<String, Object>> getTasksByEmpNoDashBoard(Integer empNo) {
+        HashMap<String, Object> taskData;
+        List<Task> doingTasks;
+        List<TaskDTO> doingTaskDTOs = new ArrayList<>();
+        try {
+            taskData = DashBoardDataUtil.getDashBoardTaskData(taskRepository.findAllByEmpNo(empNo));
+            doingTasks = (List<Task>) taskData.get("tasks");
+            for(Task task : doingTasks) {
+                doingTaskDTOs.add(convertToDto(task));
+            }
+            taskData.put("tasks", doingTaskDTOs);
+        }
+        catch(Exception e) {
+            return Optional.empty();
+        }
+
+        return Optional.of(taskData);
+
+
     }
 
     @Override
