@@ -78,4 +78,6 @@ public class ProjectServiceImplTest {
                 .anyMatch(contributorDTO -> contributorDTO.getName().equals(searchTerm));
         Assertions.assertTrue(found, "검색된 프로젝트 중 적어도 하나는 검색어와 일치하는 Contributor를 포함해야 합니다.");
     }
+
+
 }
