@@ -24,3 +24,13 @@ $ sudo docker compose -f docker-compose.yml up -d --build --force-recreate
 ![image](https://github.com/T2-Papillon/Spring/assets/66417882/71266733-a824-4598-ae23-279c961f6e4b)
 -  github action, AWS CodeDeploy 활용
 - [URL](http://3.114.241.233/8888)
+
+## Applying jekins source code analysis
+```bash
+$ ./mvnw clean pacakge
+$ ./mvnw site
+
+$ cd ..
+$ ls -l papplan/target/checkstyle-result.xml
+$ ls -l papplan/target/site/spotbugs.xml
+```
