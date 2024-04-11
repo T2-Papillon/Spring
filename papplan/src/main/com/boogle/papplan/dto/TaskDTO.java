@@ -1,7 +1,5 @@
 package com.boogle.papplan.dto;
 
-import com.boogle.papplan.entity.TaskPriority;
-import com.boogle.papplan.entity.TaskStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import java.util.Date;

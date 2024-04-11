@@ -4,7 +4,6 @@ import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.service.project.ProjectService;
 import com.boogle.papplan.service.task.TaskService;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/dashboard")
