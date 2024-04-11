@@ -33,4 +33,7 @@ $ ./mvnw site
 $ cd ..
 $ ls -l papplan/target/checkstyle-result.xml
 $ ls -l papplan/target/site/spotbugs.xml
+
+$ ./mvnw test -DargLine="-Dspring.profiles.active=test"
+$ ./mvnw jacoco:report -DargLine="-Dspring.profiles.active=test"
 ```
