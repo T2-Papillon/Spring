@@ -24,6 +24,12 @@ public class TaskDTO {
     @JsonProperty("assignee_eno")
     private Integer assigneeEno; // 담당자의 사번
 
+    @JsonProperty("assignee_name")
+    private String assigneeName;
+
+    @JsonProperty("assignee_dept")
+    private String assigneeDept;
+
     @JsonProperty("task_status")
     private String taskStatus;
 

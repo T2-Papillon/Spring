@@ -182,9 +182,6 @@ public class TaskServiceImpl implements TaskService {
         taskDto.setTaskNo(task.getTaskNo());                // task 고유 번호
         taskDto.setProjNo(task.getProject().getProjNo());   // 프로젝트 번호
         taskDto.setTaskTitle(task.getTaskTitle());          // 업무 제목
-        if (task.getAssignee() != null) {
-            taskDto.setAssigneeEno(task.getAssignee().getEno());
-        }  // 업무 담당자
         taskDto.setTaskDesc(task.getTaskDesc());            // 업무 설명
         taskDto.setTaskPriority(task.getTaskPriority().getTaskPriorityId());    // 업무 우선순위
         taskDto.setTaskStatus(task.getTaskStatus().getTaskStatusId());          // 업무 진행 상태
@@ -196,6 +193,17 @@ public class TaskServiceImpl implements TaskService {
         taskDto.setTaskPercent(task.getTaskPercent());          // 업무 진행도
         taskDto.setTaskCreateDate(task.getTaskCreateDate());    // 업무 생성일
         taskDto.setTaskUpdateDate(task.getTaskUpdateDate());    // 업무 수정일
+
+        // 담당자 정보가 있는 경우
+        if (task.getAssignee() != null) {
+            Employees assignee = task.getAssignee();
+            taskDto.setAssigneeEno(assignee.getEno());
+            taskDto.setAssigneeName(assignee.getName());
+            // 부서 정보가 있는 경우, 부서명 설정
+            if (assignee.getDepartment() != null) {
+                taskDto.setAssigneeDept(assignee.getDepartment().getDept_name());  // 부서명 설정
+            }
+        }
         return taskDto;
     }
 
