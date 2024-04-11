@@ -127,8 +127,11 @@
 				<version>4.8.4.0</version>
 				<configuration>
 					<xmlOutput>true</xmlOutput>
+					<effort>Max</effort>
+					<threshold>Low</threshold>
 					<!-- Optional directory to put spotbugs xdoc xml report -->
 					<xmlOutputDirectory>target/site</xmlOutputDirectory>
+					<spotbugsXmlOutputFilename>spotbugsReport.xml</spotbugsXmlOutputFilename>
 				</configuration>
 			</plugin>
 		</plugins>
