@@ -1,12 +1,8 @@
 package com.boogle.papplan.service.task;
 
 import com.boogle.papplan.dto.TaskDTO;
-import com.boogle.papplan.entity.Project;
-import com.boogle.papplan.entity.Task;
-import com.boogle.papplan.entity.TaskPriority;
-import com.boogle.papplan.entity.TaskStatus;
-import com.boogle.papplan.repository.ProjectRepository;
-import com.boogle.papplan.repository.TaskRepository;
+import com.boogle.papplan.entity.*;
+import com.boogle.papplan.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -24,11 +20,13 @@ public class TaskServiceImpl implements TaskService {
 
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public TaskServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository) {
+    public TaskServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, EmployeeRepository employeeRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
@@ -148,8 +146,6 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
-
-
     @Override
     public void deleteTask(Integer projNo, Integer taskNo) {
         taskRepository.deleteById(taskNo);
@@ -186,7 +182,9 @@ public class TaskServiceImpl implements TaskService {
         taskDto.setTaskNo(task.getTaskNo());                // task 고유 번호
         taskDto.setProjNo(task.getProject().getProjNo());   // 프로젝트 번호
         taskDto.setTaskTitle(task.getTaskTitle());          // 업무 제목
-        taskDto.setAssignee(task.getAssignee());            // 업무 담당자
+        if (task.getAssignee() != null) {
+            taskDto.setAssigneeEno(task.getAssignee().getEno());
+        }  // 업무 담당자
         taskDto.setTaskDesc(task.getTaskDesc());            // 업무 설명
         taskDto.setTaskPriority(task.getTaskPriority().getTaskPriorityId());    // 업무 우선순위
         taskDto.setTaskStatus(task.getTaskStatus().getTaskStatusId());          // 업무 진행 상태
@@ -203,15 +201,21 @@ public class TaskServiceImpl implements TaskService {
 
     private Task convertToEntity(TaskDTO taskDto) {
         Task task = new Task();
+        if (taskDto.getProjNo() != null) {
+            Project project = projectRepository.findById(taskDto.getProjNo())
+                    .orElseThrow(() -> new RuntimeException("Project not found with id: " + taskDto.getProjNo()));
+            task.setProject(project);
+        }
 
-        // Project 번호
-        Project project = new Project();
-        project.setProjNo(taskDto.getProjNo());
-        task.setProject(project);
+        if (taskDto.getAssigneeEno() != null) {
+            employeeRepository.findById(taskDto.getAssigneeEno())
+                    .ifPresentOrElse(task::setAssignee, () -> {
+                        throw new RuntimeException("Employee not found with id: " + taskDto.getAssigneeEno());
+                    });
+        }
 
         task.setTaskNo(taskDto.getTaskNo());
         task.setTaskTitle(taskDto.getTaskTitle());  // 업무 제목
-        task.setAssignee(taskDto.getAssignee());    // 업무 담당자 이름
         task.setTaskDesc(taskDto.getTaskDesc());    // 업무 설명
 
         // 업무 우선순위
