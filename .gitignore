@@ -220,3 +220,6 @@ buildNumber.properties
 .classpath
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,intellij,maven
+
+# jenkin
+test.db.lock.db

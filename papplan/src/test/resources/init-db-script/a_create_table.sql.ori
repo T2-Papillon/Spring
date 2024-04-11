@@ -1,0 +1,123 @@
+
+CREATE TABLE department (
+                            dept_name varchar(20) NOT NULL,
+                            dept_no varchar(20) NOT NULL,
+                            PRIMARY KEY (dept_no)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+;
+
+CREATE TABLE job_title (
+                           position_id varchar(20) NOT NULL,
+                           position_name varchar(20) NOT NULL,
+                           PRIMARY KEY (position_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+;
+
+CREATE TABLE employees (
+                           eno int(11) NOT NULL AUTO_INCREMENT,
+                           dept_no varchar(20) NOT NULL,
+                           name varchar(20) NOT NULL,
+                           position_id varchar(20) NOT NULL,
+                           email varchar(50) NOT NULL,
+                           password varchar(65) NOT NULL,
+                           PRIMARY KEY (eno),
+                           UNIQUE KEY UK_j9xgmd0ya5jmus09o0b8pqrpb (email),
+                           KEY FKc5tcy3ldjg9pgmofuh69ifnk8 (dept_no),
+                           KEY FKk9ek51ibk8edn0vmud0phx50t (position_id),
+                           CONSTRAINT FKc5tcy3ldjg9pgmofuh69ifnk8 FOREIGN KEY (dept_no) REFERENCES department (dept_no),
+                           CONSTRAINT FKk9ek51ibk8edn0vmud0phx50t FOREIGN KEY (position_id) REFERENCES job_title (position_id)
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+;
+
+CREATE TABLE project_priority (
+                                  project_priority_id varchar(20) NOT NULL,
+                                  project_priority_name varchar(20) NOT NULL,
+                                  PRIMARY KEY (project_priority_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+;
+
+CREATE TABLE project_status (
+                                project_status_id varchar(20) NOT NULL,
+                                project_status_name varchar(20) NOT NULL,
+                                PRIMARY KEY (project_status_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+;
+
+CREATE TABLE project (
+                         proj_create_date date NOT NULL,
+                         proj_end_date date NOT NULL,
+                         proj_no int(11) NOT NULL AUTO_INCREMENT,
+                         proj_percent int(11) DEFAULT NULL,
+                         proj_start_date date NOT NULL,
+                         projp_no varchar(20) NOT NULL,
+                         projs_no varchar(20) NOT NULL,
+                         proj_pm int(11) NOT NULL,
+                         proj_title varchar(50) NOT NULL,
+                         proj_desc varchar(300) NOT NULL,
+                         PRIMARY KEY (proj_no),
+                         KEY FKkxuyy9b157h8g4yhxof63b6s4 (projp_no),
+                         KEY FKhcr6l61vviyxajjn0mngn4p97 (projs_no),
+                         KEY FKoh18faxky7y2y4q2phorwlkg2 (proj_pm),
+                         CONSTRAINT FKhcr6l61vviyxajjn0mngn4p97 FOREIGN KEY (projs_no) REFERENCES project_status (project_status_id),
+                         CONSTRAINT FKkxuyy9b157h8g4yhxof63b6s4 FOREIGN KEY (projp_no) REFERENCES project_priority (project_priority_id),
+                         CONSTRAINT FKoh18faxky7y2y4q2phorwlkg2 FOREIGN KEY (proj_pm) REFERENCES employees (eno)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+;
+
+CREATE TABLE contributor (
+                             eno int(11) NOT NULL,
+                             proj_no int(11) NOT NULL,
+                             id bigint(20) NOT NULL AUTO_INCREMENT,
+                             PRIMARY KEY (id),
+                             KEY FKs0gcx265xgqadp8gvkenx161i (eno),
+                             KEY FK2unk42qkxnn3018gma7847xfg (proj_no),
+                             CONSTRAINT FK2unk42qkxnn3018gma7847xfg FOREIGN KEY (proj_no) REFERENCES project (proj_no),
+                             CONSTRAINT FKs0gcx265xgqadp8gvkenx161i FOREIGN KEY (eno) REFERENCES employees (eno)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+;
+
+CREATE TABLE task_status (
+                             task_status_id varchar(20) NOT NULL,
+                             task_status_name varchar(20) NOT NULL,
+                             PRIMARY KEY (task_status_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+;
+
+
+CREATE TABLE task_priority (
+                               task_priority_id varchar(20) NOT NULL,
+                               task_priority_name varchar(20) NOT NULL,
+                               weight double DEFAULT NULL,
+                               PRIMARY KEY (task_priority_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+;
+
+
+CREATE TABLE task (
+                      proj_no int(11) NOT NULL,
+                      task_create_date date NOT NULL,
+                      task_end_date date NOT NULL,
+                      task_no int(11) NOT NULL AUTO_INCREMENT,
+                      task_percent int(11) NOT NULL,
+                      task_start_date date NOT NULL,
+                      task_test bit(1) NOT NULL,
+                      task_update_date date DEFAULT NULL,
+                      assignee varchar(20) NOT NULL,
+                      task_priority_id varchar(20) NOT NULL,
+                      task_status_id varchar(20) NOT NULL,
+                      task_title varchar(50) NOT NULL,
+                      task_desc varchar(300) NOT NULL,
+                      task_finish_date date DEFAULT NULL,
+                      task_test_url varchar(255) DEFAULT NULL,
+                      assignee_eno int(11) NOT NULL,
+                      PRIMARY KEY (task_no),
+                      KEY FK7osws2t3jy9wq4v50pod62nk2 (proj_no),
+                      KEY FK3s63t73vthpjk6vpwr3s3wtlg (task_priority_id),
+                      KEY FK39t114vuu54mh3wqt50wc2vq4 (task_status_id),
+                      KEY assignee_eno (assignee_eno),
+                      CONSTRAINT FK39t114vuu54mh3wqt50wc2vq4 FOREIGN KEY (task_status_id) REFERENCES task_status (task_status_id),
+                      CONSTRAINT FK3s63t73vthpjk6vpwr3s3wtlg FOREIGN KEY (task_priority_id) REFERENCES task_priority (task_priority_id),
+                      CONSTRAINT FK7osws2t3jy9wq4v50pod62nk2 FOREIGN KEY (proj_no) REFERENCES project (proj_no),
+                      CONSTRAINT FKoiwxucr4q9qh0c6r8eor2wgum FOREIGN KEY (assignee_eno) REFERENCES employees (eno)
+) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+;
