@@ -127,7 +127,9 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectDTO dto = new ProjectDTO();
         dto.setProjNo(project.getProjNo());
         dto.setProjTitle(project.getProjTitle());
-        dto.setProjPm(project.getProjPm());
+        if(project.getProjPm() != null) {
+            dto.setProjPm(project.getProjPm().getName());
+        }
         dto.setProjStartDate(project.getProjStartDate());
         dto.setProjEndDate(project.getProjEndDate());
         dto.setProjPercent(project.getProjPercent());

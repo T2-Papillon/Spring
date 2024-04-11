@@ -55,7 +55,7 @@ public class SearchServiceImpl implements SearchService {
 
         dto.setProjNo(project.getProjNo());
         dto.setProjTitle(project.getProjTitle());
-        dto.setProjPm(project.getProjPm());
+        dto.setProjPm(project.getProjPm().getName());
         dto.setProjStartDate(project.getProjStartDate());
         dto.setProjEndDate(project.getProjEndDate());
         dto.setProjPercent(project.getProjPercent());

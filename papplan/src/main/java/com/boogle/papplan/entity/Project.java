@@ -18,8 +18,11 @@ public class Project {
     @Column(length = 50, nullable = false, name = "proj_title")
     private String projTitle; // 프로젝트명
 
-    @Column(length = 50, nullable = false, name = "proj_pm")
-    private String projPm; // PM
+    //@Column(length = 50, nullable = false, name = "proj_pm")
+    //private String projPm; // PM
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false, name = "proj_pm")
+    private Employees projPm;
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false, name = "proj_start_date")
