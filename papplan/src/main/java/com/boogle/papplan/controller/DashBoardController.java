@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/dashboard")
@@ -42,14 +43,15 @@ public class DashBoardController {
         HashMap<String, Object> empDashBoard = new HashMap<>();
 
         try{
-            List<ProjectDTO>    projects   = projectService.findProjectsByEmpNo(empNo);
-            List<TaskDTO>       tasks      = taskService.getTasksByEmpNo(empNo);
+            //List<ProjectDTO>    projects   = projectService.findProjectsByEmpNo(empNo);
+            //List<TaskDTO>       tasks      = taskService.getTasksByEmpNo(empNo);
 
-            HashMap<String,Object> projectData  = DashBoardDataUtil.getDashBoardPrjData(projects);
-            HashMap<String,Object> taskData     = DashBoardDataUtil.getDashBoardTaskData(tasks);
+            Optional<HashMap<String,Object>> projectData  = projectService.findProjectsByEmpNoDashBoard(empNo);
+            Optional<HashMap<String,Object>> taskData     = taskService.getTasksByEmpNoDashBoard(empNo);
 
-            empDashBoard.putAll(projectData);
-            empDashBoard.putAll(taskData);
+            projectData.ifPresent(empDashBoard::putAll);
+
+            taskData.ifPresent(empDashBoard::putAll);
 
             return ResponseEntity.ok(empDashBoard);
         }

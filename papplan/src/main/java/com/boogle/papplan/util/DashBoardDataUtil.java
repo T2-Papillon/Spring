@@ -2,6 +2,8 @@ package com.boogle.papplan.util;
 
 import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
+import com.boogle.papplan.entity.Project;
+import com.boogle.papplan.entity.Task;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -11,10 +13,10 @@ import java.util.List;
 
 public class DashBoardDataUtil {
 
-    public static HashMap<String, Object> getDashBoardPrjData(List<ProjectDTO> projects) {
+    public static HashMap<String, Object> getDashBoardPrjData(List<Project> projects) {
 
         HashMap<String, Object> prjData = new HashMap<String, Object>();
-        List<ProjectDTO> prjIsProgressing = new ArrayList<>();
+        List<Project> prjIsProgressing = new ArrayList<>();
 
         LocalDate today = LocalDate.now();
         LocalDate lastWeekEnd = today.minusDays(today.getDayOfWeek().getValue() + 1);
@@ -25,12 +27,12 @@ public class DashBoardDataUtil {
         int prjYesterday    = 0;
         int prjWeek         = 0;
 
-        for (ProjectDTO project : projects) {
+        for (Project project : projects) {
             date = LocalDate.parse(project.getProjEndDate().toString());
             prjToday        += today.equals(date) ? 1 : 0;
             prjYesterday    += date.isAfter(today.minusDays(2)) && date.isBefore(today.minusDays(1)) ? 1 : 0;
             prjWeek         += date.isAfter(lastWeekStart) && date.isBefore(lastWeekEnd) ? 1 : 0;
-            if(project.getProjectStatus().equals("DOING")) {
+            if(project.getProjectStatus().getProjectStatusId().equals("DOING")) {
                 prjIsProgressing.add(project);
             }
         }
@@ -43,10 +45,10 @@ public class DashBoardDataUtil {
         return prjData;
     }
 
-    public static HashMap<String, Object> getDashBoardTaskData(List<TaskDTO> tasks) {
+    public static HashMap<String, Object> getDashBoardTaskData(List<Task> tasks) {
 
         HashMap<String, Object> taskData = new HashMap<String, Object>();
-        List<TaskDTO> taskIsProgressing = new ArrayList<>();
+        List<Task> taskIsProgressing = new ArrayList<>();
 
         LocalDate today = LocalDate.now();
         LocalDate lastWeekEnd = today.minusDays(today.getDayOfWeek().getValue() + 1);
@@ -58,14 +60,14 @@ public class DashBoardDataUtil {
         int taskYesterday    = 0;
         int taskWeek         = 0;
 
-        for (TaskDTO task : tasks) {
+        for (Task task : tasks) {
             if(task.getTaskFinishDate() != null) {
                 date = LocalDate.parse(task.getTaskFinishDate().toString());
                 taskToday       += today.equals(date) ? 1 : 0;
                 taskYesterday   += date.isAfter(today.minusDays(2)) && date.isBefore(today.minusDays(1)) ? 1 : 0;
                 taskWeek        += date.isAfter(lastWeekStart) && date.isBefore(lastWeekEnd) ? 1 : 0;
             }
-            if(task.getTaskStatus().equals("DOING")) {
+            if(task.getTaskStatus().getTaskStatusId().equals("DOING")) {
                 taskIsProgressing.add(task);
             }
         }
