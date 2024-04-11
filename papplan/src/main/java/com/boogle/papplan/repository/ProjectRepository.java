@@ -36,11 +36,6 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
             " p.projPm = (SELECT e.name from Employees e WHERE (:empno) = e.eno)")
     List<Project> findAllByEmpno(Integer empno);
 
-    @Query(" SELECT p FROM Project p " +
-            " LEFT JOIN FETCH p.contributors c " +
-            " LEFT JOIN FETCH c.employees ")
-    List<Project> findAllWithContributors();
-
     // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
     Project findByProjNo(Integer projNo);
 
@@ -52,6 +47,4 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
             "JOIN c.employees e " +
             "WHERE LOWER(p.projTitle) LIKE LOWER(:term) OR LOWER(p.projPm) LIKE LOWER(:term) OR LOWER(e.name) LIKE LOWER(:term)")
     List<ProjectQueryDTO> findByTerm(String term, Pageable pageable);
-
-
 }

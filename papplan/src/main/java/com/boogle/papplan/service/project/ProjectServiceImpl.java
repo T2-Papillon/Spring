@@ -3,6 +3,7 @@ package com.boogle.papplan.service.project;
 import com.boogle.papplan.dto.EmployeeDTO;
 import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
+import com.boogle.papplan.entity.Contributor;
 import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.repository.ContributorRepository;
 import com.boogle.papplan.repository.EmployeeRepository;
@@ -24,7 +25,6 @@ public class ProjectServiceImpl implements ProjectService {
     private final ContributorRepository contributorRepository;
     private final EmployeeRepository employeeRepository;
     private final TaskService taskService;
-
 
 
     @Autowired
@@ -109,7 +109,18 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
+    // 24.04.11 프로젝트 생성
+    @Override
+    public void insertProject(Project project, List<Contributor> contributors) {
+        projectRepository.save(project);
+        contributorRepository.saveAll(contributors);
+    }
 
+    // 24.04.11 프로젝트 내용 수정
+    @Override
+    public void updateProject(ProjectDTO projectDTO) {
+
+    }
 
     // 프로젝트 엔티티를 ProjectDto로 변환하는 유틸리티 메소드
     private ProjectDTO convertToDto(Project project) {
