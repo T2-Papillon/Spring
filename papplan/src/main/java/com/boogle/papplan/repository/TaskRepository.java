@@ -25,7 +25,7 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     // 업무명 또는 담당자 이름으로 Task 검색
     @Query("SELECT t FROM Task t WHERE t.project.projNo = :projNo AND (" +
             "LOWER(t.taskTitle) LIKE LOWER(:term) OR " +
-            "LOWER(t.assignee) LIKE LOWER(:term))")
+            "LOWER(t.assignee.name) LIKE LOWER(:term))")
     List<Task> findByProjectIdAndTaskTitleOrAssignee(Integer projNo, String term, Pageable pageable);
 
     // 업무 상태로 업무를 조회하는 메서드
