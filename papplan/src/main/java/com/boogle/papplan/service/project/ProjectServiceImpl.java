@@ -154,7 +154,7 @@ public class ProjectServiceImpl implements ProjectService {
         dto.setProjTitle(project.getProjTitle());
         if(project.getProjPm() != null) {
             dto.setProjPm(project.getProjPm().getName());
-            dto.setProjPmDept(project.getProjPm().getDepartment().getDept_name());
+            dto.setProjPmDept(project.getProjPm().getDepartment().getDept_no());
         }
         dto.setProjStartDate(project.getProjStartDate());
         dto.setProjEndDate(project.getProjEndDate());
