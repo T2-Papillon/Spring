@@ -84,7 +84,7 @@ public class SearchServiceImplTest {
                 .anyMatch(contributor -> contributor.getName().equals(contributorName));
         Assertions.assertTrue(hasContributor, "검색된 프로젝트들 중 최소 하나는 '" + contributorName + "'를 Contributor로 포함해야 합니다.");
     }
-
+  
     @Test
     @DisplayName("유효한 projectStatusId로 검색하면 필터링된 프로젝트를 반환")
     void searchProjectsByValidStatus() {
