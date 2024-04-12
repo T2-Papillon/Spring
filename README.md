@@ -38,3 +38,6 @@ $ ./mvnw test -DargLine="-Dspring.profiles.active=test" -Dmaven.test.failure.ign
 $ ./mvnw package -DargLine="-Dspring.profiles.active=test" -Dmaven.test.failure.ignore=true
 $ ./mvnw jacoco:report -DargLine="-Dspring.profiles.active=test" -Dmaven.test.failure.ignore=true
 ```
+
+## Ref
+- https://www.jacoco.org/jacoco/trunk/doc/maven.html
