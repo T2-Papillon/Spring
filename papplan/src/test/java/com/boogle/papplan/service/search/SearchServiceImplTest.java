@@ -84,12 +84,4 @@ public class SearchServiceImplTest {
                 .anyMatch(contributor -> contributor.getName().equals(contributorName));
         Assertions.assertTrue(hasContributor, "검색된 프로젝트들 중 최소 하나는 '" + contributorName + "'를 Contributor로 포함해야 합니다.");
     }
-
-    // 프로젝트 객체 생성을 돕는 헬퍼 메소드
-    private Project createProject(String title, String pm, String contributor) {
-        Project project = new Project();
-        project.setProjTitle(title);
-        project.setProjPm(pm);
-        return project;
-    }
 }
