@@ -38,7 +38,7 @@ class ProjectControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$").isNotEmpty())
-                .andExpect(jsonPath("$",hasSize(greaterThan(0))))
+                .andExpect(jsonPath("$",hasSize(greaterThan(0))));
                 //.andDo(print());
 
     }
@@ -58,7 +58,7 @@ class ProjectControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$").isNotEmpty())
-                .andExpect(jsonPath("$",hasSize(greaterThan(0))))
+                .andExpect(jsonPath("$",hasSize(greaterThan(0))));
                 //.andDo(print());
 
     }
