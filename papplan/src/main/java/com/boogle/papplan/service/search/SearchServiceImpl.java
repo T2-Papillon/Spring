@@ -29,11 +29,20 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<Project> findProjectsByStatusId(String projectStatusId) {
-        if (projectStatusId == null || projectStatusId.isEmpty() || projectStatusId.equals("전체")) {
+        if (!isValidStatus(projectStatusId)) {
+            throw new IllegalArgumentException("유효하지 않은 상태값입니다.");
+        }
+
+        if (projectStatusId.equals("전체")) {
             return projectRepository.findAll();
         } else {
             return projectRepository.findByProjectStatus_ProjectStatusId(projectStatusId);
         }
+    }
+
+    private boolean isValidStatus(String projectStatusId) {
+        // 프로젝트 상태값이 유효한지 데이터베이스에서 조회하여 확인
+        return projectRepository.existsByProjectStatus_ProjectStatusId(projectStatusId);
     }
 
     // 프로젝트명 또는 PM 또는 참여자로 프로젝트 검색
