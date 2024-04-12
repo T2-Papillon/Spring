@@ -4,8 +4,8 @@ spring:
       platform: mariadb
       encoding: UTF-8
       mode: always
-      schema-locations: init-db-script/a_create_table.sql
-      data-locations: init-db-script/b_insert_table.sql
+      schema-locations: classpath:init-db-script/a_create_table.sql
+      data-locations: classpath:init-db-script/b_insert_table.sql
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:test;MODE=MariaDB
