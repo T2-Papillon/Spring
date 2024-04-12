@@ -84,4 +84,45 @@ public class SearchServiceImplTest {
                 .anyMatch(contributor -> contributor.getName().equals(contributorName));
         Assertions.assertTrue(hasContributor, "검색된 프로젝트들 중 최소 하나는 '" + contributorName + "'를 Contributor로 포함해야 합니다.");
     }
+  
+    @Test
+    @DisplayName("유효한 projectStatusId로 검색하면 필터링된 프로젝트를 반환")
+    void searchProjectsByValidStatus() {
+        // given
+        String validProjectStatusId = "DOING";
+
+        // when
+        List<ProjectDTO> foundProjects = searchService.findProjectsByStatusIdDto(validProjectStatusId);
+
+        // then
+        Assertions.assertNotNull(foundProjects, "검색된 프로젝트 리스트는 null이 아니어야 합니다.");
+        Assertions.assertFalse(foundProjects.isEmpty(), "검색된 프로젝트 리스트는 비어있지 않아야 합니다.");
+        boolean allMatch = foundProjects.stream()
+                .allMatch(projectDTO -> projectDTO.getProjectStatus().equals(validProjectStatusId));
+        Assertions.assertTrue(allMatch, "검색 결과에는 해당 상태의 프로젝트만 반환되어야 합니다.");
+    }
+
+    @Test
+    @DisplayName("projectStatusId 없이 검색하면 예외 발생")
+    void searchProjectsByNullStatus() {
+        // given
+        String projectStatusId = null;
+
+        // when, then
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            searchService.findProjectsByStatusIdDto(projectStatusId);
+        });
+    }
+
+    @Test
+    @DisplayName("유효하지 않은 projectStatusId로 검색했을 경우 예외 발생")
+    void searchProjectsByInvalidStatus() {
+        // given
+        String invalidProjectStatusId = "ING";
+
+        // when, then
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            searchService.findProjectsByStatusIdDto(invalidProjectStatusId);
+        });
+    }
 }

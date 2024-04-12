@@ -51,4 +51,6 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
             "JOIN c.employees e " +
             "WHERE LOWER(p.projTitle) LIKE LOWER(:term) OR LOWER(p.projPm) LIKE LOWER(:term) OR LOWER(e.name) LIKE LOWER(:term)")
     List<ProjectQueryDTO> findByTerm(String term, Pageable pageable);*/
+
+    boolean existsByProjectStatus_ProjectStatusId(String projectStatusId);
 }
