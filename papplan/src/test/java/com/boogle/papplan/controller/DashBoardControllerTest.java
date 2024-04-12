@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -44,6 +45,7 @@ class DashBoardControllerTest {
                 .andExpect(jsonPath("$.task_today").exists())
                 .andExpect(jsonPath("$.task_yesterday").exists())
                 .andExpect(jsonPath("$.task_week").exists())
+                .andDo(print())
         ;
     }
 
