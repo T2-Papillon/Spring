@@ -24,19 +24,28 @@ public class ProjectController {
         this.taskService = taskService;
     }
 
+    // 모든 프로젝트 목록 조회
+    @GetMapping
+    public ResponseEntity<List<ProjectDTO>> getAllProjects() {
+        List<ProjectDTO> projectDTOS = projectService.getAllProjects();
+        return ResponseEntity.ok(projectDTOS);
+    }
+
+    /*
     // PM별 프로젝트 조회
     @GetMapping("/pm/{pm}")
     public ResponseEntity<List<ProjectDTO>> getProjectsByPM(@RequestParam String pm) {
         List<ProjectDTO> projectDTOS = projectService.getProjectsByPM(pm);
         return ResponseEntity.ok().body(projectDTOS);
-    }
+    }*/
 
+    /*
     // 참여자별 프로젝트 조회
     @GetMapping("/contributor/{id}")
     public ResponseEntity<List<ProjectDTO>> getProjectsByContributor(@RequestParam Integer empNo) {
         List<ProjectDTO> projectDTOS = projectService.findProjectsByEmpNo(empNo);
         return ResponseEntity.ok().body(projectDTOS);
-    }
+    }*/
 
     // 상태별 프로젝트 조회
     @GetMapping("/status/{status}")
@@ -72,19 +81,14 @@ public class ProjectController {
         return ResponseEntity.ok().body(projectDto);
     }
 
-    // 모든 프로젝트 목록 조회
-    @GetMapping
-    public ResponseEntity<List<ProjectDTO>> getAllProjects() {
-        List<ProjectDTO> projectDTOS = projectService.getAllProjects();
-        return ResponseEntity.ok(projectDTOS);
-    }
-
+    /*
     // 특정 프로젝트에 속한 모든 Task 조회
     @GetMapping("/{projectNo}/task")
     public ResponseEntity<List<TaskDTO>> getTasksByProjectId(@RequestParam Integer projectNo) {
         List<TaskDTO> tasks = taskService.getTasksByProjectId(projectNo);
         return ResponseEntity.ok(tasks);
-    }
+    }*/
+
 
     // 프로젝트 진행률 업데이트 요청 처리
     @PostMapping("/{projNo}/updateProgress")
