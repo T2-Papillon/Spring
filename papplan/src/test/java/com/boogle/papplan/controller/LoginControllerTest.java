@@ -52,8 +52,8 @@ class LoginControllerTest {
                 .andExpect(jsonPath("$.dept_no").exists())
                 .andExpect(jsonPath("$.dept_no").value("HR"))
                 .andExpect(jsonPath("$.position_id").exists())
-                .andExpect(jsonPath("$.position_id").value("TEAM_LEADER"))
-                .andDo(print());
+                .andExpect(jsonPath("$.position_id").value("TEAM_LEADER"));
+                //.andDo(print());
     }
 
     /**
@@ -75,7 +75,7 @@ class LoginControllerTest {
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
-                .andExpect(MockMvcResultMatchers.content().string("Login failed"))
-                .andDo(print());
+                .andExpect(MockMvcResultMatchers.content().string("Login failed"));
+                //.andDo(print());
     }
 }

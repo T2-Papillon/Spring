@@ -49,7 +49,7 @@ public class ProjectController {
 
     // 상태별 프로젝트 조회
     @GetMapping("/status/{status}")
-    public ResponseEntity<List<ProjectDTO>> getProjectsByStatus(@RequestParam("status") String status) {
+    public ResponseEntity<List<ProjectDTO>> getProjectsByStatus(@PathVariable("status") String status) {
         List<ProjectDTO> projectDTOS = projectService.getProjectsByStatus(status);
         return ResponseEntity.ok().body(projectDTOS);
     }

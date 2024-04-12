@@ -45,7 +45,7 @@ class DashBoardControllerTest {
                 .andExpect(jsonPath("$.task_today").exists())
                 .andExpect(jsonPath("$.task_yesterday").exists())
                 .andExpect(jsonPath("$.task_week").exists())
-                .andDo(print())
+                //.andDo(print())
         ;
     }
 
