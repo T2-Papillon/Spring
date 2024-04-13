@@ -85,32 +85,6 @@ public class TaskServiceImpl implements TaskService {
         // 프로젝트 ID와 태스크 ID를 사용하여 해당하는 태스크를 조회합니다.
         Optional<Task> optionalTask = Optional.ofNullable(taskRepository.findByProjectProjNoAndTaskNo(projNo, taskNo));
 
-         /* // Project 번호
-        Project project = task.getProject();
-        project.setProjNo(taskDto.getProjNo());*/
-
-        /*task.setTaskTitle(taskDto.getTaskTitle());  // 업무 제목
-        task.setAssignee(taskDto.getAssignee());    // 업무 담당자 이름
-        task.setTaskDesc(taskDto.getTaskDesc());    // 업무 설명
-
-        // 업무 우선순위
-        TaskPriority taskPriority = new TaskPriority();
-        taskPriority.setTaskPriorityId(taskDto.getTaskPriority());
-        task.setTaskPriority(taskPriority);
-
-        // 업무 진행상태
-        TaskStatus taskStatus = new TaskStatus();
-        taskStatus.setTaskStatusId(taskDto.getTaskStatus());
-        task.setTaskStatus(taskStatus);
-
-        task.setTaskStartDate(taskDto.getTaskStartDate());      // 업무 시작일
-        task.setTaskEndDate(taskDto.getTaskEndDate());          // 업무 종료일
-        task.setTaskPercent(taskDto.getTaskPercent());          // 업무 진행 정도(xx%)
-        if(taskDto.getTaskTest() != null)
-            task.setTaskTest(taskDto.getTaskTest());                // 업무 테스트 진행 여부
-        task.setTaskCreateDate(taskDto.getTaskCreateDate());    // 업무 생성일
-        task.setTaskUpdateDate((taskDto.getTaskUpdateDate()));  // 수정일*/
-
         if (optionalTask.isEmpty()) {
             return null;
         }
