@@ -3,6 +3,7 @@ package com.boogle.papplan.service.project;
 import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.entity.Project;
+import com.boogle.papplan.entity.Task;
 import com.boogle.papplan.repository.*;
 import com.boogle.papplan.service.task.TaskService;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -137,6 +139,9 @@ public class ProjectServiceImplTest {
         // 업데이트된 프로젝트 진행률이 예상대로인지 확인
         // 예상 진행률은 주어진 작업들의 평균 진행률인데, 여기서는 (50 + 75) / 2 = 62.5가 예상되며, 반올림하여 63이어야 합니다.
         assertEquals(63, project.getProjPercent());
+
+
+
     }
 }
 
