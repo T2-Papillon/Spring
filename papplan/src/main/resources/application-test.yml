@@ -1,0 +1,35 @@
+spring:
+  sql:
+    init:
+      platform: mariadb
+      encoding: UTF-8
+      mode: always
+      schema-locations: classpath:db/schema-script/create.sql
+      data-locations: classpath:/db/data-script/data-department.sql
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test;MODE=MariaDB
+    username: sa
+    password:
+    # data: classpath:/db/data-script/
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+    show-sql: false
+  h2:
+    console:                  # H2 DB를 웹에서 관리할 수 있는 기능
+      enabled: true           # H2 Console 사용 여부
+      path: /h2-console       # H2 Console 접속 주소
+
+# Hibernate SQL ?? ?? ??
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+
+devtools:
+  LiveReload:
+    enable: true
