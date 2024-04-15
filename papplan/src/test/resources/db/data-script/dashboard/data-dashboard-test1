@@ -1,3 +1,0 @@
-INSERT INTO employees (email,password,name,dept_no,position_id) VALUES
-('test@boogle.com','1234','김지원','HR','TEAM_LEADER')
-
