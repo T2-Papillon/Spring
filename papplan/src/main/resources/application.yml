@@ -11,4 +11,4 @@ spring:
 spring:
   config:
     activate:
-      on-profile: local, dev, prd
+      on-profile: local, dev, prd, test
