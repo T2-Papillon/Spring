@@ -1,25 +1,29 @@
 package com.boogle.papplan.service.project;
 
+import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
-import com.boogle.papplan.repository.*;
+import com.boogle.papplan.entity.Project;
+import com.boogle.papplan.repository.ProjectRepository;
+import com.boogle.papplan.service.task.TaskService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @Transactional
-public class ProjectServiceImplTest {
-
-    @Autowired
-    private ProjectRepository projectRepository;
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
+public class ProjectSearchServiceImplTest {
 
     @Autowired
     private ProjectService projectService;
@@ -79,5 +83,20 @@ public class ProjectServiceImplTest {
         Assertions.assertTrue(found, "검색된 프로젝트 중 적어도 하나는 검색어와 일치하는 Contributor를 포함해야 합니다.");
     }
 
+    @Test
+    @DisplayName("상태별로 프로젝트 검색")
+    void searchByProjectStatus() {
+        // given
+        String status = "DOING";
 
+        // when
+        List<ProjectDTO> foundProjects = projectService.getProjectsByStatus(status);
+
+        // then
+        Assertions.assertNotNull(foundProjects, "검색된 프로젝트 리스트는 null이 아니어야 합니다.");
+        Assertions.assertFalse(foundProjects.isEmpty(), "검색된 프로젝트 리스트는 비어있지 않아야 합니다.");
+        Assertions.assertTrue(foundProjects.stream().allMatch(project -> project.getProjectStatus().equals(status)),
+                "검색된 프로젝트는 모두 해당 상태여야 합니다.");
+    }
 }
+
