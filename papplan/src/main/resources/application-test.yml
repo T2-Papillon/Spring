@@ -5,7 +5,7 @@ spring:
       encoding: UTF-8
       mode: always
       schema-locations: classpath:db/schema-script/create.sql
-      data-locations: classpath:/db/data-script/data-department.sql
+      data-locations: classpath:/db/data-script/data-init.sql
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:test;MODE=MariaDB
