@@ -53,7 +53,7 @@ public class SearchServiceImplTest {
     public void searchByProjPMInAll() {
 
         // given
-        String pmName = "서현우";
+        String pmName = "13";
 
         // when
         List<ProjectDTO> foundProjects = searchService.searchProjects(pmName, 0, 10);

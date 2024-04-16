@@ -48,7 +48,7 @@ public class ProjectServiceImplTest {
     void searchByProjPmForLoggedInUserProject() {
 
         // given
-        String searchTerm = "서현우";
+        String searchTerm = "13";
 
         // when
         List<ProjectDTO> foundProjects = projectService.searchProjects(searchTerm, 0, 10);
