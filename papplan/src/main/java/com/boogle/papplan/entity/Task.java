@@ -7,10 +7,11 @@ import org.hibernate.proxy.HibernateProxy;
 import java.util.Date;
 import java.util.Objects;
 
-@Entity
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
