@@ -29,6 +29,20 @@ public class TaskController {
         return ResponseEntity.ok().body(tasks);
     }
 
+    // 사용자의 업무 리스트를 가져오는 엔드포인트
+    @GetMapping("/emp/{empno}")
+    public ResponseEntity<List<TaskDTO>> getTasksByEmpno(@PathVariable("empno") Integer empNo) {
+        List<TaskDTO> tasks;
+        try{
+            tasks = taskService.getTasksByEmpNo(empNo);
+            if(tasks == null)
+                return ResponseEntity.notFound().build();
+        }
+        catch(Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(tasks);
+    }
 
 
     // 특정 프로젝트에 새로운 태스크를 추가하는 엔드포인트

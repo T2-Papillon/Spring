@@ -28,21 +28,14 @@ public class TaskServiceImpl implements TaskService {
         this.employeeRepository = employeeRepository;
     }
 
-    @Override
-    public List<Task> findTasksByStatusId(Integer projNo, String taskStatusId) {
-        if (taskStatusId == null || taskStatusId.isEmpty() || taskStatusId.equals("전체")) {
-            return taskRepository.findAll();
-        } else {
-            return taskRepository.findByProjectProjNoAndTaskStatusTaskStatusId(projNo, taskStatusId);
-        }
-    }
-
+    // 진행상태값으로 업무 리스트 조회
     @Override
     public List<TaskDTO> findTasksByStatusIdDto(Integer projNo, String taskStatusId) {
         List<Task> tasks = taskRepository.findByProjectProjNoAndTaskStatusTaskStatusId(projNo, taskStatusId);
         return tasks.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
+    // 프로젝트 ID에 속하는 하위 업무 리스트 조회
     @Override
     public List<TaskDTO> getTasksByProjectId(Integer projNo) {
         List<Task> tasks = taskRepository.findAllByProjectProjNo(projNo);
@@ -51,6 +44,16 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    // 사원 번호로 사원이 담당하고 있는 진행중인 업무 리턴
+    @Override
+    public List<TaskDTO> getTasksByEmpNo(Integer empNo) {
+        List<Task> tasks = taskRepository.findAllByEmpNo(empNo);
+        return tasks.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    // 하위 업무 생성
     @Override
     public String addTaskToProject(Integer projNo, TaskDTO taskDto) {
         Task task;
@@ -68,6 +71,7 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+    // 특정 하위 업무 내용 조회
     @Override
     public TaskDTO getTaskById(Integer projNo, Integer taskNo) {
         Task task = taskRepository.findByProjectProjNoAndTaskNo(projNo, taskNo);
@@ -78,8 +82,7 @@ public class TaskServiceImpl implements TaskService {
         return convertToDto(task);
     }
 
-
-
+    // 하위 업무 수정
     @Override
     public TaskDTO updateTask(Integer projNo, Integer taskNo, TaskDTO taskDto) {
         // 프로젝트 ID와 태스크 ID를 사용하여 해당하는 태스크를 조회합니다.
@@ -92,7 +95,6 @@ public class TaskServiceImpl implements TaskService {
             Task task = optionalTask.get();
             String originTaskStatus = task.getTaskStatus().getTaskStatusId();
             Date originTaskFinishDate = task.getTaskFinishDate();
-            System.out.println("[Update Task LOG] " + task.getTaskNo() + " >> " + " +(( " + originTaskStatus + " )) >> TO BE (( " + taskDto.getTaskStatus() + " ))");
 
             // 진행도가 100%가 되었거나 진행 상태가 완료로 바뀐 경우 -> 업무 종료 시간 저장
             if(!originTaskStatus.equals("DONE") && (taskDto.getTaskStatus().equals("DONE") || taskDto.getTaskPercent() >= 100)){
@@ -119,20 +121,13 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+    // 하위 업무 삭제
     @Override
     public void deleteTask(Integer projNo, Integer taskNo) {
         taskRepository.deleteById(taskNo);
     }
 
-    // 사원 번호로 사원이 담당하고 있는 진행중인 업무 리턴
-    @Override
-    public List<TaskDTO> getTasksByEmpNo(Integer empNo) {
-        List<Task> tasks = taskRepository.findAllByEmpNo(empNo);
-        return tasks.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
-    }
-
+    // 대시보드에서 사용하는 사용자의 하위 업무 조회, 데이터 정제
     @Override
     public Optional<HashMap<String, Object>> getTasksByEmpNoDashBoard(Integer empNo) {
         HashMap<String, Object> taskData;
@@ -169,6 +164,8 @@ public class TaskServiceImpl implements TaskService {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+
+    // --------------------------------------------------------------------------------------------
 
     private TaskDTO convertToDto(Task task) {
         TaskDTO taskDto = new TaskDTO();
