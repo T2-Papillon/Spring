@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //@EnableSwagger2
 public class PapplanApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PapplanApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(PapplanApplication.class, args);
+  }
 }

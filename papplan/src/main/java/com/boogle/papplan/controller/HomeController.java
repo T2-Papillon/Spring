@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @CrossOrigin("http://localhost:5173/")
 public class HomeController {
 
-    @GetMapping
-    public ResponseEntity<String> getUsers() {
-        return ResponseEntity.ok("OK");
-    }
+  @GetMapping
+  public ResponseEntity<String> getUsers() {
+    return ResponseEntity.ok("OK");
+  }
 
-    @GetMapping("test")
-    public ResponseEntity<String> getPage() {
-        return ResponseEntity.ok("TEST OK");
-    }
+  @GetMapping("test")
+  public ResponseEntity<String> getPage() {
+    return ResponseEntity.ok("TEST OK");
+  }
 
 }

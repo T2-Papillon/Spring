@@ -20,52 +20,52 @@ import java.util.Optional;
 @SpringBootTest
 class EmployeeServiceImplTest {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    private PositionRepository positionRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+  @Autowired
+  private EmployeeRepository employeeRepository;
+  @Autowired
+  private DepartmentRepository departmentRepository;
+  @Autowired
+  private PositionRepository positionRepository;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
-    Department department = new Department();
-    Position position = new Position();
+  Department department = new Department();
+  Position position = new Position();
 
-    @BeforeEach
-    void beforeEmployee() {
-        department.setDept_no("IT");
-        department.setDept_name("IT");
-        departmentRepository.save(department);
+  @BeforeEach
+  void beforeEmployee() {
+    department.setDept_no("IT");
+    department.setDept_name("IT");
+    departmentRepository.save(department);
 
-        position.setPosition_id("TEMP");
-        position.setPosition_name("TEMP");
-        positionRepository.save(position);
-    }
+    position.setPosition_id("TEMP");
+    position.setPosition_name("TEMP");
+    positionRepository.save(position);
+  }
 
-    @Test
-    @Transactional
-    @DisplayName("이메일로 사용자 정보 확인")
-    void findEmployeeByEmail() {
+  @Test
+  @Transactional
+  @DisplayName("이메일로 사용자 정보 확인")
+  void findEmployeeByEmail() {
 
-        //given
-        String email = "1234@boogle.co.kr";
-        String pw = "12345";
-        String encrypt = passwordEncoder.encode(pw);
+    //given
+    String email = "1234@boogle.co.kr";
+    String pw = "12345";
+    String encrypt = passwordEncoder.encode(pw);
 
-        Employees employees = new Employees();
-        employees.setEmail(email);
-        employees.setPassword(encrypt);
-        employees.setName("choi");
-        employees.setDepartment(department);
-        employees.setPosition(position);
-        employeeRepository.save(employees);
+    Employees employees = new Employees();
+    employees.setEmail(email);
+    employees.setPassword(encrypt);
+    employees.setName("choi");
+    employees.setDepartment(department);
+    employees.setPosition(position);
+    employeeRepository.save(employees);
 
-        //when
-        Optional<Employees> emp = employeeRepository.findByEmail(email);
+    //when
+    Optional<Employees> emp = employeeRepository.findByEmail(email);
 
-        //then
-        Assertions.assertNotNull(emp);
-        Assertions.assertTrue(passwordEncoder.matches(pw, emp.get().getPassword()));
-    }
+    //then
+    Assertions.assertNotNull(emp);
+    Assertions.assertTrue(passwordEncoder.matches(pw, emp.get().getPassword()));
+  }
 }

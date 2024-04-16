@@ -11,47 +11,46 @@ import java.util.HashMap;
 import java.util.Optional;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
 
-    private final EmployeeRepository employeeRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+  private final EmployeeRepository employeeRepository;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
+  @Autowired
+  public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+    this.employeeRepository = employeeRepository;
+  }
 
-    @Override
-    public Optional<EmployeeDTO> signInLogin(HashMap<String,String> userInfo) {
+  @Override
+  public Optional<EmployeeDTO> signInLogin(HashMap<String, String> userInfo) {
 
-        Optional<Employees> emp = employeeRepository.findByEmail(userInfo.get("email"));
-        if(emp.isPresent()) {
-            if(passwordEncoder.matches(userInfo.get("password"), emp.get().getPassword())){
-                Optional<EmployeeDTO> employeeDTO = Optional.ofNullable(convertToEmployeeDTO(emp.get()));
-                return employeeDTO;
-            }
-            return Optional.empty();
-        }
-        else{
-            return Optional.empty();
-        }
-    }
-
-    @Override
-    public void signUp(Employees employees) {
-        employeeRepository.save(employees);
-    }
-
-    EmployeeDTO convertToEmployeeDTO(Employees employee) {
-        EmployeeDTO employeeDTO = new EmployeeDTO(
-                employee.getEno(),
-                employee.getEmail(),
-                employee.getName(),
-                employee.getDepartment().getDept_no(),
-                employee.getPosition().getPosition_id()
-        );
+    Optional<Employees> emp = employeeRepository.findByEmail(userInfo.get("email"));
+    if (emp.isPresent()) {
+      if (passwordEncoder.matches(userInfo.get("password"), emp.get().getPassword())) {
+        Optional<EmployeeDTO> employeeDTO = Optional.ofNullable(convertToEmployeeDTO(emp.get()));
         return employeeDTO;
+      }
+      return Optional.empty();
+    } else {
+      return Optional.empty();
     }
+  }
+
+  @Override
+  public void signUp(Employees employees) {
+    employeeRepository.save(employees);
+  }
+
+  EmployeeDTO convertToEmployeeDTO(Employees employee) {
+    EmployeeDTO employeeDTO = new EmployeeDTO(
+      employee.getEno(),
+      employee.getEmail(),
+      employee.getName(),
+      employee.getDepartment().getDept_no(),
+      employee.getPosition().getPosition_id()
+    );
+    return employeeDTO;
+  }
 
 }

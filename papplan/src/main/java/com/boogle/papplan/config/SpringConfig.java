@@ -17,42 +17,42 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class SpringConfig {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.
-                csrf().disable().
-                authorizeHttpRequests(request -> request
-                        .requestMatchers("/**").permitAll()
-                        .anyRequest().authenticated()
-                );
+    http.
+      csrf().disable().
+      authorizeHttpRequests(request -> request
+        .requestMatchers("/**").permitAll()
+        .anyRequest().authenticated()
+      );
 
-        return http.build();
-    }
+    return http.build();
+  }
 
-    // CORS 구성을 빈으로 추가합니다.
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        //config.setAllowCredentials(true);
-        config.addAllowedOrigin("*"); // 클라이언트 도메인을 지정하세요.
-        config.addAllowedHeader("*");
-        config.addAllowedMethod(HttpMethod.GET);
-        config.addAllowedMethod(HttpMethod.POST);
-        config.addAllowedMethod(HttpMethod.PUT);
-        config.addAllowedMethod(HttpMethod.DELETE);
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
+  // CORS 구성을 빈으로 추가합니다.
+  @Bean
+  public CorsFilter corsFilter() {
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    CorsConfiguration config = new CorsConfiguration();
+    //config.setAllowCredentials(true);
+    config.addAllowedOrigin("*"); // 클라이언트 도메인을 지정하세요.
+    config.addAllowedHeader("*");
+    config.addAllowedMethod(HttpMethod.GET);
+    config.addAllowedMethod(HttpMethod.POST);
+    config.addAllowedMethod(HttpMethod.PUT);
+    config.addAllowedMethod(HttpMethod.DELETE);
+    source.registerCorsConfiguration("/**", config);
+    return new CorsFilter(source);
+  }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
+  @Bean
+  public ObjectMapper objectMapper() {
+    return new ObjectMapper();
+  }
 }
