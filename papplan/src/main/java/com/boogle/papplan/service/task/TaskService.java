@@ -21,6 +21,7 @@ public interface TaskService {
 
     // 사원이 담당하고 있는 모든 업무 조회
     List<TaskDTO> getTasksByEmpNo(Integer empNo);
+
     Optional<HashMap<String,Object>> getTasksByEmpNoDashBoard(Integer empNo);
 
     // 모든 프로젝트의 전체 업무를 조회
@@ -28,8 +29,6 @@ public interface TaskService {
 
     // 업무 검색
     List<TaskDTO> searchTasks(Integer projNo, String term, int page, int pageSize);
-
-    List<Task> findTasksByStatusId(Integer projNo, String taskStatusId);
 
     List<TaskDTO> findTasksByStatusIdDto(Integer projNo, String taskStatusId);
 }
