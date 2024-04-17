@@ -21,6 +21,7 @@ public interface ProjectService {
     // 프로젝트 진행률 업데이트 메서드
     void updateProjectProgress(Integer projNo);
 
+    Project convertToEntity(ProjectDTO projectDTO);
     void insertProject(Project project, List<Contributor> contributors);
     void updateProject(ProjectDTO projectDTO);
 }

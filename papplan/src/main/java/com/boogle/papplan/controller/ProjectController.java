@@ -1,13 +1,19 @@
 package com.boogle.papplan.controller;
 
+import com.boogle.papplan.dto.EmployeeDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.dto.TaskDTO;
+import com.boogle.papplan.entity.Contributor;
+import com.boogle.papplan.entity.Employees;
+import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.service.project.ProjectService;
 import com.boogle.papplan.service.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -96,4 +102,16 @@ public class ProjectController {
         projectService.updateProjectProgress(projNo);
         return ResponseEntity.ok("프로젝트 진행률이 업데이트되었습니다.");
     }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createProject(@RequestBody ProjectDTO projectDTO) {
+        try {
+            Project project = projectService.convertToEntity(projectDTO);
+            projectService.insertProject(project, project.getContributors());
+            return ResponseEntity.ok("프로젝트가 성공적으로 생성되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("프로젝트 생성에 실패했습니다: " + e.getMessage());
+        }
+    }
+
 }

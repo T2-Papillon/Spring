@@ -19,4 +19,7 @@ public interface EmployeeRepository extends JpaRepository<Employees, Integer> {
             " FROM Employees e WHERE " +
             " e.eno IN (:enos)")
     Optional<List<EmployeeDTO>> findAllByEnos(List<Integer> enos);
+
+    @Query("SELECT e FROM Employees e WHERE e.name = :name")
+    Optional<Employees> findByName(String name);
 }
