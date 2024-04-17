@@ -7,20 +7,19 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class ProjectDTO {
+public class ProjectCreateDTO {
 
-    private Integer projNo;
+    //private Integer projNo;
     private String projTitle;
-    private String projPm;
+    //private String projPm;
     private Integer projPmEno;
-    private String projPmDept;
+    //private String projPmDept;
     private Date projStartDate;
     private Date projEndDate;
-    private Integer projPercent;
+    //private Integer projPercent;
     private Date projCreateDate;
     private String projDesc;
     private String projectPriority;
     private String projectStatus;
-    private List<EmployeeDTO> contributors; // 참여자의 사원 번호(eno) 리스트
-
+    private List<Integer> contributors;
 }
