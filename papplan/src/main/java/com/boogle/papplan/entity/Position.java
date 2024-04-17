@@ -18,7 +18,7 @@ public class Position {
     @Column(length = 20, nullable = false)
     private String position_name;
 
-    @OneToMany(mappedBy = "position", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "position", cascade = CascadeType.REMOVE)
     private List<Employees> employees = new ArrayList<>();
 }
 

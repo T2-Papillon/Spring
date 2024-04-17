@@ -19,7 +19,7 @@ public class Task {
     private Integer taskNo; // 업무번호
 
     // 외래키
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="proj_no", nullable = false) // 프로젝트번호 외래키
     private Project project; // 프로젝트번호
 
@@ -29,7 +29,6 @@ public class Task {
     // 외래키
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assignee_eno", referencedColumnName = "eno", nullable = false)
-    @ToString.Exclude
     private Employees assignee; // 담당자
 
     @Temporal(TemporalType.DATE)
@@ -66,12 +65,12 @@ public class Task {
     private String taskDesc; // 설명
 
     // 외래키
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_status_id", nullable = false) // 업무상태번호 외래키
     private TaskStatus taskStatus; // 업무상태번호
 
     // 외래키
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_priority_id", nullable = false) // 업무우선순위번호 외래키
     private TaskPriority taskPriority; // 업무우선순위번호
 

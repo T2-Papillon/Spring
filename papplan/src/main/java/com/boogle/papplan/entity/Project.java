@@ -59,7 +59,7 @@ public class Project {
     private List<Task> tasks;
 
     // contributor 엔터티와의 @OneToMany 관계 추가
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "project")
     private List<Contributor> contributors;
 
 }

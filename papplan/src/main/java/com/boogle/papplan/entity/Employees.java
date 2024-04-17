@@ -25,11 +25,11 @@ public class Employees {
     @Column(length = 20, nullable = false)
     private String name; // 이름
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "dept_no")
     private Department department; // 부서번호
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "position_id")
     private Position position; // 직책코드
 }
