@@ -1,6 +1,7 @@
 package com.boogle.papplan.controller;
 
 import com.boogle.papplan.dto.EmployeeDTO;
+import com.boogle.papplan.dto.project.ProjectCreateDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.entity.Contributor;
@@ -104,10 +105,9 @@ public class ProjectController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createProject(@RequestBody ProjectDTO projectDTO) {
+    public ResponseEntity<?> createProject(@RequestBody ProjectCreateDTO projectCreateDTODTO) {
         try {
-            Project project = projectService.convertToEntity(projectDTO);
-            projectService.insertProject(project, project.getContributors());
+            projectService.insertProject(projectCreateDTODTO);
             return ResponseEntity.ok("프로젝트가 성공적으로 생성되었습니다.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("프로젝트 생성에 실패했습니다: " + e.getMessage());

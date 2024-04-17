@@ -2,6 +2,7 @@ package com.boogle.papplan.service.project;
 
 import com.boogle.papplan.dto.EmployeeDTO;
 import com.boogle.papplan.dto.TaskDTO;
+import com.boogle.papplan.dto.project.ProjectCreateDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.entity.*;
 import com.boogle.papplan.repository.*;
@@ -21,8 +22,6 @@ public class ProjectServiceImpl implements ProjectService {
     private final ContributorRepository contributorRepository;
     private final EmployeeRepository employeeRepository;
     private final TaskService taskService;
-    private final ProjectStatusRepository projectStatusRepository;
-    private final ProjectPriorityRepository projectPriorityRepository;
 
 
     @Autowired
@@ -34,8 +33,6 @@ public class ProjectServiceImpl implements ProjectService {
         this.contributorRepository = contributorRepository;
         this.employeeRepository = employeeRepository;
         this.taskService = taskService;
-        this.projectStatusRepository = projectStatusRepository;
-        this.projectPriorityRepository = projectPriorityRepository;
     }
 
     // PM으로 참여한 프로젝트를 가져오는 메서드
@@ -133,9 +130,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     // 24.04.11 프로젝트 생성
     @Override
-    public void insertProject(Project project, List<Contributor> contributors) {
-        projectRepository.save(project);
-        contributorRepository.saveAll(contributors);
+    public void insertProject(ProjectCreateDTO projectDto) {
+        Project project = convertToProject(projectDto);
+        Project savePrj = projectRepository.save(project);
+        insertContributor(savePrj.getProjNo(), projectDto.getContributors());
     }
 
     // 24.04.11 프로젝트 내용 수정
@@ -174,46 +172,47 @@ public class ProjectServiceImpl implements ProjectService {
         return dto;
     }
 
-    public Project convertToEntity(ProjectDTO projectDTO) {
+    // Project 생성 DTO -> Project Entity
+    Project convertToProject(ProjectCreateDTO projectDto) {
         Project project = new Project();
-        project.setProjTitle(projectDTO.getProjTitle());
-        project.setProjStartDate(projectDTO.getProjStartDate());
-        project.setProjEndDate(projectDTO.getProjEndDate());
-        project.setProjPercent(projectDTO.getProjPercent());
-        project.setProjCreateDate(new Date());
-        project.setProjDesc(projectDTO.getProjDesc());
-        // PM 설정
-        Employees pm = employeeRepository.findByName(projectDTO.getProjPm())
-                .orElseThrow(() -> new RuntimeException("Employee not found with name: " + projectDTO.getProjPm()));
+
+        project.setProjTitle(projectDto.getProjTitle());
+
+        Employees pm = new Employees();
+        pm.setEno(projectDto.getProjPmEno());
         project.setProjPm(pm);
 
-        // 프로젝트 상태 설정
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setProjectStatusId(projectDTO.getProjectStatus());
-        project.setProjectStatus(projectStatus);
+        project.setProjStartDate(projectDto.getProjStartDate());
+        project.setProjEndDate(projectDto.getProjEndDate());
+        project.setProjCreateDate(projectDto.getProjCreateDate());
+        project.setProjDesc(projectDto.getProjDesc());
 
-        // 프로젝트 우선순위
         ProjectPriority projectPriority = new ProjectPriority();
-        projectPriority.setProjectPriorityId(projectDTO.getProjectPriority());
+        projectPriority.setProjectPriorityId(projectDto.getProjectPriority());
         project.setProjectPriority(projectPriority);
 
-        // 참여자 설정
-        List<Contributor> contributorEnos = new ArrayList<>();
-        for (EmployeeDTO employeeDTO : projectDTO.getContributors()) {
-            Employees employee = employeeRepository.findById(employeeDTO.getEno()).orElse(null);
-            if (employee == null) {
-                throw new RuntimeException("Employee not found with ID: " + employeeDTO.getEno());
-            }
-            Contributor contributor = new Contributor();
-            contributor.setProject(project); // 참여자가 참여하는 프로젝트 설정
-            contributor.setEmployees(employee); // 참여자의 직원 정보 설정
-            contributorEnos.add(contributor);
-        }
+        ProjectStatus projectStatus = new ProjectStatus();
+        projectStatus.setProjectStatusId(projectDto.getProjectStatus());
+        project.setProjectStatus(projectStatus);
 
-        // 프로젝트에 참여자 리스트 설정
-        project.setContributors(contributorEnos);
-
+        System.out.println(project);
 
         return project;
+    }
+
+    // Project 생성 시 참여자 목록 추출 후 DB 저장
+    public void insertContributor(int projNo, List<Integer> contributors) {
+        List<Contributor> newContributors = new ArrayList<>();
+        for(int n : contributors) {
+            Contributor contributor = new Contributor();
+            Project project = new Project();
+            project.setProjNo(projNo);
+            contributor.setProject(project);
+            Employees employees = new Employees();
+            employees.setEno(n);
+            contributor.setEmployees(employees);
+            newContributors.add(contributor);
+        }
+        contributorRepository.saveAll(newContributors);
     }
 }
