@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Date;
 import java.util.List;
@@ -37,6 +38,7 @@ public class Project {
     private Date projEndDate; // 프로젝트 종료일
 
     @Column(name = "proj_percent")
+    @ColumnDefault("0")
     private Integer projPercent; // 프로젝트 진행율
 
     @Temporal(TemporalType.DATE)

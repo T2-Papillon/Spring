@@ -39,7 +39,7 @@ public class ProjectProgressServiceImplTest {
         taskService = mock(TaskService.class); // TaskService의 Mock 객체 생성
         projectRepository = mock(ProjectRepository.class); // ProjectRepository의 Mock 객체 생성
         // ProjectServiceImpl 객체 초기화, projectRepository와 taskService를 인자로 전달
-        projectService = new ProjectServiceImpl(projectRepository, null, null, taskService);
+        //projectService = new ProjectServiceImpl(projectRepository, null, null, taskService);
     }
 
     @Test

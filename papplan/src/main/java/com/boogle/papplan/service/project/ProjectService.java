@@ -1,5 +1,6 @@
 package com.boogle.papplan.service.project;
 
+import com.boogle.papplan.dto.project.ProjectCreateDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.entity.Contributor;
 import com.boogle.papplan.entity.Project;
@@ -21,7 +22,6 @@ public interface ProjectService {
     // 프로젝트 진행률 업데이트 메서드
     void updateProjectProgress(Integer projNo);
 
-    Project convertToEntity(ProjectDTO projectDTO);
-    void insertProject(Project project, List<Contributor> contributors);
+    void insertProject(ProjectCreateDTO projectDTO);
     void updateProject(ProjectDTO projectDTO);
 }
