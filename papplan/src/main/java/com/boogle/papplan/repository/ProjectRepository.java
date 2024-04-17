@@ -17,10 +17,6 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     @Query("SELECT p FROM Project p WHERE LOWER(p.projPm.name) LIKE LOWER(:projPm)")
     List<Project> findByProjPm(String projPm);
 
-    // 프로젝트에 참여자로서 포함된 프로젝트를 조회하는 메서드
-    @Query("SELECT c.project FROM Contributor c WHERE c.employees.id = :id")
-    List<Project> findProjectsByContributorId(@Param("id") Long id);
-
     // 프로젝트 상태로 프로젝트를 조회하는 메서드
     List<Project> findByProjectStatus_ProjectStatusId(String projectStatusId);
 
@@ -32,11 +28,9 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
             " p.id IN (SELECT c.project.id FROM Contributor c WHERE LOWER(c.employees.name) LIKE LOWER(:term))")
     List<Project> findByTermWithPage(String term, Pageable pageable);
 
-    @Query("SELECT DISTINCT p FROM Project p" +
-            " JOIN Contributor c ON p.projNo = c.project.projNo WHERE " +
-            " c.employees.eno = (:empno) OR " +
-            // " p.projPm = (SELECT e.name from Employees e WHERE (:empno) = e.eno)")
-            " p.projPm.eno = (:empno) ")
+    @Query("SELECT DISTINCT p FROM Project p " +
+            "JOIN p.contributors c " +
+            "WHERE c.employees.eno = (:empno) OR  p.projPm.eno = (:empno) ")
     List<Project> findAllByEmpno(Integer empno);
 
     // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드

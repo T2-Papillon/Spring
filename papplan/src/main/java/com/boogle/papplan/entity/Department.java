@@ -19,7 +19,7 @@ public class Department {
     @Column(length = 20, nullable = false)
     private String dept_name;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE)
     private List<Employees> employees = new ArrayList<>();
 
 }
