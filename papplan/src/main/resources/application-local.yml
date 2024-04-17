@@ -15,7 +15,7 @@ spring:
     hibernate:
       ddl-auto: update
     generate-ddl: false
-    show-sql: false
+    show-sql: true
 
 # Hibernate SQL ?? ?? ??
 logging:
