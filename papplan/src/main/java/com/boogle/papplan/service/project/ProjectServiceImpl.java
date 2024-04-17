@@ -152,6 +152,7 @@ public class ProjectServiceImpl implements ProjectService {
         if(project.getProjPm() != null) {
             dto.setProjPm(project.getProjPm().getName());
             dto.setProjPmDept(project.getProjPm().getDepartment().getDept_no());
+            dto.setProjPmEno(project.getProjPm().getEno());
         }
         dto.setProjStartDate(project.getProjStartDate());
         dto.setProjEndDate(project.getProjEndDate());
@@ -211,24 +212,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         // 프로젝트에 참여자 리스트 설정
         project.setContributors(contributorEnos);
-//
-//        List<Integer> enos = projectDTO.getContributors().stream()
-//                .map(EmployeeDTO::getEno)
-//                .collect(Collectors.toList());
-//        Optional<List<EmployeeDTO>> employeesDTOs = employeeRepository.findAllByEnos(enos);
-//        List<Contributor> contributors = employeesDTOs.orElseThrow(() -> new RuntimeException("Employees not found"))
-//                .stream()
-//                .map(dto -> {
-//                    Employees employee = employeeRepository.findById(dto.getEno()).orElseThrow();
-//                    Contributor contributor = new Contributor();
-//                    contributor.setProject(project);
-//                    contributor.setEmployees(employee);
-//                    return contributor;
-//                })
-//                .collect(Collectors.toList());
-//
-//        // 프로젝트에 참여자 리스트 설정
-//        project.setContributors(contributors);
+
 
         return project;
     }
