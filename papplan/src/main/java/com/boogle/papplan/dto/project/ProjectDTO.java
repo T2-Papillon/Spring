@@ -12,6 +12,7 @@ public class ProjectDTO {
     private Integer projNo;
     private String projTitle;
     private String projPm;
+    private Integer projPmEno;
     private String projPmDept;
     private Date projStartDate;
     private Date projEndDate;
