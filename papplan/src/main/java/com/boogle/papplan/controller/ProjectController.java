@@ -1,20 +1,13 @@
 package com.boogle.papplan.controller;
 
-import com.boogle.papplan.dto.EmployeeDTO;
 import com.boogle.papplan.dto.project.ProjectCreateDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
-import com.boogle.papplan.dto.TaskDTO;
-import com.boogle.papplan.entity.Contributor;
-import com.boogle.papplan.entity.Employees;
-import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.service.project.ProjectService;
 import com.boogle.papplan.service.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

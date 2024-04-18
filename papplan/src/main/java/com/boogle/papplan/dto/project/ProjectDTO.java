@@ -1,6 +1,6 @@
 package com.boogle.papplan.dto.project;
 
-import com.boogle.papplan.dto.EmployeeDTO;
+import com.boogle.papplan.dto.employee.EmployeeDTO;
 import lombok.Data;
 
 import java.util.Date;

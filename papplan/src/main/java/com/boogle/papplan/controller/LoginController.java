@@ -1,6 +1,6 @@
 package com.boogle.papplan.controller;
 
-import com.boogle.papplan.dto.EmployeeDTO;
+import com.boogle.papplan.dto.employee.EmployeeDTO;
 import com.boogle.papplan.entity.Department;
 import com.boogle.papplan.entity.Employees;
 import com.boogle.papplan.entity.Position;

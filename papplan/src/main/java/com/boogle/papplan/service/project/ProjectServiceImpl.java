@@ -1,6 +1,6 @@
 package com.boogle.papplan.service.project;
 
-import com.boogle.papplan.dto.EmployeeDTO;
+import com.boogle.papplan.dto.employee.EmployeeDTO;
 import com.boogle.papplan.dto.TaskDTO;
 import com.boogle.papplan.dto.project.ProjectCreateDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
