@@ -12,8 +12,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     @Query("SELECT DISTINCT t FROM Task t " +
             "JOIN FETCH t.project " +
             "JOIN FETCH t.assignee " +
-            "JOIN FETCH t.taskStatus " +
-            "JOIN FETCH t.taskPriority " +
             "WHERE t.project.projNo = :projNo")
     List<Task> findAllByProjectProjNo(Integer projNo);
 
@@ -21,16 +19,12 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     @Query("SELECT DISTINCT t FROM Task t " +
             "JOIN FETCH t.project " +
             "JOIN FETCH t.assignee " +
-            "JOIN FETCH t.taskStatus " +
-            "JOIN FETCH t.taskPriority " +
             "WHERE t.assignee.eno = :empNo")
     List<Task> findAllByEmpNo(Integer empNo);
 
     @Query("SELECT DISTINCT t FROM Task t " +
             "JOIN FETCH t.project " +
             "JOIN FETCH t.assignee " +
-            "JOIN FETCH t.taskStatus " +
-            "JOIN FETCH t.taskPriority " +
             "WHERE t.taskNo = (:taskNo) " +
             " AND t.project.projNo = (:projNo) ")
     Task findByProjectProjNoAndTaskNo(Integer projNo, Integer taskNo);
@@ -39,8 +33,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     @Query("SELECT t FROM Task t " +
             "JOIN FETCH t.project " +
             "JOIN FETCH t.assignee " +
-            "JOIN FETCH t.taskStatus " +
-            "JOIN FETCH t.taskPriority " +
             " WHERE t.project.projNo = :projNo AND " +
             " (LOWER(t.taskTitle) LIKE LOWER(:term) OR " +
             "LOWER(t.assignee.name) LIKE LOWER(:term))")
@@ -51,7 +43,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
             "JOIN FETCH t.project " +
             "JOIN FETCH t.assignee " +
             "JOIN FETCH t.taskStatus " +
-            "JOIN FETCH t.taskPriority " +
             "WHERE t.project.projNo = :projNo " +
             "AND t.taskStatus.taskStatusId = :taskStatusId")
     List<Task> findByProjectProjNoAndTaskStatusTaskStatusId(Integer projNo, String taskStatusId);

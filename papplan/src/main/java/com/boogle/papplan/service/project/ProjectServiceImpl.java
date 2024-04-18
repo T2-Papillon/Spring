@@ -93,14 +93,14 @@ public class ProjectServiceImpl implements ProjectService {
     // 프로젝트 번호로 프로젝트 상세정보 조회
     @Override
     public ProjectDTO getProjectByProjNo(Integer projNo) {
-        Optional<Project> project = projectRepository.findById(projNo);
+        Optional<Project> project = projectRepository.findByProjNo(projNo);
         return project.map(this::convertToDto).orElse(null);
     }
 
     // 모든 프로젝트 목록 조회
     @Override
     public List<ProjectDTO> getAllProjects() {
-        return projectRepository.findAll().stream()
+        return projectRepository.findAllWithLazy().stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }

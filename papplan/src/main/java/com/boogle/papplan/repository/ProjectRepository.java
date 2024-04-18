@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
@@ -35,17 +36,16 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     List<Project> findAllByEmpno(Integer empno);
 
     // 프로젝트 번호(projNo)에 해당하는 프로젝트를 조회하는 메서드
-    Project findByProjNo(Integer projNo);
-
-    /*
-    // 키워드에 대한 전체 프로젝트 조회 + 해당 프로젝트의 참여중인 직원의 정보 조인 쿼리
-    // 추후 대용량 데이터 처리 시 쿼리를 한 개로 줄일 수도 있으므로 조인 쿼리 추가
-    @Query("SELECT NEW com.boogle.papplan.dto.project.ProjectQueryDTO(p.projNo, p.projTitle, p.projPm, p.projStartDate, p.projEndDate, p.projPercent, p.projCreateDate, p.projDesc, p.projectStatus.projectStatusId, p.projectStatus.projectStatusId, e.eno, e.name, e.email, e.department.dept_no, e.position.position_id) " +
-            "FROM Project p " +
+    @Query(" SELECT p FROM Project p " +
+            "JOIN FETCH p.projPm " +
             "JOIN p.contributors c " +
-            "JOIN c.employees e " +
-            "WHERE LOWER(p.projTitle) LIKE LOWER(:term) OR LOWER(p.projPm) LIKE LOWER(:term) OR LOWER(e.name) LIKE LOWER(:term)")
-    List<ProjectQueryDTO> findByTerm(String term, Pageable pageable);*/
+            "WHERE p.projNo = :projNo ")
+    Optional<Project> findByProjNo(Integer projNo);
+
+    @Query(" SELECT DISTINCT p FROM Project p " +
+            "JOIN FETCH p.projPm " +
+            "JOIN p.contributors c ")
+    List<Project> findAllWithLazy();
 
     boolean existsByProjectStatus_ProjectStatusId(String projectStatusId);
 }

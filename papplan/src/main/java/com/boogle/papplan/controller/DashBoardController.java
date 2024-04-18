@@ -68,16 +68,4 @@ public class DashBoardController {
         return ResponseEntity.ok().body(projectDTOS);
     }
 
-    // 프로젝트의 상세 정보와 하위 업무 조회
-    @GetMapping("/projects/{projNo}/tasks")
-    public ResponseEntity<HashMap<String,Object>> getTaskById(@PathVariable Integer projNo) {
-        HashMap<String,Object> prjDashBoard = new HashMap<>();
-        ProjectDTO project = projectService.getProjectByProjNo(projNo);
-        List<TaskDTO> tasks = taskService.getTasksByProjectId(projNo);
-        prjDashBoard = objectMapper.convertValue(project,HashMap.class);
-        prjDashBoard.put("tasks", tasks);
-        return ResponseEntity.ok().body(prjDashBoard);
-    }
-
-
 }
