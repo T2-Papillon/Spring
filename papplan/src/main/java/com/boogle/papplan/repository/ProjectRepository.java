@@ -1,10 +1,8 @@
 package com.boogle.papplan.repository;
 
-import com.boogle.papplan.dto.project.ProjectQueryDTO;
 import com.boogle.papplan.entity.Project;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 

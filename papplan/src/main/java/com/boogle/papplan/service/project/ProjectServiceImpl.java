@@ -62,6 +62,7 @@ public class ProjectServiceImpl implements ProjectService {
             for(Project project : doingProjects) {
                 doingProjectDTOs.add(convertToDto(project));
             }
+
             projectData.put("projects", doingProjectDTOs);
         }
         catch(Exception e) {
@@ -142,8 +143,24 @@ public class ProjectServiceImpl implements ProjectService {
 
     }
 
-    // 프로젝트 엔티티를 ProjectDto로 변환하는 유틸리티 메소드
+    // 조회 결과가 단일일 경우 응답 DTO 객체 생성 메소드
     private ProjectDTO convertToDto(Project project) {
+        ProjectDTO dto = getBaseProjectDTO(project);
+
+        /*// 참여자 정보 설정
+        List<Integer> contributorEnos = project.getContributors().stream()
+                .map(contributor -> contributor.getEmployees().getEno())
+                .collect(Collectors.toList());
+        Optional<List<EmployeeDTO>> contributors = employeeRepository.findAllByEnos(contributorEnos);*/
+        //contributors.ifPresent(dto::setContributors);
+        List<EmployeeDTO> contributors = contributorRepository.findContributors(project.getProjNo());
+        dto.setContributors(contributors);
+
+        return dto;
+    }
+
+    // 기본 DTO 객체 형태를 만든다.
+    ProjectDTO getBaseProjectDTO(Project project) {
         ProjectDTO dto = new ProjectDTO();
         dto.setProjNo(project.getProjNo());
         dto.setProjTitle(project.getProjTitle());
@@ -163,12 +180,7 @@ public class ProjectServiceImpl implements ProjectService {
         if (project.getProjectPriority() != null) {
             dto.setProjectPriority(project.getProjectPriority().getProjectPriorityId()); // Or use getProjectPriorityName()
         }
-        // 참여자 정보 설정
-        List<Integer> contributorEnos = project.getContributors().stream()
-                .map(contributor -> contributor.getEmployees().getEno())
-                .collect(Collectors.toList());
-        Optional<List<EmployeeDTO>> contributors = employeeRepository.findAllByEnos(contributorEnos);
-        contributors.ifPresent(dto::setContributors);
+
         return dto;
     }
 
@@ -194,8 +206,6 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectStatus projectStatus = new ProjectStatus();
         projectStatus.setProjectStatusId(projectDto.getProjectStatus());
         project.setProjectStatus(projectStatus);
-
-        System.out.println(project);
 
         return project;
     }
