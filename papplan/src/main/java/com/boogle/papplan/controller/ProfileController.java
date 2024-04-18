@@ -15,14 +15,14 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/mypage")
-public class MyPageController {
+@RequestMapping("/api/profile")
+public class ProfileController {
 
     private final ProjectService projectService;
     private final TaskService taskService;
 
     @Autowired
-    public MyPageController(ProjectService projectService, TaskService taskService) {
+    public ProfileController(ProjectService projectService, TaskService taskService) {
         this.projectService = projectService;
         this.taskService = taskService;
     }
