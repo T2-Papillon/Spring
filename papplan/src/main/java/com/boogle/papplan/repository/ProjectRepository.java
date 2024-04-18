@@ -29,6 +29,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     List<Project> findByTermWithPage(String term, Pageable pageable);
 
     @Query("SELECT DISTINCT p FROM Project p " +
+            " JOIN FETCH p.projPm " +
             "JOIN p.contributors c " +
             "WHERE c.employees.eno = (:empno) OR  p.projPm.eno = (:empno) ")
     List<Project> findAllByEmpno(Integer empno);
