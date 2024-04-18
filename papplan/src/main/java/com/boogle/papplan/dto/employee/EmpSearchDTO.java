@@ -1,4 +1,4 @@
-package com.boogle.papplan.dto;
+package com.boogle.papplan.dto.employee;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -8,13 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeDTO {
+public class EmpSearchDTO {
 
     private Integer eno;
-    private String email;
     private String name;
     @JsonProperty("dept_no")
     private String deptNo;
-    @JsonProperty("position_id")
-    private String positionId;
 }

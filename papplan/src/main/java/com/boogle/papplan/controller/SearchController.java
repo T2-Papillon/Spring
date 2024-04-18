@@ -1,8 +1,10 @@
 package com.boogle.papplan.controller;
 
+import com.boogle.papplan.dto.employee.EmpSearchDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +39,19 @@ public class SearchController {
         List<ProjectDTO> projects = searchService.searchProjects(term, pageInt, pageSizeInt);
 
         return ResponseEntity.ok(projects);
+    }
+    
+    @GetMapping("/emp")
+    public ResponseEntity<Object> searchEmployee(@RequestParam("name") String pattern) {
+        List<EmpSearchDTO> empList;
+        try{
+            empList = searchService.findEmployeeByName(pattern);
+            return ResponseEntity.ok(empList);
+        }
+        catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("검색 오류");
+        }
+
     }
 
 }

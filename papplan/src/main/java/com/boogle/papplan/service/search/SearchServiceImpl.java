@@ -1,6 +1,7 @@
 package com.boogle.papplan.service.search;
 
-import com.boogle.papplan.dto.EmployeeDTO;
+import com.boogle.papplan.dto.employee.EmpSearchDTO;
+import com.boogle.papplan.dto.employee.EmployeeDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.entity.Project;
 import com.boogle.papplan.repository.EmployeeRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,6 +58,13 @@ public class SearchServiceImpl implements SearchService {
     public List<ProjectDTO> findProjectsByStatusIdDto(String projectStatusId) {
         List<Project> projects = findProjectsByStatusId(projectStatusId);
         return projects.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EmpSearchDTO> findEmployeeByName(String pattern) {
+        Optional<List<EmpSearchDTO>> empList = employeeRepository.findAllByPattern(pattern);
+
+        return empList.orElseGet(ArrayList::new);
     }
 
     // 프로젝트 정보 조회 + 참여중인 직원 정보 조회

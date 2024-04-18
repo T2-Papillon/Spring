@@ -1,6 +1,6 @@
 package com.boogle.papplan.service.employee;
 
-import com.boogle.papplan.dto.EmployeeDTO;
+import com.boogle.papplan.dto.employee.EmployeeDTO;
 import com.boogle.papplan.entity.Employees;
 import com.boogle.papplan.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
