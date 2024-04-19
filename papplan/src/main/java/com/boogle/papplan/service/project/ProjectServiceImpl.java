@@ -28,7 +28,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectServiceImpl(ProjectRepository projectRepository,
                               ContributorRepository contributorRepository,
                               EmployeeRepository employeeRepository,
-                              TaskService taskService, ProjectStatusRepository projectStatusRepository, ProjectPriorityRepository projectPriorityRepository) {
+                              TaskService taskService) {
         this.projectRepository = projectRepository;
         this.contributorRepository = contributorRepository;
         this.employeeRepository = employeeRepository;
