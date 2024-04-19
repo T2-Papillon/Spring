@@ -92,13 +92,6 @@ public class TaskController {
         return ResponseEntity.ok().build();
     }
 
-    // 모든 프로젝트의 전체 업무를 가져오는 엔드포인트
-    @GetMapping("/taskAll")
-    public ResponseEntity<List<TaskDTO>> getAllTasks() {
-        List<TaskDTO> tasks = taskService.getAllTasks();
-        return ResponseEntity.ok().body(tasks);
-    }
-
     // 프로젝트 ID를 경로에서 추출하여 특정 프로젝트 내에서 업무를 검색하는 엔드포인트
     @GetMapping("/project/{projNo}/task/search")
     public ResponseEntity<List<TaskDTO>> searchTasks(@PathVariable Integer projNo,

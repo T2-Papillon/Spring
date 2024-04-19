@@ -1,7 +1,6 @@
 package com.boogle.papplan.service.task;
 
 import com.boogle.papplan.dto.TaskDTO;
-import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.entity.*;
 import com.boogle.papplan.repository.*;
 import com.boogle.papplan.util.DashBoardDataUtil;
@@ -9,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -57,8 +54,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public String addTaskToProject(Integer projNo, TaskDTO taskDto) {
         Task task;
-        Project project = projectRepository.findByProjNo(projNo);
-        if (project == null)
+        Optional<Project> project = projectRepository.findById(projNo);
+        if (project.isEmpty())
             return "프로젝트가 존재하지 않습니다.";
         try{
             taskDto.setProjNo(projNo);
@@ -148,14 +145,6 @@ public class TaskServiceImpl implements TaskService {
         return Optional.of(taskData);
 
 
-    }
-
-    @Override
-    public List<TaskDTO> getAllTasks() {
-        List<Task> tasks = taskRepository.findAll(); // 모든 업무 조회
-        return tasks.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
     }
 
     @Override
