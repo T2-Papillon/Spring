@@ -4,6 +4,7 @@ import com.boogle.papplan.dto.employee.EmpSearchDTO;
 import com.boogle.papplan.dto.employee.EmployeeDTO;
 import com.boogle.papplan.dto.project.ProjectDTO;
 import com.boogle.papplan.entity.Project;
+import com.boogle.papplan.repository.ContributorRepository;
 import com.boogle.papplan.repository.EmployeeRepository;
 import com.boogle.papplan.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,16 @@ public class SearchServiceImpl implements SearchService {
 
     private final ProjectRepository projectRepository;
     private final EmployeeRepository employeeRepository;
+    private final ContributorRepository contributorRepository;
 
     @Autowired
     public SearchServiceImpl(ProjectRepository projectRepository,
-                             EmployeeRepository employeeRepository)
+                             EmployeeRepository employeeRepository,
+                             ContributorRepository contributorRepository)
     {
         this.employeeRepository = employeeRepository;
         this.projectRepository = projectRepository;
+        this.contributorRepository = contributorRepository;
     }
 
     @Override
@@ -87,11 +91,13 @@ public class SearchServiceImpl implements SearchService {
             dto.setProjectPriority(project.getProjectPriority().getProjectPriorityId());
         }
 
-        List<Integer> contributorEnos = project.getContributors().stream()
+        /*List<Integer> contributorEnos = project.getContributors().stream()
                 .map(contributor -> contributor.getEmployees().getEno())
                 .collect(Collectors.toList());
-        Optional<List<EmployeeDTO>> contributors = employeeRepository.findAllByEnos(contributorEnos);
-        contributors.ifPresent(dto::setContributors);
+        List<EmployeeDTO> contributors = contributorRepository.findContributors(project.getProjNo());
+        dto.setContributors(contributors);*/
+        List<EmployeeDTO> contributors = contributorRepository.findContributors(project.getProjNo());
+        dto.setContributors(contributors);
 
         return dto;
     }
