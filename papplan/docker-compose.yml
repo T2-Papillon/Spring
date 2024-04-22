@@ -1,0 +1,19 @@
+name: papplan
+services:
+  proxy:
+    image: nginx
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+    ports:
+      - "8888:80"
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
+    depends_on:
+      - rest
+  
+  rest:
+    build: .
+    ports:
+      - 7778:8080
+    platform: linux/amd64
