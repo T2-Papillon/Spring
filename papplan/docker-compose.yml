@@ -17,5 +17,3 @@ services:
     ports:
       - 7778:8080
     platform: linux/amd64
-    environment:
-      - TZ=Asia/Seoul
