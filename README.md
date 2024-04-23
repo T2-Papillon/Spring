@@ -10,7 +10,7 @@
 ```sh
 $ cd papplan
 $ ./mvnw clean pacakge
-$ java -jar target/paplan-0.0.5-SNAPSHOT.jar
+$ java -jar target/paplan-3.0.0-SNAPSHOT.jar
 ```
 
 ## Proxy Server Build
