@@ -30,7 +30,7 @@ public class DashBoardDataUtil {
         for (Project project : projects) {
             date = LocalDate.parse(project.getProjEndDate().toString());
             prjToday        += today.equals(date) ? 1 : 0;
-            prjYesterday    += date.isAfter(today.minusDays(2)) && date.isBefore(today) ? 1 : 0;
+            prjYesterday    += today.equals(date.plusDays(1L)) ? 1 : 0;
             prjWeek         += date.isAfter(lastWeekStart) && date.isBefore(lastWeekEnd) ? 1 : 0;
             if(project.getProjectStatus().getProjectStatusId().equals("DOING")) {
                 prjIsProgressing.add(project);
@@ -64,7 +64,7 @@ public class DashBoardDataUtil {
             if(task.getTaskFinishDate() != null) {
                 date = LocalDate.parse(task.getTaskFinishDate().toString());
                 taskToday       += today.equals(date) ? 1 : 0;
-                taskYesterday   += date.isAfter(today.minusDays(2)) && date.isBefore(today) ? 1 : 0;
+                taskYesterday   += today.equals(date.plusDays(1L)) ? 1 : 0;
                 taskWeek        += date.isAfter(lastWeekStart) && date.isBefore(lastWeekEnd) ? 1 : 0;
             }
             if(task.getTaskStatus().getTaskStatusId().equals("DOING")) {
