@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.boogle</groupId>
 	<artifactId>paplan</artifactId>
-	<version>0.0.5-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<name>paplan</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
